@@ -1,0 +1,70 @@
+version: '3.3'
+services:
+  app:
+    image: paradoxxger/mediheroes-app:${VERSION}
+    environment:
+      - "REDIS_SESSION_URL=redis://${REDIS_SESSION_USER}:${REDIS_SESSION_PASSWORD}@redis:6379/${REDIS_SESSION_DATABASE}"
+      - "DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DATABASE}?pool=${DATABASE_POOL}"
+      - "MONGODB_URL=mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@mongodb:27017/${MONGODB_DATABASE}"
+      - "SESSION_LIFETIME_IN_HOURS=${SESSION_LIFETIME_IN_HOURS}"
+      - "RAILS_ENV=production"
+      - "RACK_ENV=production"
+      - "SECRET_KEY_BASE=${SECRET_KEY_BASE}"
+      - "BASE_URL=${BASE_URL}"
+      - "PORT=80"
+      - "APP_VERSION=${VERSION}"
+      - "RELEASE_DATE=${RELEASE_DATE}"
+      - "RAILS_LOG_TO_STDOUT=true"
+    networks:
+      mediheroes:
+        aliases:
+          - app
+    entrypoint:
+      - "/srv/mediheroes/entrypoint.sh"
+    command:
+      - "--start"
+  postgres:
+    image: paradoxxger/mediheroes-postgres:${VERSION}
+    environment:
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
+      - "POSTGRES_USER=${POSTGRES_USER}"
+      - "POSTGRES_DB=${POSTGRES_DATABASE}"
+    networks:
+      mediheroes:
+        aliases:
+          - postgres
+    volumes:
+      - ${DATA_PATH}/postgres:/var/lib/postgresql/data
+  redis:
+    image: paradoxxger/mediheroes-redis:${VERSION}
+    networks:
+      mediheroes:
+        aliases:
+          - redis
+    volumes:
+      - ${DATA_PATH}/redis:/data
+  mongodb:
+    image: paradoxxger/mediheroes-mongodb:${VERSION}
+    networks:
+      mediheroes:
+        aliases:
+          - mongodb
+    volumes:
+      - ${DATA_PATH}/mongodb:/data/db
+  proxy:
+    image: paradoxxger/mediheroes-skipper:${VERSION}
+    environment:
+      - "BALANCE_RULE_WEB=https://mediheroes.com->http://app<mediheroes.conf.erb"
+      - "INTERVAL=15"
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - "${SSL_CERTIFICATE}:${SSL_CERTIFICATE}"
+      - "${SSL_PRIVATE_KEY}:${SSL_PRIVATE_KEY}"
+    networks:
+      mediheroes:
+        aliases:
+          - skipper
+networks:
+  mediheroes:

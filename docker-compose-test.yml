@@ -1,0 +1,21 @@
+version: '3.3'
+
+# Test version
+
+services:
+  mh-postgres-test:
+    image: postgres:10.2
+    environment:
+      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_DB=mh-test"
+    ports:
+      - "5433:5432"
+  mh-redis-test:
+    image: redis:4.0.8
+    ports:
+      - "6380:6379"
+  mh-mongodb-test:
+    image: mongo:3.7.1
+    ports:
+      - "27018:27017"
