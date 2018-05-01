@@ -1,5 +1,6 @@
 package com.mediheroes.mediheroes.controller.api.v1;
 
+import com.mediheroes.mediheroes.dto.AuthenticationToken;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,8 +15,8 @@ import javax.servlet.http.HttpSession;
 public class AuthenticationController {
 
     @GetMapping("/token")
-    public ResponseEntity<String>getAuthtoken(HttpSession session) {
-        return new ResponseEntity<>(session.getId(), HttpStatus.OK);
+    public ResponseEntity<AuthenticationToken>getAuthtoken(HttpSession session) {
+        return new ResponseEntity<>(new AuthenticationToken(session.getId()), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/token")

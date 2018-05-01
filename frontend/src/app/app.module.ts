@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-
+import { FormsModule } from '@angular/forms';
 
 import { AppRouting} from "./app.routing";
 import { AppComponent } from './components/app.component';
@@ -18,7 +18,9 @@ import { EmployeeStationsComponent } from './components/employee/employee-settin
 import { EmployeeSettingsNavigationComponent } from './components/employee/employee-settings/employee-settings-navigation/employee-settings-navigation.component';
 import { EmployeeJobOffersComponent } from './components/employee/employee-job-offers/employee-job-offers.component';
 import { LoadingSpinnerComponent } from './components/shared/loading-spinner/loading-spinner.component';
-
+import { LoginComponent } from './components/shared/login/login.component';
+import {TokenService} from "./services/auth/token.service";
+import {IsAuthenticatedGuard} from "./guards/is-authenticated.guard";
 
 @NgModule({
   declarations: [
@@ -35,14 +37,19 @@ import { LoadingSpinnerComponent } from './components/shared/loading-spinner/loa
     EmployeeStationsComponent,
     EmployeeSettingsNavigationComponent,
     EmployeeJobOffersComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRouting
+    AppRouting,
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    IsAuthenticatedGuard,
+    TokenService
+  ],
   bootstrap: [AppComponent]
 })
 

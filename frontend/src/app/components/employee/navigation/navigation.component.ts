@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TokenService} from "../../../services/auth/token.service";
+import { Router} from "@angular/router";
 
 @Component({
   selector: 'app-navigation',
@@ -7,11 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private tokenService : TokenService,
+    private router : Router
+  ) {}
 
-  navbar_toggle = false
+  public navbar_toggle : boolean = false;
 
-  ngOnInit() {
+  logout(){
+    this.tokenService.logout();
   }
+
+  ngOnInit() {}
 
 }
