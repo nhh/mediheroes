@@ -9,8 +9,6 @@ export class TokenService {
   private apiUrl : string = "http://localhost:8080";
   private tokenResourcePath : string = "/api/v1/auth/token";
 
-  authenticatedHttpOptions : any = {};
-
   public authenticate(loginCredentials : LoginCredentials) {
 
     const initialHttpOptions : any = {
@@ -29,24 +27,30 @@ export class TokenService {
   }
 
   private setTokenAndGotoDashboard(token: any) {
-    this.authenticatedHttpOptions = {
-      headers: new HttpHeaders({
-        'X-Requested-With': 'XMLHttpRequest',
-        "X-Auth-Token": token
-      }),
-      withCredentials: true
-    };
-    localStorage.setItem('x-auth-token', JSON.stringify(token));
+    localStorage.setItem('x-auth-token', token.token);
     this.router.navigate(['/employee/dashboard']);
   }
 
   private getAuthenticationToken() : string {
-    return JSON.parse(localStorage.getItem('x-auth-token'));
+    return localStorage.getItem('x-auth-token');
+  }
+
+  private authenthicatedHttpHeaders() : HttpHeaders {
+    return new HttpHeaders({
+      'X-Requested-With': 'XMLHttpRequest',
+      "X-Auth-Token": this.getAuthenticationToken()
+    })
+  }
+
+  public authenticatedHttpOptions() : any {
+    return {
+      headers: this.authenthicatedHttpHeaders(),
+      withCredentials: true
+    }
   }
 
   public logout() {
-      console.log(this.authenticatedHttpOptions);
-      this.http.delete(this.apiUrl + this.tokenResourcePath, this.authenticatedHttpOptions).subscribe();
+      this.http.delete(this.apiUrl + this.tokenResourcePath, this.authenticatedHttpOptions()).subscribe();
       localStorage.removeItem('x-auth-token');
       return this.router.navigate(['/login']);
   }
