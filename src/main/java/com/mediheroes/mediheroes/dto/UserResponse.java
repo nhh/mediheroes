@@ -1,13 +1,27 @@
 package com.mediheroes.mediheroes.dto;
 
-public class UserResponse {
+import com.mediheroes.mediheroes.domain.User;
 
-    private String lastname;
-    private String firstname;
+import java.io.Serializable;
 
-    public UserResponse(String firstname, String lastname) {
-        this.firstname = firstname;
-        this.lastname = lastname;
+public class UserResponse implements Serializable {
+
+    private static String lastname;
+    private static String firstname;
+    private static String email;
+
+    public UserResponse(User user) {
+        firstname = user.getFirstname();
+        lastname = user.getLastname();
+        email = user.getEmail();
+    }
+
+    public static String getEmail() {
+        return email;
+    }
+
+    public static void setEmail(String email) {
+        UserResponse.email = email;
     }
 
     public String getLastname() {
@@ -18,7 +32,6 @@ public class UserResponse {
         this.lastname = lastname;
     }
 
-
     public String getFirstname() {
         return firstname;
     }
@@ -26,6 +39,5 @@ public class UserResponse {
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
-
 
 }

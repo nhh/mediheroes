@@ -1,0 +1,24 @@
+<div class="columns">
+  <div class="column is-3">
+    <p>Hier sollen Filtereinstellungen präsent sein</p>
+    <button (click)="addItem()" [disabled]="isLoading == true" class="button is-fullwidth">Filter laden</button>
+  </div>
+  <div class="column">
+    <app-loading-spinner *ngIf="isLoading == true"></app-loading-spinner>
+
+    <table *ngIf="isLoading == false" class="table is-fullwidth">
+      <thead>
+      <tr>
+        <th>One</th>
+        <th>Two</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of items">
+        <td>{{item.title}}</td>
+        <td>{{item.members}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
