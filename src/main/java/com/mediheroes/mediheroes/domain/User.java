@@ -2,7 +2,9 @@ package com.mediheroes.mediheroes.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -105,6 +107,10 @@ public class User {
 
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public List<String> getRoles(){
+        return List.of("USER", "ADMIN");
     }
 
     public Address getAddress() {

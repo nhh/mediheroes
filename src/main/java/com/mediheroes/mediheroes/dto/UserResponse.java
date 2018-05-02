@@ -6,9 +6,9 @@ import java.io.Serializable;
 
 public class UserResponse implements Serializable {
 
-    private static String lastname;
-    private static String firstname;
-    private static String email;
+    private final String lastname;
+    private final String firstname;
+    private final String email;
 
     public UserResponse(User user) {
         firstname = user.getFirstname();
@@ -16,28 +16,16 @@ public class UserResponse implements Serializable {
         email = user.getEmail();
     }
 
-    public static String getEmail() {
+    public String getEmail() {
         return email;
-    }
-
-    public static void setEmail(String email) {
-        UserResponse.email = email;
     }
 
     public String getLastname() {
         return lastname;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
     public String getFirstname() {
         return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
     }
 
 }

@@ -18,8 +18,8 @@ import java.util.List;
 @RequestMapping("/api/v1/companies")
 public class CompanyController {
 
-    private static CompanyService companyService;
-    private static LocationService locationService;
+    private final CompanyService companyService;
+    private final LocationService locationService;
 
     public CompanyController(
         CompanyService companyServiceImpl,

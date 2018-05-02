@@ -1,13 +1,18 @@
 package com.mediheroes.mediheroes.configuration;
 
+import com.mediheroes.mediheroes.service.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.session.web.http.HeaderHttpSessionIdResolver;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -16,6 +21,12 @@ import org.springframework.web.filter.CorsFilter;
 @EnableWebSecurity
 @Configuration
 public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final CustomUserDetailsService userDetailsService;
+
+    public CustomWebSecurityConfig(@Autowired CustomUserDetailsService userDetailsServiceImpl) {
+        this.userDetailsService = userDetailsServiceImpl;
+    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -56,4 +67,15 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
     public HeaderHttpSessionIdResolver httpSessionIdResolver() {
         return new HeaderHttpSessionIdResolver("X-AUTH-TOKEN");
     }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder(12);
+    }
+
+    @Autowired
+    public void configureSession(AuthenticationManagerBuilder auth) throws Exception{
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
+
 }

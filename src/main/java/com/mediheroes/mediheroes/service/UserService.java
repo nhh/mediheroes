@@ -19,6 +19,9 @@ public class UserService {
         return this.repository.findById(id);
     }
 
+    public Optional<User> findByEmail(String email){
+        return this.repository.findByEmail(email);
+    }
     public User save(User user) {
         return repository.save(user);
     }
