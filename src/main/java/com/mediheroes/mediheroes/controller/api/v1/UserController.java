@@ -1,10 +1,6 @@
 package com.mediheroes.mediheroes.controller.api.v1;
 
-import com.mediheroes.mediheroes.domain.Address;
-import com.mediheroes.mediheroes.domain.Company;
 import com.mediheroes.mediheroes.domain.User;
-import com.mediheroes.mediheroes.dto.CompanyRequest;
-import com.mediheroes.mediheroes.dto.CompanyResponse;
 import com.mediheroes.mediheroes.dto.UserResponse;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
 import com.mediheroes.mediheroes.service.CompanyService;
@@ -52,23 +48,5 @@ public class UserController {
     ){
         var user = userService.save(newUser);
         return new ResponseEntity<>(new UserResponse(user), HttpStatus.CREATED);
-    }
-
-    @GetMapping("/{id}/address")
-    public ResponseEntity<Address> getAddress(){
-        return null;
-    }
-
-    @PutMapping("/{id}/address")
-    public ResponseEntity<Address> updateOrCreateAddress(){
-        return null;
-    }
-
-    @PutMapping("/{id}/company")
-    @Transactional
-    public ResponseEntity<CompanyResponse>updateCompany(
-        @RequestBody Company newCompany
-    ){
-        return null;
     }
 }
