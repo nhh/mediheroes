@@ -30,6 +30,9 @@ public class Company {
     @Column
     private String email;
 
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<JobOffer> jobOffers;
+
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private List<Location> locations;
 
@@ -72,17 +75,8 @@ public class Company {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Company company = (Company) o;
-        return Objects.equals(id, company.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public void setJobOffers(List<JobOffer> jobOffers) {
+        this.jobOffers = jobOffers;
     }
 
     public List<Location> getLocations() {
@@ -103,5 +97,22 @@ public class Company {
 
     public User getOwner() {
         return owner;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Company company = (Company) o;
+        return Objects.equals(id, company.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    public List<JobOffer> getJobOffers() {
+        return jobOffers;
     }
 }
