@@ -9,24 +9,19 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
-    private long id;
+    private Long id;
 
-    @Column(name="company_id")
-    private long companyId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Company company;
+
+    @Column
+    private String name;
 
     @Column
     private String email;
 
     @Embedded
     private Address address;
-
-    public long getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(long companyId) {
-        this.companyId = companyId;
-    }
 
     public String getEmail() {
         return email;
@@ -44,11 +39,23 @@ public class Location {
         this.address = address;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }

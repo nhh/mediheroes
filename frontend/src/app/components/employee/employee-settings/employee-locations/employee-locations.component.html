@@ -1,3 +1,10 @@
-<p>
-  employee-locations works!
-</p>
+<app-loading-spinner *ngIf="isLoading == true"></app-loading-spinner>
+
+<app-application-unavailable *ngIf="showErrorPage == true"></app-application-unavailable>
+
+<div *ngIf="isLoading == false">
+  <div class="box" *ngFor="let location of locations">
+    {{location.name}}
+  </div>
+</div>
+

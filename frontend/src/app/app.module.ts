@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppRouting} from "./app.routing";
@@ -21,6 +21,11 @@ import { LoadingSpinnerComponent } from './components/shared/loading-spinner/loa
 import { LoginComponent } from './components/shared/login/login.component';
 import {TokenService} from "./services/auth/token.service";
 import {IsAuthenticatedGuard} from "./guards/is-authenticated.guard";
+import {CustomHttpClient} from "./services/custom-http-client";
+import {UrlProvider} from "./services/url-provider";
+import {UserService} from "./services/auth/user.service";
+import { ApplicationUnavailableComponent } from './components/shared/application-unavailable/application-unavailable.component';
+import {HttpErrorInterceptor} from "./classes/http-error-interceptor";
 
 @NgModule({
   declarations: [
@@ -38,7 +43,8 @@ import {IsAuthenticatedGuard} from "./guards/is-authenticated.guard";
     EmployeeSettingsNavigationComponent,
     EmployeeJobOffersComponent,
     LoadingSpinnerComponent,
-    LoginComponent
+    LoginComponent,
+    ApplicationUnavailableComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +54,15 @@ import {IsAuthenticatedGuard} from "./guards/is-authenticated.guard";
   ],
   providers: [
     IsAuthenticatedGuard,
-    TokenService
+    TokenService,
+    CustomHttpClient,
+    UrlProvider,
+    UserService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

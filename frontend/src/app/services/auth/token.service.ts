@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
-import {LoginCredentials} from "../../classes/login-credentials";
+import { Injectable, NgZone } from '@angular/core';
+import {LoginCredentials} from "../../dtos/login-credentials";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {UrlProvider} from "../url-provider";
+import 'rxjs/add/operator/mergeMap';
 import {Router} from "@angular/router";
 
 @Injectable()
 export class TokenService {
 
-  private apiUrl : string = "http://localhost:8080";
-  private tokenResourcePath : string = "/api/v1/auth/token";
+  constructor(private http: HttpClient, private urlProvider : UrlProvider, private router : Router) { }
 
   public authenticate(loginCredentials : LoginCredentials) {
 
@@ -19,46 +20,38 @@ export class TokenService {
       withCredentials: true
     };
 
-    return this.http.get(this.apiUrl + this.tokenResourcePath, initialHttpOptions)
-      .subscribe(
-        response => this.setTokenAndGotoDashboard(response),
-        err => console.log("User authentication failed!")
-      )
+    return this.http.get(this.urlProvider.authTokenResource(), initialHttpOptions)
+      .flatMap(token => {
+        localStorage.setItem("X-AUTH-TOKEN", token.token);
+        return this.http.get(this.urlProvider.currentUserResource(), { headers: this.authenthicatedHttpHeaders()})
+      }).subscribe(currentUser => {
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+        return this.router.navigate(["/employee/dashboard"]);
+     });
   }
 
-  private setTokenAndGotoDashboard(token: any) {
-    localStorage.setItem('x-auth-token', token.token);
-    this.router.navigate(['/employee/dashboard']);
+  public getAuthenticationToken() : string {
+    return localStorage.getItem('X-AUTH-TOKEN');
   }
 
-  private getAuthenticationToken() : string {
-    return localStorage.getItem('x-auth-token');
-  }
-
-  private authenthicatedHttpHeaders() : HttpHeaders {
+  public authenthicatedHttpHeaders() : HttpHeaders {
     return new HttpHeaders({
       'X-Requested-With': 'XMLHttpRequest',
-      "X-Auth-Token": this.getAuthenticationToken()
+      "X-AUTH-TOKEN": this.getAuthenticationToken()
     })
   }
 
-  public authenticatedHttpOptions() : any {
-    return {
-      headers: this.authenthicatedHttpHeaders(),
-      withCredentials: true
-    }
+  public isAuthenticated() {
+    let currentUser = localStorage.getItem("currentUser");
+    let authToken = localStorage.getItem("X-AUTH-TOKEN");
+    return authToken != null && currentUser != null
   }
 
   public logout() {
-      this.http.delete(this.apiUrl + this.tokenResourcePath, this.authenticatedHttpOptions()).subscribe();
-      localStorage.removeItem('x-auth-token');
+      this.http.delete(this.urlProvider.authTokenResource(), {headers: this.authenthicatedHttpHeaders()}).subscribe();
+      localStorage.removeItem('X-AUTH-TOKEN');
+      localStorage.removeItem('currentUser');
       return this.router.navigate(['/login']);
   }
-
-  public isAuthenthicated() : boolean {
-    return localStorage.getItem("x-auth-token") !== null
-  }
-
-  constructor(private http: HttpClient, private router : Router) { }
 
 }

@@ -22,7 +22,7 @@ export class EmployeeJobOffersComponent implements OnInit {
 
   addItem(){
     this.isLoading = true;
-    setTimeout(() =>{
+    setTimeout(() => {
       this.items.push({title: "Hello World", members: 1})
       this.isLoading = false;
     }, 1500);

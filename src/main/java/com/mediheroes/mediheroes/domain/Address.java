@@ -1,21 +1,26 @@
 package com.mediheroes.mediheroes.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Embeddable
 public class Address {
 
     @Column
+    @NotNull
     private String street;
 
     @Column
+    @NotNull
     private String state;
 
     @Column
+    @NotNull
     private String city;
 
     @Column
+    @NotNull
     private int zip;
 
     public int getZip() {

@@ -12,7 +12,7 @@ export class IsAuthenticatedGuard implements CanActivate, CanActivateChild {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if(this.tokenService.isAuthenthicated()){
+    if(this.tokenService.isAuthenticated()){
       return true
     } else {
       this.router.navigate(['/login']);
@@ -23,7 +23,7 @@ export class IsAuthenticatedGuard implements CanActivate, CanActivateChild {
   canActivateChild(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if(this.tokenService.isAuthenthicated()){
+    if(this.tokenService.isAuthenticated()){
       return true
     } else {
       this.router.navigate(['/login']);

@@ -1,9 +1,13 @@
 package com.mediheroes.mediheroes.controller.api.v1;
 
 import com.mediheroes.mediheroes.domain.Address;
+import com.mediheroes.mediheroes.domain.Company;
 import com.mediheroes.mediheroes.domain.User;
+import com.mediheroes.mediheroes.dto.CompanyRequest;
+import com.mediheroes.mediheroes.dto.CompanyResponse;
 import com.mediheroes.mediheroes.dto.UserResponse;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
+import com.mediheroes.mediheroes.service.CompanyService;
 import com.mediheroes.mediheroes.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,22 +22,26 @@ import java.util.ArrayList;
 public class UserController {
 
     private final UserService userService;
+    private final CompanyService companyService;
 
     public UserController (
-        UserService userServiceImpl
+        UserService userServiceImpl,
+        CompanyService companyServiceImpl
     ) {
         userService = userServiceImpl;
+        companyService = companyServiceImpl;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> getUser(@PathVariable Long id){
-        return new ResponseEntity<>(new UserResponse(userService.find(id).orElseThrow(EntityNotFoundException::new)), HttpStatus.OK);
+    public ResponseEntity<UserResponse> getUser(@PathVariable Long id) {
+        var user = userService.find(id).orElseThrow(EntityNotFoundException::new);
+        return new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<ArrayList<User>> getAllUser() {
-        var userList = new ArrayList<User>();
-        userService.findAllUsers().forEach(userList::add);
+    public ResponseEntity<ArrayList<UserResponse>> getAllUser() {
+        var userList = new ArrayList<UserResponse>();
+        userService.findAllUsers().forEach((user -> userList.add(new UserResponse(user))));
         return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 
@@ -56,4 +64,11 @@ public class UserController {
         return null;
     }
 
+    @PutMapping("/{id}/company")
+    @Transactional
+    public ResponseEntity<CompanyResponse>updateCompany(
+        @RequestBody Company newCompany
+    ){
+        return null;
+    }
 }

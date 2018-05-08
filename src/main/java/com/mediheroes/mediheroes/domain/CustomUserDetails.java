@@ -9,16 +9,15 @@ import java.util.stream.Collectors;
 
 public class CustomUserDetails implements UserDetails {
 
+    private final UserSession userSession;
 
-    private final User user;
-
-    public CustomUserDetails(User user){
-        this.user = user;
+    public CustomUserDetails(User userImpl){
+        userSession = new UserSession(userImpl);
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.user.getRoles().stream()
+        return this.userSession.getRoles().stream()
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList());
     }
@@ -40,17 +39,17 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled(){
-        return this.user.isActive();
+        return this.userSession.isActive();
     }
 
     @Override
     public String getUsername(){
-        return this.user.getEmail();
+        return this.userSession.getEmail().toLowerCase();
     }
 
     @Override
     public String getPassword(){
-        return this.user.getPassword();
+        return this.userSession.getPassword();
     }
 }
 

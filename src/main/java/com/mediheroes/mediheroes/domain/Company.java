@@ -1,6 +1,7 @@
 package com.mediheroes.mediheroes.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,23 +12,33 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
-    private long id;
+    private Long id;
 
+    @NotNull
     @Column
     private String name;
 
+    @NotNull
     @Column
     private boolean active;
 
+    @NotNull
     @Column
     private boolean verified;
 
+    @NotNull
     @Column
     private String email;
 
-    @OneToMany
-    @JoinColumn(name="company_id", referencedColumnName="id")
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private List<Location> locations;
+
+    @OneToOne(mappedBy = "company")
+    private User owner;
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 
     public boolean isActive() {
         return active;
@@ -80,5 +91,17 @@ public class Company {
 
     public void setLocations(List<Location> locations) {
         this.locations = locations;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public User getOwner() {
+        return owner;
     }
 }

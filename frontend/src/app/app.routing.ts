@@ -32,9 +32,15 @@ const routes: Routes = [
       {
         path: 'settings', component: EmployeeSettingsComponent,
         children: [
-          {path: 'general', component: EmployeeGeneralComponent},
-          {path: 'locations', component: EmployeeLocationsComponent},
-          {path: 'stations', component: EmployeeStationsComponent},
+          {
+            path: 'general', component: EmployeeGeneralComponent
+          },
+          {
+            path: 'locations', component: EmployeeLocationsComponent
+          },
+          {
+            path: 'stations', component: EmployeeStationsComponent
+          },
           {path: 'employees', component: EmployeeStationsComponent},
         ]
       }

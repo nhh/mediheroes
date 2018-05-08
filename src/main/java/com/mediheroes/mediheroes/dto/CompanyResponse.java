@@ -8,12 +8,14 @@ public class CompanyResponse {
     private final String email;
     private final boolean verified;
     private final boolean active;
+    private final Long id;
 
     public CompanyResponse(Company company) {
         name = company.getName();
         active = company.isActive();
         verified = company.isVerified();
         email = company.getEmail();
+        id = company.getId();
     }
 
     public boolean isActive() {
@@ -29,5 +31,9 @@ public class CompanyResponse {
 
     public String getEmail() {
         return email;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

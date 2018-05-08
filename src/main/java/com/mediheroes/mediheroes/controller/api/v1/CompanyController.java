@@ -1,36 +1,40 @@
 package com.mediheroes.mediheroes.controller.api.v1;
 
 import com.mediheroes.mediheroes.domain.Company;
-import com.mediheroes.mediheroes.domain.Location;
+import com.mediheroes.mediheroes.dto.CompanyRequest;
 import com.mediheroes.mediheroes.dto.CompanyResponse;
 import com.mediheroes.mediheroes.service.CompanyService;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
 import com.mediheroes.mediheroes.service.LocationService;
+import com.mediheroes.mediheroes.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/companies")
+@Transactional
 public class CompanyController {
 
     private final CompanyService companyService;
     private final LocationService locationService;
+    private final UserService userService;
 
     public CompanyController(
-        CompanyService companyServiceImpl,
-        LocationService locationServiceImpl
+        CompanyService companyService,
+        LocationService locationService,
+        UserService userService
     ) {
-        companyService = companyServiceImpl;
-        locationService = locationServiceImpl;
+        this.companyService = companyService;
+        this.locationService = locationService;
+        this.userService = userService;
     }
 
     @GetMapping("")
-    @Transactional
     public ArrayList<CompanyResponse> companies() {
         var companyList = new ArrayList<CompanyResponse>();
         companyService.findAll().forEach(company -> companyList.add(new CompanyResponse(company)));
@@ -38,40 +42,22 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    @Transactional
     public CompanyResponse getOneCompany(@PathVariable Long id) {
         return companyService.find(id)
                             .map(CompanyResponse::new)
                             .orElseThrow(EntityNotFoundException::new);
     }
 
-    @PostMapping(name = "", consumes = "application/json")
-    @Transactional
-    public ResponseEntity<CompanyResponse> createCompany(
-        @RequestBody Company companyParams
+    @PostMapping("")
+    public ResponseEntity<CompanyResponse> createCompany (
+        @Valid @RequestBody CompanyRequest companyParams
     ){
-        var company = companyService.save(companyParams);
-        return new ResponseEntity<>(new CompanyResponse(company), HttpStatus.CREATED);
+        var company = new Company();
+        company.setVerified(true);
+        company.setActive(true);
+        company.setEmail(companyParams.getEmail());
+        company.setName(companyParams.getName());
+        var user = userService.find(companyParams.getOwnerId()).orElseThrow(EntityNotFoundException::new);
+        return new ResponseEntity<>(new CompanyResponse(userService.createCompany(user, company)), HttpStatus.CREATED);
     }
-
-
-    @GetMapping("/{id}/locations")
-    @Transactional
-    public ResponseEntity<List<Location>> getAllLocations(@PathVariable Long id){
-        return companyService.find(id)
-                            .map(company -> (new ResponseEntity<>(company.getLocations(), HttpStatus.OK)))
-                            .orElseThrow(EntityNotFoundException::new);
-    }
-
-    @GetMapping("/{id}/locations/{locationId}")
-    @Transactional
-    public ResponseEntity<Location> getOneLocation(
-        @PathVariable Long id,
-        @PathVariable int locationId
-    ) {
-        return new ResponseEntity<>(locationService.find(locationId).orElseThrow(EntityNotFoundException::new), HttpStatus.OK);
-    }
-
-
-
 }

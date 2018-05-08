@@ -10,13 +10,12 @@ import { Router} from "@angular/router";
 export class NavigationComponent implements OnInit {
 
   constructor(
-    private tokenService : TokenService,
-    private router : Router
+    private tokenService : TokenService
   ) {}
 
   public navbar_toggle : boolean = false;
 
-  logout(){
+  public logout() : void {
     this.tokenService.logout();
   }
 

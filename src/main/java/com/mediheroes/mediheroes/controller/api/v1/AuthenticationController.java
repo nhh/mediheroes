@@ -1,12 +1,13 @@
 package com.mediheroes.mediheroes.controller.api.v1;
 
+import com.mediheroes.mediheroes.domain.User;
 import com.mediheroes.mediheroes.dto.AuthenticationToken;
+import com.mediheroes.mediheroes.dto.UserResponse;
+import com.mediheroes.mediheroes.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.nio.file.attribute.UserPrincipal;
@@ -14,6 +15,18 @@ import java.nio.file.attribute.UserPrincipal;
 @RequestMapping("/api/v1/auth")
 @RestController
 public class AuthenticationController {
+
+    private final UserService userService;
+
+    public AuthenticationController(UserService userServiceImpl) {
+        userService = userServiceImpl;
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> getAuthtoken() {
+        var user = new UserResponse(userService.getCurrentUser());
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 
     @GetMapping("/token")
     public ResponseEntity getAuthtoken(HttpSession session) {
@@ -34,6 +47,13 @@ public class AuthenticationController {
             // Already logged out
             return new ResponseEntity<>(HttpStatus.OK);
         }
+    }
+
+    @PostMapping("/register")
+    @Transactional
+    public ResponseEntity<UserResponse> register(@RequestBody User newUser){
+        var user = userService.save(newUser);
+        return new ResponseEntity<>(new UserResponse(user), HttpStatus.CREATED);
     }
 
 }

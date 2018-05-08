@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginCredentials } from "../../../classes/login-credentials";
+import { LoginCredentials } from "../../../dtos/login-credentials";
 import { TokenService} from "../../../services/auth/token.service";
 
 @Component({
