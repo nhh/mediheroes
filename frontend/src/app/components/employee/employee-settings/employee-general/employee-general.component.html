@@ -1,3 +1,6 @@
-<p>
-  employee-general works!
-</p>
+<app-loading-spinner *ngIf="isLoading == true"></app-loading-spinner>
+
+<div class="box" *ngIf="isLoading == false">
+  <p>{{company.name}}</p>
+  <p>{{company.address}}</p>
+</div>

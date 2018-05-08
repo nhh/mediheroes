@@ -16,4 +16,14 @@ export class UserService {
     return JSON.parse(currentUser);
   }
 
+  getCurrentCompany(){
+    let user = localStorage.getItem("currentUser");
+
+    if (user == null){
+
+    }
+
+    return JSON.parse(user).company
+  }
+
 }

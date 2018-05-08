@@ -20,9 +20,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const request = req.clone();
     return next.handle(request).catch((err: any) => {
-      debugger
       if (err instanceof HttpErrorResponse) {
-        if (err.status === 401) {
+        if (err.status === 401 || err.status === 0) {
           this.tokenService.logout();
         }
       }
