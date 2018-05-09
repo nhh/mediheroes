@@ -7,6 +7,7 @@ import com.mediheroes.mediheroes.exception.EntityNotFoundException;
 import com.mediheroes.mediheroes.service.CompanyService;
 import com.mediheroes.mediheroes.service.JobOfferService;
 import com.mediheroes.mediheroes.service.LocationService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,8 @@ public class JobOfferController {
     public ResponseEntity<JobOfferResponse> getOneJobOffer(
         @PathVariable Long id
     ){
-        return null;
+        var jobOffer = jobOfferService.findById(id).orElseThrow(EntityNotFoundException::new);
+        return new ResponseEntity<>(new JobOfferResponse(jobOffer), HttpStatus.OK);
     }
 
     @PostMapping("")
@@ -57,7 +59,7 @@ public class JobOfferController {
 
         jobOfferService.create(jobOffer);
 
-        return null;
+        return new ResponseEntity<>(new JobOfferResponse(jobOffer), HttpStatus.CREATED);
     }
 
     @GetMapping("")

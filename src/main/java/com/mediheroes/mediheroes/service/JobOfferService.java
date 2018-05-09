@@ -20,7 +20,7 @@ public class JobOfferService {
         return jobOfferRepository.findById(id);
     }
 
-    @PreAuthorize("jobOfferPermission.canCreateJobOffer(#jobOffer)")
+    @PreAuthorize("@jobOfferPermission.canCreateJobOffer(#jobOffer)")
     public JobOffer create(JobOffer jobOffer){
         return jobOfferRepository.save(jobOffer);
     }
