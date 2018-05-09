@@ -1,5 +1,6 @@
 package com.mediheroes.mediheroes.dto;
 
+import com.mediheroes.mediheroes.domain.Company;
 import com.mediheroes.mediheroes.domain.User;
 
 import java.io.Serializable;
@@ -19,7 +20,11 @@ public class UserResponse implements Serializable {
         this.firstname = user.getFirstname();
         this.lastname = user.getLastname();
         this.email = user.getEmail();
-        this.company = new CompanyResponse(user.getCompany());
+        if(user.getCompany() == null){
+            this.company = null;
+        } else {
+            this.company = new CompanyResponse(user.getCompany());
+        }
     }
 
     public Long getId() {

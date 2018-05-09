@@ -1,6 +1,7 @@
 package com.mediheroes.mediheroes.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "locations")
@@ -22,6 +23,9 @@ public class Location {
 
     @Embedded
     private Address address;
+
+    @OneToMany(mappedBy = "location")
+    private List<JobOffer> jobOffers;
 
     public String getEmail() {
         return email;

@@ -40,6 +40,8 @@ CREATE TABLE job_offers (
   id SERIAL PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
   description VARCHAR(1000),
+  salary INTEGER NOT NULL,
+  job VARCHAR(100),
   created_at TIMESTAMP DEFAULT now(),
   updated_at TIMESTAMP DEFAULT now()
 );
@@ -50,8 +52,10 @@ ALTER TABLE locations ADD COLUMN company_id INTEGER REFERENCES companies(id);
 ALTER TABLE users ADD COLUMN company_id INTEGER REFERENCES companies(id);
 
 CREATE UNIQUE INDEX idx_users_email ON users (email);
-CREATE UNIQUE INDEX idx_users_company_id ON users (company_id);
+CREATE INDEX idx_users_company_id ON users (company_id);
 
 ALTER TABLE job_offers ADD COLUMN company_id INTEGER REFERENCES companies(id);
+ALTER TABLE job_offers ADD COLUMN location_id INTEGER REFERENCES locations(id);
 
-CREATE UNIQUE INDEX idx_job_offers_company_id ON users(company_id)
+CREATE INDEX idx_job_offers_company_id ON job_offers(company_id);
+CREATE INDEX idx_job_offers_location_id ON job_offers(location_id);

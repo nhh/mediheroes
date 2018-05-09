@@ -2,6 +2,7 @@ package com.mediheroes.mediheroes.controller.api.v1;
 
 import com.mediheroes.mediheroes.domain.User;
 import com.mediheroes.mediheroes.dto.AuthenticationToken;
+import com.mediheroes.mediheroes.dto.UserRequest;
 import com.mediheroes.mediheroes.dto.UserResponse;
 import com.mediheroes.mediheroes.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -51,8 +52,19 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     @Transactional
-    public ResponseEntity<UserResponse> register(@RequestBody User newUser){
-        var user = userService.save(newUser);
+    public ResponseEntity<UserResponse> register(@RequestBody UserRequest userRequest){
+
+        var user = new User();
+        user.setAddress(userRequest.getAddress());
+        user.setPassword(userRequest.getPassword());
+        user.setEmail(userRequest.getEmail());
+        user.setFirstname(userRequest.getFirstname());
+        user.setLastname(userRequest.getLastname());
+        user.setActive(userRequest.isActive());
+        user.setVerified(userRequest.isVerified());
+
+        userService.save(user);
+
         return new ResponseEntity<>(new UserResponse(user), HttpStatus.CREATED);
     }
 
