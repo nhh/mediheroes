@@ -4,6 +4,7 @@ import com.mediheroes.mediheroes.domain.User;
 import com.mediheroes.mediheroes.dto.AuthenticationToken;
 import com.mediheroes.mediheroes.dto.UserRequest;
 import com.mediheroes.mediheroes.dto.UserResponse;
+import com.mediheroes.mediheroes.exception.EntityNotFoundException;
 import com.mediheroes.mediheroes.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +26,8 @@ public class AuthenticationController {
 
     @GetMapping("/me")
     public ResponseEntity<UserResponse> getAuthtoken() {
-        var user = new UserResponse(userService.getCurrentUser());
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        var user = userService.getCurrentUser().orElseThrow(EntityNotFoundException::new);
+        return new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
     }
 
     @GetMapping("/token")

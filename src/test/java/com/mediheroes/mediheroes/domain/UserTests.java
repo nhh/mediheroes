@@ -19,7 +19,7 @@ public class UserTests {
     }
 
     @Test
-    public void setCompany(){
+    public void setCompany() {
         // Setup
         //fail("Implement me");
         // Precondition

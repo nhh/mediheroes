@@ -4,8 +4,6 @@ import javax.validation.constraints.NotNull;
 
 public class CompanyRequest {
 
-    private Long id;
-
     private boolean active;
     private boolean verified;
 
@@ -56,13 +54,5 @@ public class CompanyRequest {
 
     public void setOwnerId(Long ownerId) {
         this.ownerId = ownerId;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

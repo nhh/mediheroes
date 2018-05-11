@@ -32,7 +32,7 @@ public class UserService {
         companyService = companyServiceImpl;
     }
 
-    public User getCurrentUser(){
+    public Optional<User> getCurrentUser(){
         var email = SecurityContextHolder.getContext().getAuthentication().getName();
         return findByEmail(email);
     }
@@ -41,8 +41,8 @@ public class UserService {
         return this.userRepository.findById(id);
     }
 
-    public User findByEmail(String email){
-        return this.userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
+    public Optional<User> findByEmail(String email){
+        return this.userRepository.findByEmail(email);
     }
     public User save(User user) {
         return userRepository.save(user);
@@ -54,8 +54,7 @@ public class UserService {
 
     @Transactional
     @PreAuthorize("@userPermission.canUpdateCompany(#updatedCompany)")
-    public Company updateCompany(Company updatedCompany){
-        var user = getCurrentUser();
+    public Company updateCompany(Company updatedCompany, User user){
 
         if(user.getCompany() == null) {
             throw new EntityNotFoundException();

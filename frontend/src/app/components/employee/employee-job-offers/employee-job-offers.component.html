@@ -1,24 +1,78 @@
 <div class="columns">
   <div class="column is-3">
-    <p>Hier sollen Filtereinstellungen präsent sein</p>
-    <button (click)="addItem()" [disabled]="isLoading == true" class="button is-fullwidth">Filter laden</button>
-  </div>
-  <div class="column">
-    <app-loading-spinner *ngIf="isLoading == true"></app-loading-spinner>
+    <!-- Main container -->
+    <nav class="level">
+      <!-- Left side -->
+      <div class="level-left">
+        <div class="level-item">
+          <p class="subtitle is-5">
+            <strong>Filter</strong>
+          </p>
+        </div>
+      </div>
 
-    <table *ngIf="isLoading == false" class="table is-fullwidth">
+      <!-- Right side -->
+      <div class="level-right">
+        <p class="level-item"><strong>Alle</strong></p>
+        <p class="level-item"><a class="button is-success">Von mir erstellt</a></p>
+      </div>
+    </nav>
+    <button (click)="loadJobOffers()" [disabled]="isLoading == true" class="button is-fullwidth">Erneut laden</button>
+  </div>
+  <div class="column" >
+    <!-- Main container -->
+    <nav class="level">
+      <!-- Left side -->
+      <div class="level-left">
+        <div class="level-item">
+          <p class="subtitle is-5">
+            <strong>Suche</strong>
+          </p>
+        </div>
+        <div class="level-item">
+          <div class="field has-addons">
+            <p class="control">
+              <input class="input is-rounded" type="text" placeholder="Titel, Job">
+            </p>
+            <p class="control">
+              <button class="button">
+                Suchen
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side -->
+      <div class="level-right">
+        <p class="level-item"><a class="button is-success" (click)="this.showModal = !this.showModal">Neues Jobangebot</a></p>
+      </div>
+    </nav>
+
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    <table *ngIf="!isLoading" class="table is-fullwidth">
       <thead>
       <tr>
-        <th>One</th>
-        <th>Two</th>
+        <th>Title</th>
+        <th>Job</th>
+        <th>Description</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let item of items">
-        <td>{{item.title}}</td>
-        <td>{{item.members}}</td>
+      <tr *ngFor="let offer of jobOffers">
+        <td>{{offer.name}}</td>
+        <td>{{offer.job}}</td>
+        <td>{{offer.description}}</td>
       </tr>
       </tbody>
     </table>
   </div>
+</div>
+
+<div class="modal" [ngClass]="{'is-active':this.showModal}">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div class="box is-fullwidth is-fullheight">Hello</div>
+  </div>
+  <button (click)="this.showModal = !this.showModal" class="modal-close is-large" aria-label="close"></button>
 </div>

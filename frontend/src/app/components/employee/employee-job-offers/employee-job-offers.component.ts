@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {CustomHttpClient} from "../../../services/custom-http-client";
+import {UrlProvider} from "../../../services/url-provider";
 
 @Component({
   selector: 'app-employee-job-offers',
@@ -7,25 +9,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EmployeeJobOffersComponent implements OnInit {
 
-  constructor() {
+  constructor(private http : CustomHttpClient, private urlProvider : UrlProvider) {
   }
 
   isLoading = true;
-
-  items = [
-    {title: 'Title', members: 2}
-  ];
+  jobOffers = [];
 
   ngOnInit() {
-    this.isLoading = false;
+    this.loadJobOffers()
   }
 
-  addItem(){
+  loadJobOffers(){
     this.isLoading = true;
-    setTimeout(() => {
-      this.items.push({title: "Hello World", members: 1})
-      this.isLoading = false;
-    }, 1500);
+    this.http.get(this.urlProvider.jobOfferResource()).subscribe(
+      data => this.jobOffers = data,
+      error => console.log(error),
+      complete => {
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 250)
+      }
+    )
   }
 
 }

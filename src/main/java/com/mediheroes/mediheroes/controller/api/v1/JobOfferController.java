@@ -7,12 +7,14 @@ import com.mediheroes.mediheroes.exception.EntityNotFoundException;
 import com.mediheroes.mediheroes.service.CompanyService;
 import com.mediheroes.mediheroes.service.JobOfferService;
 import com.mediheroes.mediheroes.service.LocationService;
+import com.mediheroes.mediheroes.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,15 +25,19 @@ public class JobOfferController {
     private final JobOfferService jobOfferService;
     private final CompanyService companyService;
     private final LocationService locationService;
+    private final UserService userService;
+
 
     public JobOfferController(
         JobOfferService jobOfferService,
         CompanyService companyService,
-        LocationService locationService
+        LocationService locationService,
+        UserService userService
     ) {
         this.companyService = companyService;
         this.jobOfferService = jobOfferService;
         this.locationService = locationService;
+        this.userService = userService;
     }
 
     @GetMapping("/{id}")
@@ -46,10 +52,11 @@ public class JobOfferController {
     public ResponseEntity<JobOfferResponse> createJobOffer (
         @Valid @RequestBody JobOfferRequest jobOfferRequest
     ) {
-        var jobOffer = new JobOffer();
+        var user = userService.getCurrentUser().orElseThrow(EntityNotFoundException::new);
         var company = companyService.find(jobOfferRequest.getCompanyId()).orElseThrow(EntityNotFoundException::new);
         var location = locationService.find(jobOfferRequest.getLocationId()).orElseThrow(EntityNotFoundException::new);
 
+        var jobOffer = new JobOffer();
         jobOffer.setCompany(company);
         jobOffer.setLocation(location);
         jobOffer.setName(jobOfferRequest.getName());
@@ -57,14 +64,20 @@ public class JobOfferController {
         jobOffer.setJob(jobOfferRequest.getJob());
         jobOffer.setSalary(jobOfferRequest.getSalary());
 
-        jobOfferService.create(jobOffer);
+        jobOfferService.create(jobOffer, user);
 
         return new ResponseEntity<>(new JobOfferResponse(jobOffer), HttpStatus.CREATED);
     }
 
     @GetMapping("")
-    public ResponseEntity<List<JobOfferResponse>> getAllJobOffers(){
-        return null;
+    public ResponseEntity<List<JobOfferResponse>> getAllJobOffers(
+        @RequestParam("companyId") Long companyId
+    ){
+        var user = userService.getCurrentUser().orElseThrow(EntityNotFoundException::new);
+        var company = companyService.find(companyId).orElseThrow(EntityNotFoundException::new);
+        var jobOffers = new ArrayList<JobOfferResponse>();
+        jobOfferService.getAllByCompanyId(company, user).forEach(jobOffer -> jobOffers.add(new JobOfferResponse(jobOffer)));
+        return new ResponseEntity<>(jobOffers, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

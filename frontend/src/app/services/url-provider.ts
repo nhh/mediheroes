@@ -8,31 +8,35 @@ export class UrlProvider {
 
   constructor(private userService : UserService) {}
 
-  userResource(){
+  jobOfferResource() {
+    return this.baseUrl + "/job-offers?companyId=" + this.userService.getCurrentCompany().id
+  }
+
+  userResource() {
     return this.baseUrl + "/users"
   }
 
-  companyResource(){
+  companyResource() {
     return this.baseUrl + "/companies"
   }
 
-  locationResource(){
+  locationResource() {
     return this.baseUrl + "/locations"
   }
 
-  authResource(){
+  authResource() {
     return this.baseUrl + "/auth"
   }
 
-  authTokenResource(){
+  authTokenResource() {
     return this.baseUrl + "/auth/token"
   }
 
-  currentUserResource(){
+  currentUserResource() {
     return this.baseUrl + "/auth/me"
   }
 
-  currentCompanyResource(){
+  currentCompanyResource() {
     return this.baseUrl + "/companies/" + this.userService.getCurrentCompany().id
   }
 

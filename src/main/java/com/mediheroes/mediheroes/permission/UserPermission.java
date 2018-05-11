@@ -8,18 +8,13 @@ import org.springframework.stereotype.Component;
 @Component("userPermission")
 public class UserPermission {
 
-    public final UserService userService;
+    private final UserService userService;
 
     public UserPermission(UserService userService) {
         this.userService = userService;
     }
 
     public boolean canAddCompany(User user, Company company){
-        var currentUser = userService.getCurrentUser();
-
-        if (user.getId() != currentUser.getId()){
-            return false;
-        }
 
         if (user.hasCompany()){
             return false;
