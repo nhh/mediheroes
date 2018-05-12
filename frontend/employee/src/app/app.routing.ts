@@ -1,78 +1,54 @@
 import { Routes, RouterModule } from "@angular/router";
 import { NgModule } from '@angular/core';
 
-import {EmployeeComponent} from "./components/employee/employee.component";
-import {FreelancerComponent} from "./components/freelancer/freelancer/freelancer.component";
-import {FreelancerDashboardComponent} from "./components/freelancer/freelancer-dashboard/freelancer-dashboard.component";
-import {EmployeeDashboardComponent} from "./components/employee/employee-dashboard/employee-dashboard.component";
-import {AppComponent} from "./components/app.component";
-import {EmployeeSettingsComponent} from "./components/employee/employee-settings/employee-settings.component";
-import {EmployeeGeneralComponent} from "./components/employee/employee-settings/employee-general/employee-general.component";
-import {EmployeeLocationsComponent} from "./components/employee/employee-settings/employee-locations/employee-locations.component";
-import {EmployeeStationsComponent} from "./components/employee/employee-settings/employee-stations/employee-stations.component";
-import {EmployeeJobOffersComponent} from "./components/employee/employee-job-offers/employee-job-offers.component";
-import {LoginComponent} from "./components/shared/login/login.component";
+import {DashboardComponent} from "./components/dashboard/dashboard.component";
+import {SettingsComponent} from "./components/settings/settings.component";
+import {GeneralComponent} from "./components/settings/general/general.component";
+import {LocationsComponent} from "./components/settings/locations/locations.component";
+import {StationsComponent} from "./components/settings/stations/stations.component";
+import {JobOffersComponent} from "./components/job-offers/job-offers.component";
 import {IsAuthenticatedGuard} from "./guards/is-authenticated.guard";
-import {NewJobOfferComponent} from "./components/employee/employee-job-offers/new-job-offer/new-job-offer.component";
-import {JobOfferOverviewComponent} from "./components/employee/employee-job-offers/job-offer-overview/job-offer-overview.component";
+import {NewJobOfferComponent} from "./components/job-offers/new-job-offer/new-job-offer.component";
+import {JobOfferOverviewComponent} from "./components/job-offers/job-offer-overview/job-offer-overview.component";
 
 const routes: Routes = [
   {
-    path: 'employee',
+    path: 'job-offers',
+    component: JobOffersComponent,
     canActivate: [IsAuthenticatedGuard],
     canActivateChild: [IsAuthenticatedGuard],
-    component: EmployeeComponent,
     children: [
       {
-        path: 'job-offers',
-        component: EmployeeJobOffersComponent,
-        canActivate: [IsAuthenticatedGuard],
-        children: [
-          {
-            path: 'new',
-              component: NewJobOfferComponent
-          },
-          {
-            path: 'overview',
-            component: JobOfferOverviewComponent
-          }
-        ]
+        path: 'new',
+        component: NewJobOfferComponent
       },
       {
-        path: 'dashboard', component: EmployeeDashboardComponent
-      },
-      {
-        path: 'settings', component: EmployeeSettingsComponent,
-        children: [
-          {
-            path: 'general', component: EmployeeGeneralComponent
-          },
-          {
-            path: 'locations', component: EmployeeLocationsComponent
-          },
-          {
-            path: 'stations', component: EmployeeStationsComponent
-          },
-          {path: 'employees', component: EmployeeStationsComponent},
-        ]
+        path: 'overview',
+        component: JobOfferOverviewComponent
       }
     ]
   },
   {
-    path: 'freelancer',
+    path: 'dashboard', component: DashboardComponent,
     canActivate: [IsAuthenticatedGuard],
-    component: FreelancerComponent,
+    canActivateChild: [IsAuthenticatedGuard]
+  },
+  {
+    path: 'settings', component: SettingsComponent,
+    canActivate: [IsAuthenticatedGuard],
+    canActivateChild: [IsAuthenticatedGuard],
     children: [
-      {path: 'dashboard', component: FreelancerDashboardComponent}
+      {
+        path: 'general', component: GeneralComponent
+      },
+      {
+        path: 'locations', component: LocationsComponent
+      },
+      {
+        path: 'stations', component: StationsComponent
+      },
+      {path: 'employees', component: StationsComponent},
     ]
-  },
-  {
-    path: '',
-    component: AppComponent,
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
   }
 ];
 

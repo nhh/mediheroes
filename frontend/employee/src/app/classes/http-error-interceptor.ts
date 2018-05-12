@@ -1,3 +1,4 @@
+
 import {
   HttpErrorResponse,
   HttpEvent,
@@ -6,9 +7,9 @@ import {
   HttpRequest,
 } from "@angular/common/http";
 import {Injectable} from "@angular/core";
-import {Observable} from 'rxjs/Rx';
 import {TokenService} from "../services/auth/token.service";
-
+import {throwError, Observable} from 'rxjs';
+import {catchError, mergeMap} from 'rxjs/operators'
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -17,16 +18,20 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
   }
 
+  private handleHttpError(error){
+    if (error instanceof HttpErrorResponse) {
+      if (error.status === 401 || error.status === 0) {
+        this.tokenService.logout();
+      }
+    }
+    return throwError(error);
+  }
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const request = req.clone();
-    return next.handle(request).catch((err: any) => {
-      if (err instanceof HttpErrorResponse) {
-        if (err.status === 401 || err.status === 0) {
-          this.tokenService.logout();
-        }
-      }
-      return Observable.throw(err);
-    });
+    return next.handle(request).pipe(
+      catchError((err: HttpErrorResponse) => this.handleHttpError(err))
+    )
   }
 
 }

@@ -1,8 +1,9 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {LoginCredentials} from "../../dtos/login-credentials";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {UrlProvider} from "../url-provider";
-import 'rxjs/add/operator/mergeMap';
+import {mergeMap} from "rxjs/operators"
+
 import {Router} from "@angular/router";
 
 @Injectable()
@@ -20,14 +21,16 @@ export class TokenService {
       withCredentials: true
     };
 
-    return this.http.get(this.urlProvider.authTokenResource(), initialHttpOptions)
-      .flatMap((data : any) => {
+    return this.http.get(this.urlProvider.authTokenResource(), initialHttpOptions).pipe(
+      mergeMap((data : any) => {
         localStorage.setItem("X-AUTH-TOKEN", data.token);
         return this.http.get(this.urlProvider.currentUserResource(), { headers: this.authenthicatedHttpHeaders()})
-      }).subscribe((currentUser) => {
-        localStorage.setItem("currentUser", JSON.stringify(currentUser));
-        return this.router.navigate(["/employee/dashboard"]);
-     });
+      })
+    ).subscribe((currentUser) => {
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      return this.router.navigate(["/employee/dashboard"]);
+    })
+
   }
 
   public getAuthenticationToken() : string {
