@@ -4,6 +4,7 @@ import com.mediheroes.mediheroes.domain.JobOffer;
 
 public class JobOfferResponse {
 
+    private final Long id;
     private final String name;
     private final String description;
     private final Long locationId;
@@ -12,6 +13,7 @@ public class JobOfferResponse {
     private final String job;
 
     public JobOfferResponse(JobOffer jobOffer) {
+        this.id = jobOffer.getId();
         this.name = jobOffer.getName();
         this.description = jobOffer.getDescription();
         this.locationId = jobOffer.getLocation().getId();
@@ -42,5 +44,9 @@ public class JobOfferResponse {
 
     public String getJob() {
         return job;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

@@ -14,4 +14,4 @@ FROM nginx:alpine
 
 COPY --from=node /mediheroes/dist/ /usr/share/nginx/html
 
-COPY ./docker/frontend/mediheroes.com.conf /etc/nginx/conf.d/default.conf
+ADD ./docker/frontend/mediheroes.com.conf /etc/nginx/conf.d/default.conf

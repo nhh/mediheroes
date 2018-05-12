@@ -31,4 +31,9 @@ public class JobOfferService {
     public Iterable<JobOffer> getAllByCompanyId(Company company, User user) {
         return jobOfferRepository.findAllByCompanyId(company.getId());
     }
+
+    @PreAuthorize("@jobOfferPermission.canDeleteJobOffer(#jobOffer, #user)")
+    public void deleteJobOffer(JobOffer jobOffer, User user) {
+        this.jobOfferRepository.delete(jobOffer);
+    }
 }

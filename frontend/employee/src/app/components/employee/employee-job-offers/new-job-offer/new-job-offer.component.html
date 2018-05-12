@@ -1,0 +1,62 @@
+<div class="columns">
+  <div class="column is-3">
+    <nav class="level">
+      <div class="level-left">
+        <div class="level-item">
+          <p class="subtitle is-5">
+            <strong>Filter</strong>
+          </p>
+        </div>
+      </div>
+      <div class="level-right">
+      </div>
+    </nav>
+  </div>
+  <div class="column">
+    <div class="field">
+      <label class="label">Job Angebotsname</label>
+      <div class="control">
+        <input [(ngModel)]="this.jobOfferRequest.name" class="input" type="text" placeholder="Angebotsname">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Beschreibung</label>
+      <div class="control">
+        <textarea [(ngModel)]="jobOfferRequest.description" class="textarea" placeholder="Beschreibung"></textarea>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Jobtitel</label>
+      <div class="control">
+        <input [(ngModel)]="jobOfferRequest.job" class="input" type="text" placeholder="Angebotsname">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Gehalt pro Stunde</label>
+      <div class="control">
+        <input [(ngModel)]="jobOfferRequest.salary" class="input" type="text" placeholder="Gehalt pro Stunde">
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="control">
+        <label class="checkbox">
+          <input type="checkbox">
+          I agree to the <a href="#">terms and conditions</a>
+        </label>
+      </div>
+    </div>
+
+    <div class="field is-grouped">
+      <div class="control">
+        <button (click)="addJobOffer(jobOfferRequest)" class="button is-link">Submit</button>
+      </div>
+      <div class="control">
+        <button routerLink="../overview" class="button is-text">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<app-loading-spinner *ngIf="this.isLoading == true"></app-loading-spinner>
+
+<app-application-unavailable *ngIf="this.showErrorPage == true"></app-application-unavailable>
+
+<div *ngIf="this.isLoading == false">
+  <div class="box" *ngFor="let location of locations">
+    {{location.name}}
+  </div>
+</div>
+

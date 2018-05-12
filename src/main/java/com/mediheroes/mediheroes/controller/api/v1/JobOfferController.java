@@ -92,7 +92,10 @@ public class JobOfferController {
     public ResponseEntity<JobOfferResponse> deleteOneJobOffer(
         @PathVariable Long id
     ){
-        return null;
+        var user = userService.getCurrentUser().orElseThrow(EntityNotFoundException::new);
+        var jobOffer = jobOfferService.findById(id).orElseThrow(EntityNotFoundException::new);
+        jobOfferService.deleteJobOffer(jobOffer, user);
+        return new ResponseEntity<>(new JobOfferResponse(jobOffer), HttpStatus.OK);
     }
 
 }

@@ -4,8 +4,6 @@ services:
     image: paradoxxger/mediheroes-backend:latest
     environment:
       - "SPRING_REDIS_HOST=redis"
-    ports:
-      - "8080:8080"
     networks:
       mediheroes:
         aliases:
@@ -35,5 +33,8 @@ services:
       mediheroes:
         aliases:
           - frontend
+    volumes:
+      - "/etc/letsencrypt/live/mediheroes.com/fullchain.pem:/etc/letsencrypt/live/mediheroes.com/fullchain.pem"
+      - "/etc/letsencrypt/live/mediheroes.com/privkey.pem:/etc/letsencrypt/live/mediheroes.com/privkey.pem"
 networks:
   mediheroes:

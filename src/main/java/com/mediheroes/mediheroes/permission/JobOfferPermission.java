@@ -16,4 +16,8 @@ public class JobOfferPermission {
         return company.getOwner().equals(user);
         //if (company.getEmployees().contains(user))
     }
+
+    public boolean canDeleteJobOffer(JobOffer jobOffer, User user){
+        return user.getCompany().equals(jobOffer.getCompany());
+    }
 }
