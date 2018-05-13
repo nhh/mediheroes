@@ -8,7 +8,7 @@ RUN npm install
 
 COPY ./frontend /mediheroes/
 
-RUN npm run build --prod --environment prod
+RUN npm run build --target=production --environment=prod
 
 FROM nginx:alpine
 

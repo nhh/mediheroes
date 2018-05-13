@@ -11,12 +11,14 @@ import {HttpErrorInterceptor} from '../shared/class/http-error-interceptor';
 import {FreelancerRouting} from './freelancer.routing';
 import {FreelancerComponent} from './component/freelancer.component';
 import {TokenService} from '../shared/service/auth/token.service';
+import {NavigationComponent} from './component/navigation/navigation.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    FreelancerComponent
+    FreelancerComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +41,8 @@ import {TokenService} from '../shared/service/auth/token.service';
   exports: [
     DashboardComponent,
     FreelancerComponent,
-    FreelancerRouting
+    FreelancerRouting,
+    NavigationComponent
   ]
 })
 

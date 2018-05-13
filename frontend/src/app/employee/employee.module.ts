@@ -22,11 +22,13 @@ import {HttpErrorInterceptor} from '../shared/class/http-error-interceptor';
 import {EmployeeRouting} from './employee.routing';
 import {EmployeeComponent} from './components/employee.component';
 import {TokenService} from '../shared/service/auth/token.service';
+import {EmployeesComponent} from './components/settings/employees/employees.component';
 
 
 @NgModule({
   declarations: [
     EmployeeComponent,
+    EmployeesComponent,
     DashboardComponent,
     NavigationComponent,
     SettingsComponent,
@@ -60,6 +62,7 @@ import {TokenService} from '../shared/service/auth/token.service';
   ],
   exports: [
     EmployeeComponent,
+    EmployeesComponent,
     DashboardComponent,
     NavigationComponent,
     SettingsComponent,
