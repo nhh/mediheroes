@@ -9,7 +9,6 @@ import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {LocationsComponent} from './components/settings/locations/locations.component';
 import {StationsComponent} from './components/settings/stations/stations.component';
 import {SettingsNavigationComponent} from './components/settings/settings-navigation/settings-navigation.component';
-import {JobOffersComponent} from './components/job-offers/job-offers.component';
 import {LoadingSpinnerComponent} from './components/shared/loading-spinner/loading-spinner.component';
 import {ApplicationUnavailableComponent} from './components/shared/application-unavailable/application-unavailable.component';
 import {NewJobOfferComponent} from './components/job-offers/new-job-offer/new-job-offer.component';
@@ -23,6 +22,7 @@ import {EmployeeRouting} from './employee.routing';
 import {EmployeeComponent} from './components/employee.component';
 import {TokenService} from '../shared/service/auth/token.service';
 import {EmployeesComponent} from './components/settings/employees/employees.component';
+import { ShowJobOfferComponent } from './components/job-offers/show-job-offer/show-job-offer.component';
 
 
 @NgModule({
@@ -36,11 +36,11 @@ import {EmployeesComponent} from './components/settings/employees/employees.comp
     LocationsComponent,
     StationsComponent,
     SettingsNavigationComponent,
-    JobOffersComponent,
     LoadingSpinnerComponent,
     ApplicationUnavailableComponent,
     NewJobOfferComponent,
-    JobOfferOverviewComponent
+    JobOfferOverviewComponent,
+    ShowJobOfferComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +70,6 @@ import {EmployeesComponent} from './components/settings/employees/employees.comp
     LocationsComponent,
     StationsComponent,
     SettingsNavigationComponent,
-    JobOffersComponent,
     LoadingSpinnerComponent,
     ApplicationUnavailableComponent,
     NewJobOfferComponent,

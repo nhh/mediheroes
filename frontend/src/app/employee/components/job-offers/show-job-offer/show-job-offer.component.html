@@ -12,11 +12,14 @@
       </div>
     </nav>
   </div>
-  <div class="column">
+  <div class="column" *ngIf="isLoading">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+  <div class="column" *ngIf="!isLoading" >
     <div class="field">
       <label class="label">Job Angebotsname</label>
       <div class="control">
-        <input [(ngModel)]="this.jobOfferRequest.name" class="input" type="text" placeholder="Angebotsname">
+        <input [(ngModel)]="jobOfferRequest.name" class="input" type="text" placeholder="Angebotsname">
       </div>
     </div>
 
@@ -52,7 +55,7 @@
 
     <div class="field is-grouped">
       <div class="control">
-        <button (click)="addJobOffer(jobOfferRequest)" class="button is-link">Submit</button>
+        <button (click)="updateJobOffer(jobOfferRequest)" class="button is-link">Speichern</button>
       </div>
       <div class="control">
         <button routerLink=".." class="button is-text">Cancel</button>
