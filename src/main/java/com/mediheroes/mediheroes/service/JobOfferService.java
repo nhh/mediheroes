@@ -36,4 +36,9 @@ public class JobOfferService {
     public void deleteJobOffer(JobOffer jobOffer, User user) {
         this.jobOfferRepository.delete(jobOffer);
     }
+
+    @PreAuthorize("@jobOfferPermission.canUpdateJobOffer(#jobOffer, #user)")
+    public JobOffer updateJobOffer(JobOffer jobOffer, User user) {
+        return jobOfferRepository.save(jobOffer);
+    }
 }

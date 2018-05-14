@@ -85,7 +85,20 @@ public class JobOfferController {
         @PathVariable Long id,
         @Valid @RequestBody JobOfferRequest jobOfferRequest
     ){
-        return null;
+        var user = userService.getCurrentUser().orElseThrow(EntityNotFoundException::new);
+        var jobOffer = jobOfferService.findById(id).orElseThrow(EntityNotFoundException::new);
+        var location = locationService.find(jobOfferRequest.getLocationId()).orElseThrow(EntityNotFoundException::new);
+
+        jobOffer.setSalary(jobOfferRequest.getSalary());
+        jobOffer.setJob(jobOfferRequest.getJob());
+        jobOffer.setDescription(jobOfferRequest.getDescription());
+        jobOffer.setName(jobOfferRequest.getName());
+        jobOffer.setLocation(location);
+
+        jobOfferService.updateJobOffer(jobOffer, user);
+
+        return new ResponseEntity<>(new JobOfferResponse(jobOffer), HttpStatus.OK);
+
     }
 
     @DeleteMapping("/{id}")

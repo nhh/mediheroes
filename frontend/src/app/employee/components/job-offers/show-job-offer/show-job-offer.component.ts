@@ -32,7 +32,6 @@ export class ShowJobOfferComponent implements OnInit {
     this.http.get(this.urlProvider.jobOfferResource() + '/' + id).subscribe(
       (data : JobOfferRequest) => {
         this.jobOfferRequest = data;
-        console.log(this.jobOfferRequest);
       },
       (error) => {},
       () => {

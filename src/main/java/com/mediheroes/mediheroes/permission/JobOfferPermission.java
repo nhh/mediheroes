@@ -20,4 +20,8 @@ public class JobOfferPermission {
     public boolean canDeleteJobOffer(JobOffer jobOffer, User user){
         return user.getCompany().equals(jobOffer.getCompany());
     }
+
+    public boolean canUpdateJobOffer(JobOffer jobOffer, User user){
+        return user.getCompany().equals(jobOffer.getCompany());
+    }
 }

@@ -25,7 +25,7 @@ export class NewJobOfferComponent implements OnInit {
     jobOfferRequest.locationId = 1;
     this.http.post(this.urlProvider.jobOfferResource(), jobOfferRequest).subscribe(
       data => {
-        this.router.navigate(['/employee/job-offers/overview']);
+        this.router.navigate(['/employee/job-offers']);
       },
       error => console.log(error)
     )
