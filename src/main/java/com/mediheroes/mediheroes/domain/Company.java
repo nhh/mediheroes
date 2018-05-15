@@ -2,6 +2,7 @@ package com.mediheroes.mediheroes.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,11 +34,14 @@ public class Company {
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<JobOffer> jobOffers;
 
-    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Location> locations;
 
-    @OneToOne(mappedBy = "company")
+    @OneToOne(mappedBy = "company", fetch = FetchType.LAZY)
     private User owner;
+
+    @OneToMany(mappedBy = "employer", fetch = FetchType.LAZY)
+    private List<User> employees = new ArrayList<>();
 
     public void setOwner(User owner) {
         this.owner = owner;
@@ -99,6 +103,43 @@ public class Company {
         return owner;
     }
 
+    public List<User> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<User> employees) {
+        this.employees = employees;
+    }
+
+    public void addLocation(Location location){
+        locations.add(location);
+        location.setCompany(this);
+    }
+
+    public void removeLocation(Location location){
+        locations.remove(location);
+        location.setCompany(null);
+    }
+
+    public void addEmployee(User employee){
+        employees.add(employee);
+        employee.setEmployer(this);
+    }
+
+    public void removeEmployee(User employee){
+        employees.remove(employee);
+        employee.setEmployer(null);
+    }
+
+    public void addJobOffer(JobOffer jobOffer){
+        jobOffers.add(jobOffer);
+        jobOffer.setCompany(this);
+    }
+
+    public List<JobOffer> getJobOffers() {
+        return jobOffers;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -112,7 +153,5 @@ public class Company {
         return Objects.hash(id);
     }
 
-    public List<JobOffer> getJobOffers() {
-        return jobOffers;
-    }
+
 }

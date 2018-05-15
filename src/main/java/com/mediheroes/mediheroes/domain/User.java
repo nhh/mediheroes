@@ -53,6 +53,9 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     private Company company;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Company employer;
+
     public Company getCompany() {
         return company;
     }
@@ -138,20 +141,6 @@ public class User {
         this.address = address;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id);
-    }
-
     public long getId() {
         return id;
     }
@@ -171,4 +160,27 @@ public class User {
     public boolean hasCompany() {
         return company != null;
     }
+
+    public Company getEmployer() {
+        return employer;
+    }
+
+    public void setEmployer(Company employer) {
+        this.employer = employer;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id);
+    }
+
 }

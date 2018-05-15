@@ -9,7 +9,6 @@ public class LocationResponse {
     private final Address address;
     private final Long id;
 
-    private final CompanyResponse company;
     private final String name;
 
     public LocationResponse(Location location) {
@@ -17,7 +16,6 @@ public class LocationResponse {
         this.email = location.getEmail();
         this.address = location.getAddress();
         this.id = location.getId();
-        this.company = new CompanyResponse(location.getCompany());
     }
 
     public String getEmail() {
@@ -33,10 +31,6 @@ public class LocationResponse {
     }
     public Long getId() {
         return id;
-    }
-
-    public CompanyResponse getCompany() {
-        return company;
     }
 
 

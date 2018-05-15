@@ -15,9 +15,6 @@ public class LocationRequest {
     @NotNull
     private Address address;
 
-    @NotNull
-    private Long companyId;
-
     public String getName() {
         return name;
     }
@@ -40,13 +37,5 @@ public class LocationRequest {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public Long getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(Long companyId) {
-        this.companyId = companyId;
     }
 }

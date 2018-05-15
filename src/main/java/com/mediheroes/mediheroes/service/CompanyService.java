@@ -35,9 +35,8 @@ public class CompanyService {
     }
 
     @PreAuthorize("@companyPermission.canAddLocation(#company, #location)")
-    public Location addLocationToCompany(Company company, Location location) {
-        location.setCompany(company);
-        locationService.save(location);
-        return location;
+    public void addLocationToCompany(Company company, Location location) {
+        company.addLocation(location);
+        companyRepository.save(company);
     }
 }
