@@ -12,6 +12,6 @@ COPY --from=build /srv/mediheroes/build/libs/mediheroes-*.jar ./srv/mediheroes/m
 
 WORKDIR /srv/mediheroes
 
-ENV JAVA_OPTS="-Xmx1024m -Xms256m"
+ENV JAVA_OPTS="-xmx1024m -xms256m"
 
 ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -server  -Dspring.profiles.active=prod -Djava.security.egd=file:/dev/./urandom -jar mediheroes.jar" ]
