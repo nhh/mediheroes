@@ -12,12 +12,13 @@ import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {EmployeeComponent} from './components/employee.component';
 import {ShowJobOfferComponent} from './components/job-offers/show-job-offer/show-job-offer.component';
 import {EmployeesComponent} from './components/settings/employees/employees.component';
+import {IsEmployeeGuard} from '../shared/guard/is-employee.guard';
 
 const routes: Routes = [
   {
     path: "employee",
-    canActivate: [IsAuthenticatedGuard],
-    canActivateChild: [IsAuthenticatedGuard],
+    canActivate: [IsAuthenticatedGuard, IsEmployeeGuard],
+    canActivateChild: [IsAuthenticatedGuard, IsEmployeeGuard],
     component: EmployeeComponent,
     children: [
       {

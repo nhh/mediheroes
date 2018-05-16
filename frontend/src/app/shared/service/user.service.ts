@@ -26,4 +26,14 @@ export class UserService {
     return JSON.parse(user).company
   }
 
+  isEmployee(): boolean {
+    let user = JSON.parse(localStorage.getItem("currentUser"));
+    return user.roles.includes("EMPLOYEE")
+  }
+
+  isOwner(): boolean {
+    let user = JSON.parse(localStorage.getItem("currentUser"));
+    return user.roles.includes("OWNER")
+  }
+
 }
