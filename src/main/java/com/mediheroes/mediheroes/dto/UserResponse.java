@@ -4,6 +4,7 @@ import com.mediheroes.mediheroes.domain.Company;
 import com.mediheroes.mediheroes.domain.User;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class UserResponse implements Serializable {
 
@@ -11,7 +12,7 @@ public class UserResponse implements Serializable {
     private final String firstname;
     private final String email;
     private final CompanyResponse company;
-
+    private final List<String> roles;
 
     private final Long id;
 
@@ -20,6 +21,7 @@ public class UserResponse implements Serializable {
         this.firstname = user.getFirstname();
         this.lastname = user.getLastname();
         this.email = user.getEmail();
+        this.roles = user.getRoles();
         if(user.getCompany() == null){
             this.company = null;
         } else {
@@ -27,9 +29,14 @@ public class UserResponse implements Serializable {
         }
     }
 
+    public List<String> getRoles() {
+        return roles;
+    }
+
     public Long getId() {
         return id;
     }
+
     public String getEmail() {
         return email;
     }

@@ -4,6 +4,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -126,11 +127,21 @@ public class User {
     }
 
     public List<String> getRoles(){
+        var roles = new ArrayList<String>();
 
         if(hasCompany()){
-            return List.of("FREELANCER");
+            roles.add("OWNER");
+        } else if (isEmployee()) {
+            roles.add("EMPLOYEE");
+        } else {
+            roles.add("FREELANCER");
         }
-        return List.of("OWNER");
+
+        return roles;
+    }
+
+    public boolean isEmployee() {
+        return this.employer == null;
     }
 
     public Address getAddress() {

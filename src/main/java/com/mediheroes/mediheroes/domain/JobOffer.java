@@ -2,6 +2,7 @@ package com.mediheroes.mediheroes.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 @Table(name = "job_offers")
@@ -85,4 +86,17 @@ public class JobOffer {
         this.company = company;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JobOffer jobOffer = (JobOffer) o;
+        return Objects.equals(id, jobOffer.id);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id);
+    }
 }
