@@ -39,6 +39,9 @@ export class UrlProvider {
   currentCompanyResource() {
     return this.baseUrl + "/companies/" + this.userService.getCurrentCompany().id
   }
+  currentCompanyEmployeesResource(){
+    return this.baseUrl + "/companies/" + this.userService.getCurrentCompany().id + '/employees'
+  }
 
 
 }

@@ -1,6 +1,6 @@
-<app-loading-spinner *ngIf="this.isLoading == true"></app-loading-spinner>
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 
-<div class="box" *ngIf="this.isLoading == false">
+<div class="box" *ngIf="!isLoading">
   <p>{{company.name}}</p>
   <p>{{company.address}}</p>
 </div>

@@ -11,6 +11,7 @@ import {JobOfferOverviewComponent} from "./components/job-offers/job-offer-overv
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {EmployeeComponent} from './components/employee.component';
 import {ShowJobOfferComponent} from './components/job-offers/show-job-offer/show-job-offer.component';
+import {EmployeesComponent} from './components/settings/employees/employees.component';
 
 const routes: Routes = [
   {
@@ -48,7 +49,7 @@ const routes: Routes = [
           {
             path: 'stations', component: StationsComponent
           },
-          {path: 'employees', component: StationsComponent},
+          {path: 'employees', component: EmployeesComponent},
         ]
       },
       {
