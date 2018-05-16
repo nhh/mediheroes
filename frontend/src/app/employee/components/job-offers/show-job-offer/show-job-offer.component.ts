@@ -11,8 +11,8 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class ShowJobOfferComponent implements OnInit {
 
-  private jobOfferRequest = new JobOfferRequest();
-  private isLoading = true;
+  jobOfferRequest = new JobOfferRequest();
+  isLoading = true;
   private jobOfferId : number;
 
   constructor(

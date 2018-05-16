@@ -9,10 +9,10 @@ import {UrlProvider} from '../../../../shared/service/url-provider';
 })
 export class EmployeesComponent implements OnInit {
 
-  private isLoading = true;
+  isLoading = true;
   private employees = [];
-  private newEmployeeEmail : string;
-  private showInviteModal = false;
+  newEmployeeEmail : string;
+  showInviteModal = false;
 
   constructor(
     private http : CustomHttpClient,
