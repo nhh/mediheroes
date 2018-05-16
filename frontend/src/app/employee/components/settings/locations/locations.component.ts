@@ -24,7 +24,7 @@ export class LocationsComponent implements OnInit {
 
   ngOnInit() {
     let companyId = this.userService.getCurrentUser().company.id;
-    this.httpClient.get(this.urlProvider.locationResource()+ '?companyId=' + companyId).subscribe(
+    this.httpClient.get(this.urlProvider.locationResource()).subscribe(
       response => {
         setTimeout(() => {
           this.locations = response;

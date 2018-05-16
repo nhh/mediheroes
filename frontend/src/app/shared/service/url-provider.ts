@@ -21,7 +21,7 @@ export class UrlProvider {
   }
 
   locationResource() {
-    return this.baseUrl + "/locations"
+    return this.baseUrl + "/companies/" + this.userService.getCurrentCompany().id + "/locations"
   }
 
   authResource() {
