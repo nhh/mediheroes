@@ -18,20 +18,8 @@ import java.nio.file.attribute.UserPrincipal;
 @RestController
 public class AuthenticationController {
 
-    private final UserService userService;
-
-    public AuthenticationController(UserService userServiceImpl) {
-        userService = userServiceImpl;
-    }
-
-    @GetMapping("/me")
-    public ResponseEntity<UserResponse> getAuthtoken() {
-        var user = userService.getCurrentUser().orElseThrow(EntityNotFoundException::new);
-        return new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
-    }
-
     @GetMapping("/token")
-    public ResponseEntity getAuthtoken(HttpSession session) {
+    public ResponseEntity getToken(HttpSession session) {
         try {
             var sessionId = session.getId();
             return new ResponseEntity<>(new AuthenticationToken(sessionId), HttpStatus.OK);
@@ -41,7 +29,7 @@ public class AuthenticationController {
     }
 
     @DeleteMapping(value = "/token")
-    public ResponseEntity logout(HttpSession session) {
+    public ResponseEntity deleteToken(HttpSession session) {
         try {
             session.invalidate();
             return new ResponseEntity<>(HttpStatus.OK);
@@ -49,24 +37,6 @@ public class AuthenticationController {
             // Already logged out
             return new ResponseEntity<>(HttpStatus.OK);
         }
-    }
-
-    @PostMapping("/register")
-    @Transactional
-    public ResponseEntity<UserResponse> register(@RequestBody UserRequest userRequest){
-
-        var user = new User();
-        user.setAddress(userRequest.getAddress());
-        user.setPassword(userRequest.getPassword());
-        user.setEmail(userRequest.getEmail());
-        user.setFirstname(userRequest.getFirstname());
-        user.setLastname(userRequest.getLastname());
-        user.setActive(userRequest.isActive());
-        user.setVerified(userRequest.isVerified());
-
-        userService.save(user);
-
-        return new ResponseEntity<>(new UserResponse(user), HttpStatus.CREATED);
     }
 
 }
