@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  private loginRequest = new LoginRequest();
+  loginRequest = new LoginRequest();
   isLoading = false;
 
   constructor(
