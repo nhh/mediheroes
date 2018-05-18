@@ -4,13 +4,10 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import {DashboardComponent} from './component/dashboard/dashboard.component';
 import {IsAuthenticatedGuard} from '../shared/guard/is-authenticated.guard';
-import {CustomHttpClient} from '../shared/service/custom-http-client';
-import {UrlProvider} from '../shared/service/url-provider';
 import {UserService} from '../shared/service/user.service';
 import {HttpErrorInterceptor} from '../shared/class/http-error-interceptor';
 import {FreelancerRouting} from './freelancer.routing';
 import {FreelancerComponent} from './component/freelancer.component';
-import {TokenService} from '../shared/service/auth/token.service';
 import {NavigationComponent} from './component/navigation/navigation.component';
 
 
@@ -28,9 +25,6 @@ import {NavigationComponent} from './component/navigation/navigation.component';
   ],
   providers: [
     IsAuthenticatedGuard,
-    TokenService,
-    CustomHttpClient,
-    UrlProvider,
     UserService,
     {
       provide: HTTP_INTERCEPTORS,

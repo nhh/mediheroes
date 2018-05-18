@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {CustomHttpClient} from "../../../../shared/service/custom-http-client";
-import { UrlProvider } from '../../../../shared/service/url-provider';
+import {UserService} from '../../../../shared/service/user.service';
+import {CompanyResourceService} from '../../../../shared/service/resource/company-resource.service';
 
 @Component({
   selector: 'app-employee-general',
@@ -12,14 +12,13 @@ export class GeneralComponent implements OnInit {
   public isLoading : boolean = true;
   private company : any = {};
 
-  constructor(private http : CustomHttpClient, private urlProvider : UrlProvider) { }
+  constructor(private userService : UserService, private companyResourceService : CompanyResourceService) { }
 
   ngOnInit() {
-    this.http.get(this.urlProvider.currentCompanyResource()).subscribe(
+    this.companyResourceService.getCompany(this.userService.getCurrentCompany().id).subscribe(
       (data) => this.company = data,
       (error) => console.log(error),
       () => setTimeout(() => { this.isLoading = false }, 250)
     )
   }
-
 }

@@ -14,15 +14,17 @@ import {ApplicationUnavailableComponent} from './components/shared/application-u
 import {NewJobOfferComponent} from './components/job-offers/new-job-offer/new-job-offer.component';
 import {JobOfferOverviewComponent} from './components/job-offers/job-offer-overview/job-offer-overview.component';
 import {IsAuthenticatedGuard} from '../shared/guard/is-authenticated.guard';
-import {CustomHttpClient} from '../shared/service/custom-http-client';
-import {UrlProvider} from '../shared/service/url-provider';
 import {UserService} from '../shared/service/user.service';
 import {HttpErrorInterceptor} from '../shared/class/http-error-interceptor';
 import {EmployeeRouting} from './employee.routing';
 import {EmployeeComponent} from './components/employee.component';
-import {TokenService} from '../shared/service/auth/token.service';
 import {EmployeesComponent} from './components/settings/employees/employees.component';
 import { ShowJobOfferComponent } from './components/job-offers/show-job-offer/show-job-offer.component';
+import {CompanyResourceService} from '../shared/service/resource/company-resource.service';
+import {JobOfferResourceService} from '../shared/service/resource/job-offer-resource.service';
+import {TokenResourceService} from '../shared/service/resource/token-resource.service';
+import {UserResourceService} from '../shared/service/resource/user-resource.service';
+import {Injector} from '@angular/core';
 
 
 @NgModule({
@@ -50,9 +52,10 @@ import { ShowJobOfferComponent } from './components/job-offers/show-job-offer/sh
   ],
   providers: [
     IsAuthenticatedGuard,
-    TokenService,
-    CustomHttpClient,
-    UrlProvider,
+    CompanyResourceService,
+    JobOfferResourceService,
+    TokenResourceService,
+    UserResourceService,
     UserService,
     {
       provide: HTTP_INTERCEPTORS,

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {CustomHttpClient} from "../../../../shared/service/custom-http-client";
 import {JobOfferRequest} from "../../../dtos/job-offer-request";
 import {UserService} from "../../../../shared/service/user.service";
-import { UrlProvider } from '../../../../shared/service/url-provider';
 import {Router} from "@angular/router";
+import {JobOfferResourceService} from '../../../../shared/service/resource/job-offer-resource.service';
 
 @Component({
   selector: 'app-new-job-offer',
@@ -14,27 +13,23 @@ export class NewJobOfferComponent implements OnInit {
 
   jobOfferRequest = new JobOfferRequest();
 
-  constructor(private http : CustomHttpClient, private userService : UserService, private urlProvider : UrlProvider, private router : Router) {}
+  constructor(private userService : UserService, private router : Router, private jobOfferResourceService : JobOfferResourceService) {}
 
   ngOnInit() {
 
   }
 
-  addJobOffer(jobOfferRequest : JobOfferRequest) {
-    jobOfferRequest.companyId = this.userService.getCurrentCompany().id;
-    jobOfferRequest.locationId = 1;
-    this.http.post(this.urlProvider.jobOfferResource(), jobOfferRequest).subscribe(
+  addJobOffer() {
+
+    this.jobOfferRequest.companyId = this.userService.getCurrentCompany().id;
+    this.jobOfferRequest.locationId = 1;
+
+    this.jobOfferResourceService.createJobOffer(this.jobOfferRequest).subscribe(
       data => {
         this.router.navigate(['/employee/job-offers']);
       },
       error => console.log(error)
-    )
+    );
   }
-
-
-  loadLocations() {
-    // load locations
-  }
-
 
 }

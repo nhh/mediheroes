@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UrlProvider} from '../../../../shared/service/url-provider';
-import {CustomHttpClient} from "../../../../shared/service/custom-http-client";
 import {UserService} from "../../../../shared/service/user.service";
+import {JobOfferResourceService} from '../../../../shared/service/resource/job-offer-resource.service';
 
 @Component({
   selector: 'app-job-offer-overview',
@@ -10,7 +9,10 @@ import {UserService} from "../../../../shared/service/user.service";
 })
 export class JobOfferOverviewComponent implements OnInit {
 
-  constructor(private http : CustomHttpClient, private urlProvider : UrlProvider, private userService : UserService) {}
+  constructor(
+    private jobOfferResourceService : JobOfferResourceService,
+    private userService : UserService
+  ) {}
 
   public isLoading : boolean = true;
   public jobOffers : any = [];
@@ -21,7 +23,7 @@ export class JobOfferOverviewComponent implements OnInit {
 
   loadJobOffers() {
     this.isLoading = true;
-    this.http.get(this.urlProvider.jobOfferResource() + "?companyId=" + this.userService.getCurrentCompany().id).subscribe(
+    this.jobOfferResourceService.getJobOffers(this.userService.getCurrentCompany().id).subscribe(
       data => this.jobOffers = data,
       error => console.log(error),
       () => {
@@ -29,14 +31,14 @@ export class JobOfferOverviewComponent implements OnInit {
           this.isLoading = false;
         }, 250)
       }
-    )
+    );
   }
 
   deleteJobOffer(id : number) {
-    this.http.delete(this.urlProvider.jobOfferResource() + "/" + id).subscribe(
+    this.jobOfferResourceService.deleteJobOffer(id).subscribe(
       data => this.loadJobOffers(),
       error => console.log(error)
-    )
+    );
   }
 
 }

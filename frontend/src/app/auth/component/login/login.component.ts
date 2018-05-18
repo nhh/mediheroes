@@ -1,25 +1,41 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginCredentials} from '../../dto/login-credentials';
-import { TokenService} from '../../../shared/service/auth/token.service';
+import {TokenResourceService} from '../../../shared/service/resource/token-resource.service';
+import {AuthService} from '../../../shared/service/auth/auth.service';
+import {LoginRequest} from '../../../shared/dto/login-request';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  providers: [ TokenService ],
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 
-  loginCredentials = new LoginCredentials("", "");
+  private loginRequest = new LoginRequest();
+  isLoading = false;
 
-  submitted = false;
+  constructor(
+    private tokenResourceService : TokenResourceService,
+    private authService : AuthService,
+    private router : Router
+  ) { }
 
   onSubmit() {
-    this.tokenService.authenticate(this.loginCredentials)
+    this.isLoading = true;
+    return this.authService.authenticate(this.loginRequest).subscribe(
+      (currentUser) => {
+        return this.router.navigate(['/employee/dashboard']);
+      },
+      (error) => {
+        // Todo show notification
+        this.isLoading = false;
+        console.log(error);
+      },
+      () => {
+        this.isLoading = false;
+      }
+    );
   }
-
-
-  constructor(private tokenService : TokenService) { }
 
   ngOnInit() {
 

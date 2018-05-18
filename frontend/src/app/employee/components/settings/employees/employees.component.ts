@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {CustomHttpClient} from '../../../../shared/service/custom-http-client';
-import {UrlProvider} from '../../../../shared/service/url-provider';
+import {CompanyResourceService} from '../../../../shared/service/resource/company-resource.service';
+import {UserService} from '../../../../shared/service/user.service';
 
 @Component({
   selector: 'app-employee-employees',
@@ -10,22 +10,21 @@ import {UrlProvider} from '../../../../shared/service/url-provider';
 export class EmployeesComponent implements OnInit {
 
   isLoading = true;
-  private employees = [];
   newEmployeeEmail : string;
   showInviteModal = false;
+  private employees = [];
 
   constructor(
-    private http : CustomHttpClient,
-    private urlProvider : UrlProvider,
-
+    private companyResourceService : CompanyResourceService,
+    private userService : UserService
   ) { }
 
   ngOnInit() {
-    this.getEmployeesOfCompany();
+    this.getEmployees();
   }
 
-  getEmployeesOfCompany(){
-    this.http.get(this.urlProvider.currentCompanyEmployeesResource()).subscribe(
+  private getEmployees(){
+    this.companyResourceService.getEmployees(this.userService.getCurrentCompany().id).subscribe(
       (employees : any) => {
         this.employees = employees;
       },
@@ -35,13 +34,14 @@ export class EmployeesComponent implements OnInit {
           this.isLoading = false;
         }, 250)
       }
-    )
+    );
   }
 
   addEmployeeToCompany(email : string){
     this.isLoading = true;
     this.showInviteModal = false;
-    this.http.post(this.urlProvider.currentCompanyEmployeesResource(), email).subscribe(
+
+    this.companyResourceService.addEmployee(this.userService.getCurrentCompany().id, email).subscribe(
       (employees : any) => {
         this.employees = employees;
       },
@@ -52,20 +52,21 @@ export class EmployeesComponent implements OnInit {
           this.isLoading = false;
         }, 250)
       }
-    )
+    );
   }
 
   removeEmployeeFromCompany(employeeId : number){
     this.isLoading = true;
-    this.http.delete(this.urlProvider.currentCompanyEmployeesResource() + '/' + employeeId).subscribe(
+
+    this.companyResourceService.removeEmployee(this.userService.getCurrentCompany().id, employeeId).subscribe(
       (employee : any) => {
-        this.getEmployeesOfCompany();
+        this.getEmployees();
       },
       (errr) => {},
       () => {
         this.newEmployeeEmail = '';
       }
-    )
+    );
   }
 
 }

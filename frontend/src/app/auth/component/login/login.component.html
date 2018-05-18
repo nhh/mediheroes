@@ -11,13 +11,13 @@
           <form (ngSubmit)="onSubmit()">
             <div class="field">
               <div class="control">
-                <input class="input is-large" type="email" placeholder="Your Email" autofocus="" [(ngModel)]="loginCredentials.email" name="name">
+                <input class="input is-large" type="email" placeholder="Your Email" autofocus="" [(ngModel)]="loginRequest.email" name="name">
               </div>
             </div>
 
             <div class="field">
               <div class="control">
-                <input class="input is-large" type="password" placeholder="Your Password" [(ngModel)]="loginCredentials.password" name="alterEgo">
+                <input class="input is-large" type="password" placeholder="Your Password" [(ngModel)]="loginRequest.password" name="alterEgo">
               </div>
             </div>
             <div class="field">
@@ -26,7 +26,7 @@
                 Remember me
               </label>
             </div>
-            <button type="submit" class="button is-block is-info is-large is-fullwidth">Login</button>
+            <button type="submit" [disabled]="isLoading" [ngClass]="{'is-loading' : isLoading}" class="button is-block is-info is-large is-fullwidth">Login</button>
           </form>
         </div>
         <p class="has-text-grey">

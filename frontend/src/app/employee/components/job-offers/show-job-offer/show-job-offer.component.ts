@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {JobOfferRequest} from '../../../dtos/job-offer-request';
-import {CustomHttpClient} from '../../../../shared/service/custom-http-client';
-import {UrlProvider} from '../../../../shared/service/url-provider';
 import {ActivatedRoute} from '@angular/router';
+import {JobOfferResourceService} from '../../../../shared/service/resource/job-offer-resource.service';
 
 @Component({
   selector: 'app-show-job-offer',
@@ -16,8 +15,7 @@ export class ShowJobOfferComponent implements OnInit {
   private jobOfferId : number;
 
   constructor(
-    private http: CustomHttpClient,
-    private urlProvider : UrlProvider,
+    private jobOfferResourceService: JobOfferResourceService,
     private route: ActivatedRoute
   ) { }
 
@@ -29,8 +27,8 @@ export class ShowJobOfferComponent implements OnInit {
   }
 
   loadCurrentJobOffer(id : number){
-    this.http.get(this.urlProvider.jobOfferResource() + '/' + id).subscribe(
-      (data : JobOfferRequest) => {
+    this.jobOfferResourceService.getJobOffer(id).subscribe(
+      (data : any) => {
         this.jobOfferRequest = data;
       },
       (error) => {},
@@ -39,25 +37,23 @@ export class ShowJobOfferComponent implements OnInit {
           this.isLoading = false
         }, 250)
       }
-    )
+    );
   }
 
-  updateJobOffer(jobOffer : JobOfferRequest){
+  updateJobOffer(){
     this.isLoading = true;
-    this.http.put(this.urlProvider.jobOfferResource() + '/' + this.jobOfferId, jobOffer).subscribe(
-      (data : JobOfferRequest) => {
-        // Show notification
+    this.jobOfferResourceService.updateJobOffer(this.jobOfferId, this.jobOfferRequest).subscribe(
+      (data : any) => {
         this.jobOfferRequest = data;
       },
       (error) => {
-        // Throw error
       },
       () => {
         setTimeout(() => {
           this.isLoading = false;
         }, 250)
       }
-    )
+    );
   }
 
 }

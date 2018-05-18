@@ -1,21 +1,34 @@
 import { Injectable } from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild} from '@angular/router';
-import {TokenService} from "../service/auth/token.service";
 import { Router} from "@angular/router";
 import {Observable} from 'rxjs';
+import {AuthService} from '../service/auth/auth.service';
 
 @Injectable()
 export class IsAuthenticatedGuard implements CanActivate, CanActivateChild {
 
-  constructor(private tokenService: TokenService, private router : Router) {};
+  constructor(
+    private authService: AuthService,
+    private router : Router
+  ) {};
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if(this.tokenService.isAuthenticated()){
+    if(this.authService.isAuthenticated()){
       return true
     } else {
-      this.tokenService.logout();
+      this.authService.logout().subscribe(
+        (success) => {
+
+        },
+        (error) => {
+          console.log(error)
+        },
+        () => {
+          this.router.navigate(['/login'])
+        }
+      );
       return false
     }
   }
@@ -23,10 +36,20 @@ export class IsAuthenticatedGuard implements CanActivate, CanActivateChild {
   canActivateChild(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if(this.tokenService.isAuthenticated()){
+    if(this.authService.isAuthenticated()){
       return true
     } else {
-      this.tokenService.logout();
+      this.authService.logout().subscribe(
+        (success) => {
+
+        },
+        (error) => {
+          console.log(error)
+        },
+        () => {
+          this.router.navigate(['/login'])
+        }
+      );
       return false
     }
   }

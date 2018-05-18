@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TokenService} from "../../../shared/service/auth/token.service";
+import {AuthService} from '../../../shared/service/auth/auth.service';
 
 @Component({
   selector: 'employee-navigation',
@@ -9,13 +9,13 @@ import { TokenService} from "../../../shared/service/auth/token.service";
 export class NavigationComponent implements OnInit {
 
   constructor(
-    private tokenService : TokenService
+    private authService : AuthService
   ) {}
 
   public navbar_toggle : boolean = false;
 
   public logout() : void {
-    this.tokenService.logout();
+    this.authService.logout();
   }
 
   ngOnInit() {}
