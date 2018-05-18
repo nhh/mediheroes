@@ -42,13 +42,13 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.NEVER)
+            .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
             .and()
             .csrf().disable()
             .authorizeRequests()
             .antMatchers(AUTH_WHITELIST).permitAll()
             .antMatchers(HttpMethod.OPTIONS, "/api/v1/**").permitAll()
-            .antMatchers("/api/v1/auth/register").permitAll()
+            .antMatchers(HttpMethod.POST,"/api/v1/users").permitAll()
             .anyRequest()
             .authenticated()
             .and()
