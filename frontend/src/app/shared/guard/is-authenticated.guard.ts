@@ -18,17 +18,8 @@ export class IsAuthenticatedGuard implements CanActivate, CanActivateChild {
     if(this.authService.isAuthenticated()){
       return true
     } else {
-      this.authService.logout().subscribe(
-        (success) => {
-
-        },
-        (error) => {
-          console.log(error)
-        },
-        () => {
-          this.router.navigate(['/login'])
-        }
-      );
+      this.authService.logout().subscribe();
+      this.router.navigate(['/login']);
       return false
     }
   }
@@ -39,17 +30,8 @@ export class IsAuthenticatedGuard implements CanActivate, CanActivateChild {
     if(this.authService.isAuthenticated()){
       return true
     } else {
-      this.authService.logout().subscribe(
-        (success) => {
-
-        },
-        (error) => {
-          console.log(error)
-        },
-        () => {
-          this.router.navigate(['/login'])
-        }
-      );
+      this.authService.logout().subscribe();
+      this.router.navigate(['/login']);
       return false
     }
   }

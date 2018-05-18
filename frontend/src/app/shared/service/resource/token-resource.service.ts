@@ -26,7 +26,7 @@ export class TokenResourceService extends AbstractResourceService {
   }
 
   deleteToken(){
-    return this.http.delete(this.basePath + '/auth', this.authenticatedHttpOptions())
+    return this.http.delete(this.basePath + '/auth/token', this.authenticatedHttpOptions())
   }
 
 }
