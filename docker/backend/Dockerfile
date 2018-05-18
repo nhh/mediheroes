@@ -14,4 +14,4 @@ WORKDIR /srv/mediheroes
 
 ENV JAVA_OPTS="-Xmx1024m -Xms256m"
 
-ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseJVMCICompiler -server  -Dspring.profiles.active=prod -Djava.security.egd=file:/dev/./urandom -jar mediheroes.jar" ]
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -server  -Dspring.profiles.active=prod -Djava.security.egd=file:/dev/./urandom -jar mediheroes.jar" ]
