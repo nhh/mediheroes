@@ -24,7 +24,15 @@ export class LoginComponent implements OnInit {
     this.isLoading = true;
     return this.authService.authenticate(this.loginRequest).subscribe(
       (currentUser) => {
-        return this.router.navigate(['/employee/dashboard']);
+
+        if(currentUser.roles.includes("OWNER")){
+          return this.router.navigate(['/employee/dashboard']);
+        } else if (currentUser.roles.includes("EMPLOYEE")) {
+          return this.router.navigate(['/employee/dashboard']);
+        } else {
+          return this.router.navigate(['/freelancer/dashboard']);
+        }
+
       },
       (error) => {
         // Todo show notification
