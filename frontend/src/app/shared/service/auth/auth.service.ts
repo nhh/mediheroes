@@ -3,6 +3,7 @@ import { LoginRequest } from '../../dto/login-request';
 import {TokenResourceService} from '../resource/token-resource.service';
 import {mergeMap} from 'rxjs/operators';
 import {UserResourceService} from '../resource/user-resource.service';
+import {RegisterRequest} from '../../dto/register-request';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,10 @@ export class AuthService {
         }
       )
     );
+  }
+
+  public register(registerRequest : RegisterRequest){
+    return this.userResourceService.createUser(registerRequest);
   }
 
 }
