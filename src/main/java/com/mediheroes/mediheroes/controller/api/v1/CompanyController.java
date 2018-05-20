@@ -36,7 +36,7 @@ public class CompanyController {
     }
 
     @GetMapping("")
-    public ResponseEntity companies() {
+    public ResponseEntity<CompanyResponse[]> companies() {
         var companyList = StreamSupport
             .stream(companyService.findAll().spliterator(), false)
             .map(CompanyResponse::new)
@@ -46,10 +46,12 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public CompanyResponse getOneCompany(@PathVariable Long id) {
-        return companyService.find(id)
+    public ResponseEntity<CompanyResponse> getOneCompany(@PathVariable Long id) {
+        var company = companyService.find(id)
                             .map(CompanyResponse::new)
                             .orElseThrow(EntityNotFoundException::new);
+
+        return new ResponseEntity<>(company, HttpStatus.OK);
     }
 
     @PostMapping("")

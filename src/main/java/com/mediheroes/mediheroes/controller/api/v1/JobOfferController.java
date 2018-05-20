@@ -14,8 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/api/v1/job-offers")
@@ -44,17 +43,26 @@ public class JobOfferController {
     public ResponseEntity<JobOfferResponse> getOneJobOffer(
         @PathVariable Long id
     ){
-        var jobOffer = jobOfferService.findById(id).orElseThrow(EntityNotFoundException::new);
-        return new ResponseEntity<>(new JobOfferResponse(jobOffer), HttpStatus.OK);
+        var jobOffer = jobOfferService
+            .findById(id)
+            .map(JobOfferResponse::new)
+            .orElseThrow(EntityNotFoundException::new);
+        return new ResponseEntity<>(jobOffer, HttpStatus.OK);
     }
 
     @PostMapping("")
     public ResponseEntity<JobOfferResponse> createJobOffer (
         @Valid @RequestBody JobOfferRequest jobOfferRequest
     ) {
-        var user = userService.getCurrentUser().orElseThrow(EntityNotFoundException::new);
-        var company = companyService.find(jobOfferRequest.getCompanyId()).orElseThrow(EntityNotFoundException::new);
-        var location = locationService.find(jobOfferRequest.getLocationId()).orElseThrow(EntityNotFoundException::new);
+        var user = userService
+            .getCurrentUser()
+            .orElseThrow(EntityNotFoundException::new);
+        var company = companyService
+            .find(jobOfferRequest.getCompanyId())
+            .orElseThrow(EntityNotFoundException::new);
+        var location = locationService
+            .find(jobOfferRequest.getLocationId())
+            .orElseThrow(EntityNotFoundException::new);
 
         var jobOffer = new JobOffer();
         jobOffer.setCompany(company);
@@ -70,13 +78,21 @@ public class JobOfferController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<JobOfferResponse>> getAllJobOffers(
+    public ResponseEntity<JobOfferResponse[]> getAllJobOffers(
         @RequestParam("companyId") Long companyId
     ){
-        var user = userService.getCurrentUser().orElseThrow(EntityNotFoundException::new);
-        var company = companyService.find(companyId).orElseThrow(EntityNotFoundException::new);
-        var jobOffers = new ArrayList<JobOfferResponse>();
-        jobOfferService.getAllByCompanyId(company, user).forEach(jobOffer -> jobOffers.add(new JobOfferResponse(jobOffer)));
+        var user = userService
+            .getCurrentUser()
+            .orElseThrow(EntityNotFoundException::new);
+        var company = companyService
+            .find(companyId)
+            .orElseThrow(EntityNotFoundException::new);
+
+        var jobOffers = StreamSupport
+            .stream(jobOfferService.getAllByCompanyId(company, user).spliterator(), false)
+            .map(JobOfferResponse::new)
+            .toArray(JobOfferResponse[]::new);
+
         return new ResponseEntity<>(jobOffers, HttpStatus.OK);
     }
 
@@ -85,9 +101,15 @@ public class JobOfferController {
         @PathVariable Long id,
         @Valid @RequestBody JobOfferRequest jobOfferRequest
     ){
-        var user = userService.getCurrentUser().orElseThrow(EntityNotFoundException::new);
-        var jobOffer = jobOfferService.findById(id).orElseThrow(EntityNotFoundException::new);
-        var location = locationService.find(jobOfferRequest.getLocationId()).orElseThrow(EntityNotFoundException::new);
+        var user = userService
+            .getCurrentUser()
+            .orElseThrow(EntityNotFoundException::new);
+        var jobOffer = jobOfferService
+            .findById(id)
+            .orElseThrow(EntityNotFoundException::new);
+        var location = locationService
+            .find(jobOfferRequest
+            .getLocationId()).orElseThrow(EntityNotFoundException::new);
 
         jobOffer.setSalary(jobOfferRequest.getSalary());
         jobOffer.setJob(jobOfferRequest.getJob());
@@ -105,8 +127,12 @@ public class JobOfferController {
     public ResponseEntity<JobOfferResponse> deleteOneJobOffer(
         @PathVariable Long id
     ){
-        var user = userService.getCurrentUser().orElseThrow(EntityNotFoundException::new);
-        var jobOffer = jobOfferService.findById(id).orElseThrow(EntityNotFoundException::new);
+        var user = userService
+            .getCurrentUser()
+            .orElseThrow(EntityNotFoundException::new);
+        var jobOffer = jobOfferService
+            .findById(id)
+            .orElseThrow(EntityNotFoundException::new);
         jobOfferService.deleteJobOffer(jobOffer, user);
         return new ResponseEntity<>(new JobOfferResponse(jobOffer), HttpStatus.OK);
     }

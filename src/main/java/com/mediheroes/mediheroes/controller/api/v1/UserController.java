@@ -8,11 +8,9 @@ import com.mediheroes.mediheroes.service.CompanyService;
 import com.mediheroes.mediheroes.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.ArrayList;
+import java.util.stream.StreamSupport;
 
 @RequestMapping("/api/v1/users")
 @RestController
@@ -31,13 +29,18 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUser(@PathVariable Long id) {
-        var user = userService.find(id).orElseThrow(EntityNotFoundException::new);
-        return new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
+        var user = userService
+            .find(id)
+            .map(UserResponse::new)
+            .orElseThrow(EntityNotFoundException::new);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping("/me")
     public ResponseEntity<UserResponse> getAuthtoken() {
-        var user = userService.getCurrentUser().orElseThrow(EntityNotFoundException::new);
+        var user = userService
+            .getCurrentUser()
+            .orElseThrow(EntityNotFoundException::new);
         return new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
     }
 
@@ -61,9 +64,12 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<ArrayList<UserResponse>> getAllUser() {
-        var userList = new ArrayList<UserResponse>();
-        userService.findAllUsers().forEach((user -> userList.add(new UserResponse(user))));
+    public ResponseEntity<UserResponse[]> getAllUser() {
+        var userList = StreamSupport
+            .stream(userService.findAllUsers().spliterator(), false)
+            .map(UserResponse::new)
+            .toArray(UserResponse[]::new);
+
         return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 }

@@ -1,18 +1,14 @@
 package com.mediheroes.mediheroes.controller.api.v1;
 
-import com.mediheroes.mediheroes.domain.User;
 import com.mediheroes.mediheroes.dto.AuthenticationToken;
-import com.mediheroes.mediheroes.dto.UserRequest;
-import com.mediheroes.mediheroes.dto.UserResponse;
-import com.mediheroes.mediheroes.exception.EntityNotFoundException;
-import com.mediheroes.mediheroes.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-import java.nio.file.attribute.UserPrincipal;
 
 @RequestMapping("/api/v1/auth")
 @RestController
