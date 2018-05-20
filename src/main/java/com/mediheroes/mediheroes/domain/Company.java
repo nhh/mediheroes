@@ -128,7 +128,7 @@ public class Company {
 
     public void removeEmployee(User employee){
         employees.remove(employee);
-        employee.setEmployer(null);
+        employee.removeEmployer();
     }
 
     public void addJobOffer(JobOffer jobOffer){

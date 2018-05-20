@@ -176,6 +176,11 @@ public class User {
         this.employer = employer;
     }
 
+    public void removeEmployer(){
+        this.setEmployer(null);
+        this.setType(Type.FREELANCER);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
