@@ -9,13 +9,17 @@ import {HttpErrorInterceptor} from '../shared/class/http-error-interceptor';
 import {FreelancerRouting} from './freelancer.routing';
 import {FreelancerComponent} from './component/freelancer.component';
 import {NavigationComponent} from './component/navigation/navigation.component';
+import { SettingsComponent } from './component/settings/settings.component';
+import { JobOffersComponent } from './component/job-offers/job-offers.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
     FreelancerComponent,
-    NavigationComponent
+    NavigationComponent,
+    SettingsComponent,
+    JobOffersComponent
   ],
   imports: [
     BrowserModule,
