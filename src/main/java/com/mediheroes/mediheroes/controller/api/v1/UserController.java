@@ -8,12 +8,14 @@ import com.mediheroes.mediheroes.service.CompanyService;
 import com.mediheroes.mediheroes.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.StreamSupport;
 
 @RequestMapping("/api/v1/users")
 @RestController
+@Transactional
 public class UserController {
 
     private final UserService userService;
