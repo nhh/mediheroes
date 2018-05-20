@@ -14,8 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/api/v1/companies")
@@ -37,10 +36,13 @@ public class CompanyController {
     }
 
     @GetMapping("")
-    public ArrayList<CompanyResponse> companies() {
-        var companyList = new ArrayList<CompanyResponse>();
-        companyService.findAll().forEach(company -> companyList.add(new CompanyResponse(company)));
-        return companyList;
+    public ResponseEntity companies() {
+        var companyList = StreamSupport
+            .stream(companyService.findAll().spliterator(), false)
+            .map(CompanyResponse::new)
+            .toArray(CompanyResponse[]::new);
+
+        return new ResponseEntity<>(companyList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -59,32 +61,47 @@ public class CompanyController {
         company.setActive(true);
         company.setEmail(companyParams.getEmail());
         company.setName(companyParams.getName());
-        var user = userService.find(companyParams.getOwnerId()).orElseThrow(EntityNotFoundException::new);
+
+        var user = userService
+            .find(companyParams.getOwnerId())
+            .orElseThrow(EntityNotFoundException::new);
+
         return new ResponseEntity<>(new CompanyResponse(userService.createCompany(user, company)), HttpStatus.CREATED);
     }
 
     @PostMapping("/{id}/employees")
-    public ResponseEntity<ArrayList<UserResponse>> addEmployeeToCompany(
+    public ResponseEntity addEmployeeToCompany(
         @PathVariable Long id,
         @RequestBody String email
     ) {
-        var company = companyService.find(id).orElseThrow(EntityNotFoundException::new);
-        var employee = userService.findByEmail(email).orElseThrow(EntityNotFoundException::new);
+        var company = companyService
+            .find(id)
+            .orElseThrow(EntityNotFoundException::new);
+
+        var employee = userService
+            .findByEmail(email)
+            .orElseThrow(EntityNotFoundException::new);
+
         company.addEmployee(employee);
         companyService.save(company);
-        // Todo refactor me.... .toArray
-        var userList = new ArrayList<UserResponse>();
-        company.getEmployees().stream().map(UserResponse::new).forEach(userList::add);
-        return new ResponseEntity<>(userList, HttpStatus.OK);
+
+        var employeeList = company.getEmployees()
+            .stream()
+            .map(UserResponse::new)
+            .toArray(UserResponse[]::new);
+
+        return new ResponseEntity<>(employeeList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/employees")
-    public ResponseEntity<ArrayList<UserResponse>> getEmployeesOfCompany (
+    public ResponseEntity getEmployeesOfCompany (
         @PathVariable Long id
     ) {
         var company = companyService.find(id).orElseThrow(EntityNotFoundException::new);
-        var userList = new ArrayList<UserResponse>();
-        company.getEmployees().stream().map(UserResponse::new).forEach(userList::add);
+        var userList = company.getEmployees()
+            .stream()
+            .map(UserResponse::new)
+            .toArray(UserResponse[]::new);
         return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 
@@ -106,12 +123,12 @@ public class CompanyController {
         @PathVariable Long locationId
     ) {
         var responseLocation = companyService.find(id)
-                                        .orElseThrow(EntityNotFoundException::new)
-                                        .getLocations()
-                                        .stream()
-                                        .filter(location -> location.getId().equals(locationId))
-                                        .findFirst()
-                                        .orElseThrow(EntityNotFoundException::new);
+            .orElseThrow(EntityNotFoundException::new)
+            .getLocations()
+            .stream()
+            .filter(location -> location.getId().equals(locationId))
+            .findFirst()
+            .orElseThrow(EntityNotFoundException::new);
 
         return new ResponseEntity<>(new LocationResponse(responseLocation), HttpStatus.OK);
     }
