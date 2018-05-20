@@ -57,6 +57,7 @@ public class UserController {
         user.setLastname(userRequest.getLastname());
         user.setActive(userRequest.isActive());
         user.setVerified(userRequest.isVerified());
+        user.setType(User.Type.FREELANCER);
 
         userService.save(user);
 

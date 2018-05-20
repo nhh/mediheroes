@@ -13,6 +13,12 @@ import java.util.Objects;
 @Table(name = "users")
 public class User {
 
+    public enum Type {
+        FREELANCER,
+        EMPLOYEE,
+        OWNER,
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
@@ -21,6 +27,9 @@ public class User {
     @NotNull
     @Column(unique = true)
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
     @NotNull
     @Column
@@ -62,9 +71,9 @@ public class User {
     }
 
     public void setCompany(Company company) {
+        this.setType(Type.OWNER);
         this.company = company;
     }
-
 
     public String getEmail() {
         return email;
@@ -127,21 +136,7 @@ public class User {
     }
 
     public List<String> getRoles(){
-        var roles = new ArrayList<String>();
-
-        if(hasCompany()){
-            roles.add("OWNER");
-        } else if (isEmployee()) {
-            roles.add("EMPLOYEE");
-        } else {
-            roles.add("FREELANCER");
-        }
-
-        return roles;
-    }
-
-    public boolean isEmployee() {
-        return this.employer == null;
+        return List.of(type.toString());
     }
 
     public Address getAddress() {
@@ -177,6 +172,7 @@ public class User {
     }
 
     public void setEmployer(Company employer) {
+        this.setType(Type.EMPLOYEE);
         this.employer = employer;
     }
 
@@ -194,4 +190,11 @@ public class User {
         return Objects.hash(id);
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
 }
