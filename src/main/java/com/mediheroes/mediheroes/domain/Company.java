@@ -31,7 +31,7 @@ public class Company {
     @Column
     private String email;
 
-    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JobOffer> jobOffers;
 
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -134,6 +134,11 @@ public class Company {
     public void addJobOffer(JobOffer jobOffer){
         jobOffers.add(jobOffer);
         jobOffer.setCompany(this);
+    }
+
+    public void removeJobOffer(JobOffer jobOffer){
+        jobOffers.remove(jobOffer);
+        jobOffer.setCompany(null);
     }
 
     public List<JobOffer> getJobOffers() {

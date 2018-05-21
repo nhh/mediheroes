@@ -219,7 +219,7 @@ public class CompanyController {
     }
 
     @DeleteMapping("/{id}/job-offers/{jobOfferId}")
-    public ResponseEntity<JobOfferResponse> deleteOneJobOffer(
+    public ResponseEntity deleteOneJobOffer(
         @PathVariable Long id,
         @PathVariable Long jobOfferId
     ){
@@ -235,9 +235,13 @@ public class CompanyController {
             .findFirst()
             .orElseThrow(EntityNotFoundException::new);
 
-        jobOfferService.deleteJobOffer(jobOffer, user);
+        var company = companyService
+            .find(id)
+            .orElseThrow(EntityNotFoundException::new);
 
-        return new ResponseEntity<>(new JobOfferResponse(jobOffer), HttpStatus.OK);
+        companyService.deleteJobOffer(company, jobOffer, user);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/{id}/job-offers")

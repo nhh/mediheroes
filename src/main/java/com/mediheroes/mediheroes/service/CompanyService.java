@@ -53,4 +53,11 @@ public class CompanyService {
     public List<JobOffer> getJobOffers(Company company, User user) {
         return company.getJobOffers();
     }
+
+    @PreAuthorize("@companyPermission.canDeleteJobOffer(#company, #user)")
+    public void deleteJobOffer(Company company, JobOffer jobOffer, User user) {
+        company.removeJobOffer(jobOffer);
+        save(company);
+    }
+
 }

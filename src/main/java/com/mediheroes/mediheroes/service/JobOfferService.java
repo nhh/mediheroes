@@ -32,12 +32,7 @@ public class JobOfferService {
         return jobOfferRepository.findAllByCompanyId(company.getId());
     }
 
-    @PreAuthorize("@jobOfferPermission.canDeleteJobOffer(#jobOffer, #user)")
-    public void deleteJobOffer(JobOffer jobOffer, User user) {
-        this.jobOfferRepository.delete(jobOffer);
-    }
-
-    @PreAuthorize("@jobOfferPermission.canUpdateJobOffer(#jobOffer, #user)")
+    @PreAuthorize("@jobOfferPermission.canUpdateJobOffer(#company, #user)")
     public JobOffer updateJobOffer(JobOffer jobOffer, User user) {
         return jobOfferRepository.save(jobOffer);
     }

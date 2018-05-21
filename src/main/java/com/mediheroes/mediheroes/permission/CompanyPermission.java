@@ -19,4 +19,8 @@ public class CompanyPermission {
     public boolean canGetJobOffers(Company company, User user){
         return true;
     }
+
+    public boolean canDeleteJobOffer(Company company, User user){
+        return true;
+    }
 }
