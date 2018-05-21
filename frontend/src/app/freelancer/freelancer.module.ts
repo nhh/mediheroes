@@ -9,11 +9,11 @@ import {HttpErrorInterceptor} from '../shared/class/http-error-interceptor';
 import {FreelancerRouting} from './freelancer.routing';
 import {FreelancerComponent} from './component/freelancer.component';
 import {NavigationComponent} from './component/navigation/navigation.component';
-import { SettingsComponent } from './component/settings/settings.component';
-import { JobOffersComponent } from './component/job-offers/job-offers.component';
+import {SettingsComponent} from './component/settings/settings.component';
+import {IndexComponent} from './component/job-offers/index/index.component';
 import {SharedModule} from '../shared/shared.module';
 import {IsFreelancerGuard} from '../shared/guard/is-freelancer.guard';
-import { ShowComponent } from './component/job-offers/show/show.component';
+import {ShowComponent} from './component/job-offers/show/show.component';
 
 
 @NgModule({
@@ -22,7 +22,7 @@ import { ShowComponent } from './component/job-offers/show/show.component';
     FreelancerComponent,
     NavigationComponent,
     SettingsComponent,
-    JobOffersComponent,
+    IndexComponent,
     ShowComponent
   ],
   imports: [

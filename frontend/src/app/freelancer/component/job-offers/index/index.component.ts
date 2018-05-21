@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from '../../../shared/service/user.service';
-import {JobOfferResourceService} from '../../../shared/service/resource/job-offer-resource.service';
+import {JobOfferResourceService} from '../../../../shared/service/resource/job-offer-resource.service';
 
 @Component({
   selector: 'app-job-offers',
-  templateUrl: './job-offers.component.html',
-  styleUrls: ['./job-offers.component.css']
+  templateUrl: './index.component.html',
+  styleUrls: ['./index.component.css']
 })
-export class JobOffersComponent implements OnInit {
+export class IndexComponent implements OnInit {
 
   isLoading = false;
   jobOffers : any = [];

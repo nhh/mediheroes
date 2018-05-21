@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 import { DashboardComponent} from './component/dashboard/dashboard.component';
 import {FreelancerComponent} from './component/freelancer.component';
 import {SettingsComponent} from './component/settings/settings.component';
-import {JobOffersComponent} from './component/job-offers/job-offers.component';
 import {IsFreelancerGuard} from '../shared/guard/is-freelancer.guard';
 import {IsAuthenticatedGuard} from '../shared/guard/is-authenticated.guard';
 import {ShowComponent} from './component/job-offers/show/show.component';
+import {IndexComponent} from './component/job-offers/index/index.component';
 
 const routes: Routes = [
   {
@@ -25,8 +25,11 @@ const routes: Routes = [
       },
       {
         path: "job-offers",
-        component: JobOffersComponent,
         children: [
+          {
+            path: "",
+            component: IndexComponent
+          },
           {
             path: ":id",
             component: ShowComponent
