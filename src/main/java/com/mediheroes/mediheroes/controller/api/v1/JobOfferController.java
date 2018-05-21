@@ -49,16 +49,8 @@ public class JobOfferController {
     }
 
     @GetMapping("")
-    public ResponseEntity<JobOfferResponse[]> getAllJobOffers(
-        @RequestParam("companyId") Long companyId
-    ){
-        var user = userService
-            .getCurrentUser()
-            .orElseThrow(EntityNotFoundException::new);
-        var company = companyService
-            .find(companyId)
-            .orElseThrow(EntityNotFoundException::new);
-
+    public ResponseEntity<JobOfferResponse[]> getAllJobOffers() {
+        // Todo refactor within service for permission checks
         var jobOffers = StreamSupport
             .stream(jobOfferService.findAll().spliterator(), false)
             .map(JobOfferResponse::new)
