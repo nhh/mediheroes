@@ -32,7 +32,7 @@ public class JobOfferService {
         return jobOfferRepository.findAllByCompanyId(company.getId());
     }
 
-    @PreAuthorize("@jobOfferPermission.canUpdateJobOffer(#company, #user)")
+    @PreAuthorize("@jobOfferPermission.canUpdateJobOffer(#jobOffer, #user)")
     public JobOffer updateJobOffer(JobOffer jobOffer, User user) {
         return jobOfferRepository.save(jobOffer);
     }
