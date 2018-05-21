@@ -41,4 +41,8 @@ public class JobOfferService {
     public JobOffer updateJobOffer(JobOffer jobOffer, User user) {
         return jobOfferRepository.save(jobOffer);
     }
+
+    public Iterable<JobOffer> findAll() {
+        return jobOfferRepository.findAll();
+    }
 }

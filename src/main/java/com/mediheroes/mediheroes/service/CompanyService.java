@@ -1,11 +1,14 @@
 package com.mediheroes.mediheroes.service;
 
 import com.mediheroes.mediheroes.domain.Company;
+import com.mediheroes.mediheroes.domain.JobOffer;
 import com.mediheroes.mediheroes.domain.Location;
+import com.mediheroes.mediheroes.domain.User;
 import com.mediheroes.mediheroes.repository.CompanyRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,5 +41,16 @@ public class CompanyService {
     public void addLocationToCompany(Company company, Location location) {
         company.addLocation(location);
         companyRepository.save(company);
+    }
+
+    @PreAuthorize("@companyPermission.canAddJobOffer(#company, #user)")
+    public void addJobOfferToCompany(JobOffer jobOffer, Company company, User user) {
+        company.addJobOffer(jobOffer);
+        save(company);
+    }
+
+    @PreAuthorize("@companyPermission.canGetJobOffers(#company, #user)")
+    public List<JobOffer> getJobOffers(Company company, User user) {
+        return company.getJobOffers();
     }
 }

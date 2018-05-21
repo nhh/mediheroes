@@ -1,11 +1,13 @@
 package com.mediheroes.mediheroes.controller.api.v1;
 
 import com.mediheroes.mediheroes.domain.Company;
+import com.mediheroes.mediheroes.domain.JobOffer;
 import com.mediheroes.mediheroes.domain.Location;
 import com.mediheroes.mediheroes.dto.*;
 import com.mediheroes.mediheroes.exception.EntityAlreadyExistsException;
 import com.mediheroes.mediheroes.service.CompanyService;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
+import com.mediheroes.mediheroes.service.JobOfferService;
 import com.mediheroes.mediheroes.service.LocationService;
 import com.mediheroes.mediheroes.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.stream.StreamSupport;
 
 @RestController
@@ -24,15 +27,18 @@ public class CompanyController {
     private final CompanyService companyService;
     private final LocationService locationService;
     private final UserService userService;
+    private final JobOfferService jobOfferService;
 
     public CompanyController (
         CompanyService companyService,
         LocationService locationService,
-        UserService userService
+        UserService userService,
+        JobOfferService jobOfferService
     ) {
         this.companyService = companyService;
         this.locationService = locationService;
         this.userService = userService;
+        this.jobOfferService = jobOfferService;
     }
 
     @GetMapping("")
@@ -178,4 +184,128 @@ public class CompanyController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}/job-offers/{jobOfferId}")
+    public ResponseEntity<JobOfferResponse> updateOneJobOffer(
+        @PathVariable Long id,
+        @PathVariable Long jobOfferId,
+        @Valid @RequestBody JobOfferRequest jobOfferRequest
+    ){
+        var user = userService
+            .getCurrentUser()
+            .orElseThrow(EntityNotFoundException::new);
+
+        var jobOffer = companyService
+            .find(id)
+            .orElseThrow(EntityNotFoundException::new)
+            .getJobOffers().stream()
+            .filter(offer -> offer.getId().equals(jobOfferId))
+            .findFirst()
+            .orElseThrow(EntityNotFoundException::new);
+
+        var location = locationService
+            .find(jobOfferRequest
+            .getLocationId()).orElseThrow(EntityNotFoundException::new);
+
+        jobOffer.setSalary(jobOfferRequest.getSalary());
+        jobOffer.setJob(jobOfferRequest.getJob());
+        jobOffer.setDescription(jobOfferRequest.getDescription());
+        jobOffer.setName(jobOfferRequest.getName());
+        jobOffer.setLocation(location);
+
+        jobOfferService.updateJobOffer(jobOffer, user);
+
+        return new ResponseEntity<>(new JobOfferResponse(jobOffer), HttpStatus.OK);
+
+    }
+
+    @DeleteMapping("/{id}/job-offers/{jobOfferId}")
+    public ResponseEntity<JobOfferResponse> deleteOneJobOffer(
+        @PathVariable Long id,
+        @PathVariable Long jobOfferId
+    ){
+        var user = userService
+            .getCurrentUser()
+            .orElseThrow(EntityNotFoundException::new);
+
+        var jobOffer = companyService
+            .find(id)
+            .orElseThrow(EntityNotFoundException::new)
+            .getJobOffers().stream()
+            .filter(offer -> offer.getId().equals(jobOfferId))
+            .findFirst()
+            .orElseThrow(EntityNotFoundException::new);
+
+        jobOfferService.deleteJobOffer(jobOffer, user);
+
+        return new ResponseEntity<>(new JobOfferResponse(jobOffer), HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/job-offers/")
+    public ResponseEntity<JobOfferResponse> createJobOffer (
+        @PathVariable Long id,
+        @Valid @RequestBody JobOfferRequest jobOfferRequest
+    ) {
+        var user = userService
+            .getCurrentUser()
+            .orElseThrow(EntityNotFoundException::new);
+
+        var company = companyService
+            .find(id)
+            .orElseThrow(EntityNotFoundException::new);
+
+        var location = locationService
+            .find(jobOfferRequest.getLocationId())
+            .orElseThrow(EntityNotFoundException::new);
+
+        var jobOffer = new JobOffer();
+
+        jobOffer.setCompany(company);
+        jobOffer.setLocation(location);
+        jobOffer.setName(jobOfferRequest.getName());
+        jobOffer.setDescription(jobOfferRequest.getDescription());
+        jobOffer.setJob(jobOfferRequest.getJob());
+        jobOffer.setSalary(jobOfferRequest.getSalary());
+
+        companyService.addJobOfferToCompany(jobOffer, company, user);
+
+        return new ResponseEntity<>(new JobOfferResponse(jobOffer), HttpStatus.CREATED);
+    }
+
+
+    @GetMapping("/{id}/job-offers/{jobOfferId}")
+    public ResponseEntity<JobOfferResponse> getOneJobOffer(
+        @PathVariable Long id,
+        @PathVariable Long jobOfferId
+    ){
+        var jobOffer = companyService
+            .find(id)
+            .orElseThrow(EntityNotFoundException::new)
+            .getJobOffers().stream()
+            .filter(offer -> offer.getId().equals(jobOfferId))
+            .findFirst()
+            .map(JobOfferResponse::new)
+            .orElseThrow(EntityNotFoundException::new);
+
+        return new ResponseEntity<>(jobOffer, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/job-offers")
+    public ResponseEntity<JobOfferResponse[]> getAllJobOffersOfCompany(
+        @PathVariable Long id
+    ){
+        var user = userService
+            .getCurrentUser()
+            .orElseThrow(EntityNotFoundException::new);
+
+        var company = companyService
+            .find(id)
+            .orElseThrow(EntityNotFoundException::new);
+
+        var jobOffers = companyService.getJobOffers(company, user)
+            .stream()
+            .map(JobOfferResponse::new)
+            .toArray(JobOfferResponse[]::new);
+
+        return new ResponseEntity<>(jobOffers, HttpStatus.OK);
+    }
 }
