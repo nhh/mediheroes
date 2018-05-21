@@ -24,6 +24,7 @@ import {JobOfferResourceService} from '../shared/service/resource/job-offer-reso
 import {TokenResourceService} from '../shared/service/resource/token-resource.service';
 import {UserResourceService} from '../shared/service/resource/user-resource.service';
 import {SharedModule} from '../shared/shared.module';
+import {IsEmployeeGuard} from '../shared/guard/is-employee.guard';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import {SharedModule} from '../shared/shared.module';
   ],
   providers: [
     IsAuthenticatedGuard,
+    IsEmployeeGuard,
     CompanyResourceService,
     JobOfferResourceService,
     TokenResourceService,

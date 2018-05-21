@@ -26,9 +26,7 @@ import {SharedModule} from './shared/shared.module';
     FreelancerRouting,
     FormsModule
   ],
-  providers: [
-
-  ],
+  providers: [],
   bootstrap: [
     AppComponent
   ]

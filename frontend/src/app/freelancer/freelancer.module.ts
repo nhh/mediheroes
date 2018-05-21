@@ -12,6 +12,7 @@ import {NavigationComponent} from './component/navigation/navigation.component';
 import { SettingsComponent } from './component/settings/settings.component';
 import { JobOffersComponent } from './component/job-offers/job-offers.component';
 import {SharedModule} from '../shared/shared.module';
+import {IsFreelancerGuard} from '../shared/guard/is-freelancer.guard';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import {SharedModule} from '../shared/shared.module';
   ],
   providers: [
     IsAuthenticatedGuard,
+    IsFreelancerGuard,
     UserService,
     {
       provide: HTTP_INTERCEPTORS,

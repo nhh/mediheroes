@@ -8,7 +8,7 @@ export class UserService {
   }
 
   getCurrentUser() {
-    let currentUser = localStorage.getItem("currentUser");
+    const currentUser = localStorage.getItem("currentUser");
 
     if(currentUser == null){
       // handle not authenticated
@@ -17,7 +17,7 @@ export class UserService {
   }
 
   getCurrentCompany(){
-    let user = localStorage.getItem("currentUser");
+    const user = localStorage.getItem("currentUser");
 
     if (user == null){
 
@@ -27,13 +27,18 @@ export class UserService {
   }
 
   isEmployee(): boolean {
-    let user = JSON.parse(localStorage.getItem("currentUser"));
+    const user = JSON.parse(localStorage.getItem("currentUser"));
     return user.roles.includes("EMPLOYEE")
   }
 
   isOwner(): boolean {
-    let user = JSON.parse(localStorage.getItem("currentUser"));
+    const user = JSON.parse(localStorage.getItem("currentUser"));
     return user.roles.includes("OWNER")
+  }
+
+  isFreelancer(): boolean {
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    return user.roles.includes("FREELANCER")
   }
 
 }
