@@ -9,7 +9,6 @@ import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {LocationsComponent} from './components/settings/locations/locations.component';
 import {StationsComponent} from './components/settings/stations/stations.component';
 import {SettingsNavigationComponent} from './components/settings/settings-navigation/settings-navigation.component';
-import {LoadingSpinnerComponent} from './components/shared/loading-spinner/loading-spinner.component';
 import {ApplicationUnavailableComponent} from './components/shared/application-unavailable/application-unavailable.component';
 import {NewJobOfferComponent} from './components/job-offers/new-job-offer/new-job-offer.component';
 import {JobOfferOverviewComponent} from './components/job-offers/job-offer-overview/job-offer-overview.component';
@@ -24,7 +23,7 @@ import {CompanyResourceService} from '../shared/service/resource/company-resourc
 import {JobOfferResourceService} from '../shared/service/resource/job-offer-resource.service';
 import {TokenResourceService} from '../shared/service/resource/token-resource.service';
 import {UserResourceService} from '../shared/service/resource/user-resource.service';
-import {Injector} from '@angular/core';
+import {SharedModule} from '../shared/shared.module';
 
 
 @NgModule({
@@ -38,13 +37,13 @@ import {Injector} from '@angular/core';
     LocationsComponent,
     StationsComponent,
     SettingsNavigationComponent,
-    LoadingSpinnerComponent,
     ApplicationUnavailableComponent,
     NewJobOfferComponent,
     JobOfferOverviewComponent,
     ShowJobOfferComponent
   ],
   imports: [
+    SharedModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,
@@ -73,7 +72,6 @@ import {Injector} from '@angular/core';
     LocationsComponent,
     StationsComponent,
     SettingsNavigationComponent,
-    LoadingSpinnerComponent,
     ApplicationUnavailableComponent,
     NewJobOfferComponent,
     JobOfferOverviewComponent,

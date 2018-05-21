@@ -11,6 +11,7 @@ import {FreelancerComponent} from './component/freelancer.component';
 import {NavigationComponent} from './component/navigation/navigation.component';
 import { SettingsComponent } from './component/settings/settings.component';
 import { JobOffersComponent } from './component/job-offers/job-offers.component';
+import {SharedModule} from '../shared/shared.module';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { JobOffersComponent } from './component/job-offers/job-offers.component'
     JobOffersComponent
   ],
   imports: [
+    SharedModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,

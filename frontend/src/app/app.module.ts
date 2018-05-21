@@ -9,21 +9,29 @@ import { FormsModule } from '@angular/forms';
 import {AuthRouting} from './auth/auth.routing';
 import {EmployeeRouting} from './employee/employee.routing';
 import {FreelancerRouting} from './freelancer/freelancer.routing';
+import {SharedModule} from './shared/shared.module';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
   imports: [
     BrowserModule,
     EmployeeModule,
     EmployeeRouting,
+    SharedModule,
     AuthModule,
     AuthRouting,
     FreelancerModule,
     FreelancerRouting,
     FormsModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 
 export class AppModule { }

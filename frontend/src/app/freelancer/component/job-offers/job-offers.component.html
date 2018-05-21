@@ -41,6 +41,7 @@
     <a class="button is-fullwidth">Filter bestätigen</a>
   </div>
   <div class="column">
+    <app-loading-spinner *ngIf="this.isLoading"></app-loading-spinner>
     <table *ngIf="!this.isLoading" class="table is-fullwidth">
       <thead>
       <tr>
@@ -68,7 +69,7 @@
             </div>
             <div class="dropdown-menu" id="dropdown-menu" role="menu">
               <div class="dropdown-content">
-                <a class="dropdown-item" (click)="addToFavorites(offer.id)">
+                <a class="dropdown-item" (click)="addToFavorites(offer)">
                   <span class="icon is-small">
                     <i class="fa fa-heart"></i>
                   </span>
