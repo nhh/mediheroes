@@ -240,7 +240,7 @@ public class CompanyController {
         return new ResponseEntity<>(new JobOfferResponse(jobOffer), HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/job-offers/")
+    @PostMapping("/{id}/job-offers")
     public ResponseEntity<JobOfferResponse> createJobOffer (
         @PathVariable Long id,
         @Valid @RequestBody JobOfferRequest jobOfferRequest
