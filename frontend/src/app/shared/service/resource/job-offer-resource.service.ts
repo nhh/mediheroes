@@ -9,24 +9,13 @@ export class JobOfferResourceService extends AbstractResourceService {
 
   private basePath = "/api/v1/job-offers";
 
-  getJobOffers(companyId: number){
-    return this.http.get(this.basePath + '?companyId=' + companyId, this.authenticatedHttpOptions());
+
+  getAllJobOffers(){
+    return this.http.get(this.basePath, this.authenticatedHttpOptions());
   }
 
-  deleteJobOffer(id : number){
-    return this.http.delete(this.basePath + '/' + id, this.authenticatedHttpOptions());
-  }
-
-  createJobOffer(jobOfferRequest : JobOfferRequest){
-    return this.http.post(this.basePath, jobOfferRequest, this.authenticatedHttpOptions());
-  }
-
-  getJobOffer(id : number){
+  getOneJobOffer(id : number){
     return this.http.get(this.basePath + '/' + id, this.authenticatedHttpOptions());
-  }
-
-  updateJobOffer(id : number, jobOffer : JobOfferRequest){
-    return this.http.put(this.basePath + '/' + id, jobOffer, this.authenticatedHttpOptions());
   }
 
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {JobOfferRequest} from "../../../dtos/job-offer-request";
 import {UserService} from "../../../../shared/service/user.service";
 import {Router} from "@angular/router";
-import {JobOfferResourceService} from '../../../../shared/service/resource/job-offer-resource.service';
+import {CompanyResourceService} from '../../../../shared/service/resource/company-resource.service';
 
 @Component({
   selector: 'app-new-job-offer',
@@ -13,7 +13,11 @@ export class NewJobOfferComponent implements OnInit {
 
   jobOfferRequest = new JobOfferRequest();
 
-  constructor(private userService : UserService, private router : Router, private jobOfferResourceService : JobOfferResourceService) {}
+  constructor(
+    private userService : UserService,
+    private router : Router,
+    private companyResourceService : CompanyResourceService
+  ) {}
 
   ngOnInit() {
 
@@ -24,7 +28,7 @@ export class NewJobOfferComponent implements OnInit {
     this.jobOfferRequest.companyId = this.userService.getCurrentCompany().id;
     this.jobOfferRequest.locationId = 1;
 
-    this.jobOfferResourceService.createJobOffer(this.jobOfferRequest).subscribe(
+    this.companyResourceService.addJobOffer(this.userService.getCurrentCompany().id, this.jobOfferRequest).subscribe(
       data => {
         this.router.navigate(['/employee/job-offers']);
       },

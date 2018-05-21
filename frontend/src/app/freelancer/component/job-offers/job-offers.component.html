@@ -1,3 +1,85 @@
-<p>
-  job-offers works!
-</p>
+<div class="columns">
+  <div class="column is-3">
+    <nav class="level">
+      <div class="level-left">
+        <div class="level-item">
+          <p class="subtitle is-5">
+            <strong>Jobangebote:</strong>
+          </p>
+        </div>
+      </div>
+      <div class="level-right">
+        <p class="level-item"><a>Alle</a></p>
+        <p class="level-item"><a>Favoriten</a></p>
+        <p class="level-item"><a class="button is-success">Neuste</a></p>
+      </div>
+    </nav>
+    <nav class="level">
+      <div class="level-left">
+        <div class="level-item">
+          <div class="select">
+            <select>
+              <option>Bundesland wählen</option>
+              <option>Niedersachen</option>
+              <option>Hamburg</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="level-right">
+        <div class="level-item">
+          <div class="select">
+            <select>
+              <option>Job wählen</option>
+              <option>Krankenpfleger/in</option>
+              <option>Notarzt/in</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <a class="button is-fullwidth">Filter bestätigen</a>
+  </div>
+  <div class="column">
+    <table *ngIf="!this.isLoading" class="table is-fullwidth">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Angebot</th>
+        <th>Jobtitel</th>
+        <th>Träger</th>
+        <th>Optionen</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let offer of jobOffers">
+        <td>#JO{{offer.id}}</td>
+        <td><a [routerLink]="offer.id">{{offer.name}}</a></td>
+        <td>{{offer.job}}</td>
+        <td>{{offer.description}}</td>
+        <td>
+          <div class="dropdown is-hoverable is-right">
+            <div class="dropdown-trigger">
+              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                <span class="icon is-small">
+                  <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+              <div class="dropdown-content">
+                <a class="dropdown-item" (click)="addToFavorites(offer.id)">
+                  <span class="icon is-small">
+                    <i class="fa fa-heart"></i>
+                  </span>
+                  Zu Favoriten hinzufügen
+                </a>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

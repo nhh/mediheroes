@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {JobOfferRequest} from '../../../dtos/job-offer-request';
 import {ActivatedRoute} from '@angular/router';
-import {JobOfferResourceService} from '../../../../shared/service/resource/job-offer-resource.service';
+import {CompanyResourceService} from '../../../../shared/service/resource/company-resource.service';
+import {UserService} from '../../../../shared/service/user.service';
 
 @Component({
   selector: 'app-show-job-offer',
@@ -15,7 +16,8 @@ export class ShowJobOfferComponent implements OnInit {
   private jobOfferId : number;
 
   constructor(
-    private jobOfferResourceService: JobOfferResourceService,
+    private companyResourceService: CompanyResourceService,
+    private userService : UserService,
     private route: ActivatedRoute
   ) { }
 
@@ -26,8 +28,8 @@ export class ShowJobOfferComponent implements OnInit {
     });
   }
 
-  loadCurrentJobOffer(id : number){
-    this.jobOfferResourceService.getJobOffer(id).subscribe(
+  loadCurrentJobOffer(jobOfferId : number){
+    this.companyResourceService.getOneJobOffer(this.userService.getCurrentCompany().id, jobOfferId).subscribe(
       (data : any) => {
         this.jobOfferRequest = data;
       },
@@ -42,7 +44,7 @@ export class ShowJobOfferComponent implements OnInit {
 
   updateJobOffer(){
     this.isLoading = true;
-    this.jobOfferResourceService.updateJobOffer(this.jobOfferId, this.jobOfferRequest).subscribe(
+    this.companyResourceService.updateJobOffer(this.userService.getCurrentCompany().id, this.jobOfferId, this.jobOfferRequest).subscribe(
       (data : any) => {
         this.jobOfferRequest = data;
       },

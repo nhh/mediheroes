@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from "../../../../shared/service/user.service";
 import {JobOfferResourceService} from '../../../../shared/service/resource/job-offer-resource.service';
+import {CompanyResourceService} from '../../../../shared/service/resource/company-resource.service';
 
 @Component({
   selector: 'app-job-offer-overview',
@@ -10,7 +11,7 @@ import {JobOfferResourceService} from '../../../../shared/service/resource/job-o
 export class JobOfferOverviewComponent implements OnInit {
 
   constructor(
-    private jobOfferResourceService : JobOfferResourceService,
+    private companyResourceService : CompanyResourceService,
     private userService : UserService
   ) {}
 
@@ -23,7 +24,7 @@ export class JobOfferOverviewComponent implements OnInit {
 
   loadJobOffers() {
     this.isLoading = true;
-    this.jobOfferResourceService.getJobOffers(this.userService.getCurrentCompany().id).subscribe(
+    this.companyResourceService.getJobOffers(this.userService.getCurrentCompany().id).subscribe(
       data => this.jobOffers = data,
       error => console.log(error),
       () => {
@@ -34,8 +35,8 @@ export class JobOfferOverviewComponent implements OnInit {
     );
   }
 
-  deleteJobOffer(id : number) {
-    this.jobOfferResourceService.deleteJobOffer(id).subscribe(
+  deleteJobOffer(jobOfferId : number) {
+    this.companyResourceService.removeJobOffer(this.userService.getCurrentCompany().id, jobOfferId).subscribe(
       data => this.loadJobOffers(),
       error => console.log(error)
     );
