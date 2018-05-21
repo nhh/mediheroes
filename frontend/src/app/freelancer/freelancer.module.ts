@@ -13,6 +13,7 @@ import { SettingsComponent } from './component/settings/settings.component';
 import { JobOffersComponent } from './component/job-offers/job-offers.component';
 import {SharedModule} from '../shared/shared.module';
 import {IsFreelancerGuard} from '../shared/guard/is-freelancer.guard';
+import { ShowComponent } from './component/job-offers/show/show.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {IsFreelancerGuard} from '../shared/guard/is-freelancer.guard';
     FreelancerComponent,
     NavigationComponent,
     SettingsComponent,
-    JobOffersComponent
+    JobOffersComponent,
+    ShowComponent
   ],
   imports: [
     SharedModule,

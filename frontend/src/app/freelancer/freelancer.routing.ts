@@ -6,6 +6,7 @@ import {SettingsComponent} from './component/settings/settings.component';
 import {JobOffersComponent} from './component/job-offers/job-offers.component';
 import {IsFreelancerGuard} from '../shared/guard/is-freelancer.guard';
 import {IsAuthenticatedGuard} from '../shared/guard/is-authenticated.guard';
+import {ShowComponent} from './component/job-offers/show/show.component';
 
 const routes: Routes = [
   {
@@ -24,7 +25,13 @@ const routes: Routes = [
       },
       {
         path: "job-offers",
-        component: JobOffersComponent
+        component: JobOffersComponent,
+        children: [
+          {
+            path: ":id",
+            component: ShowComponent
+          }
+        ]
       }
     ]
   }
