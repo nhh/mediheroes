@@ -20,7 +20,7 @@ export class IsAuthenticatedGuard implements CanActivate, CanActivateChild {
     if(this.authService.isAuthenticated()){
       return true
     } else {
-      this.authService.logout().subscribe();
+      this.authService.logout();
       this.router.navigate(['/login']);
       return false
     }
@@ -32,7 +32,7 @@ export class IsAuthenticatedGuard implements CanActivate, CanActivateChild {
     if(this.authService.isAuthenticated()){
       return true
     } else {
-      this.authService.logout().subscribe();
+      this.authService.logout();
       this.router.navigate(['/login']);
       return false
     }

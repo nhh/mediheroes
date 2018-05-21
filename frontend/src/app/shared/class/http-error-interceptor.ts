@@ -15,21 +15,18 @@ import {Router} from '@angular/router';
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
-  constructor(private authService : AuthService, private router : Router){
-
-  }
+  constructor(
+    private authService : AuthService
+  ){}
 
   private handleHttpError(error){
     if (error instanceof HttpErrorResponse) {
-      if (error.status === 401 || error.status === 0) {
-        this.authService.logout().subscribe(
-          (success) => {
+      if(error.status === 502 || error.status === 503){
 
-          }, (error) => {
-            console.log(error);
-          },
-          () => this.router.navigate(['/login'])
-        );
+      }
+
+      if (error.status === 401 || error.status === 0) {
+        this.authService.logout();
       }
     }
     return throwError(error);

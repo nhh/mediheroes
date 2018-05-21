@@ -4,6 +4,7 @@ import {TokenResourceService} from '../resource/token-resource.service';
 import {mergeMap} from 'rxjs/operators';
 import {UserResourceService} from '../resource/user-resource.service';
 import {RegisterRequest} from '../../dto/register-request';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +13,16 @@ export class AuthService {
 
   constructor(
     private tokenResourceService : TokenResourceService,
-    private userResourceService : UserResourceService
+    private userResourceService : UserResourceService,
+    private router : Router
   ) { }
 
   public logout() {
     localStorage.clear();
-    return this.tokenResourceService.deleteToken();
+    return this.tokenResourceService.deleteToken().subscribe(
+      (data) => this.router.navigate(['/login']),
+      (error) => this.router.navigate(['/login'])
+    );
   }
 
   public isAuthenticated() {

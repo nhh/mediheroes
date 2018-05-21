@@ -10,15 +10,13 @@ import {Router} from '@angular/router';
 export class NavigationComponent implements OnInit {
 
   constructor(
-    private authService : AuthService,
-    private router : Router
+    private authService : AuthService
   ) {}
 
   public navbar_toggle : boolean = false;
 
   public logout() : void {
-    this.authService.logout().subscribe();
-    this.router.navigate(['/login']);
+    this.authService.logout();
   }
 
   ngOnInit() {}
