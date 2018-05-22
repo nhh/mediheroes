@@ -51,8 +51,10 @@ public class JobOfferController {
     @GetMapping("")
     public ResponseEntity<JobOfferResponse[]> getAllJobOffers() {
         // Todo refactor within service for permission checks
+        var user = userService.getCurrentUser().orElseThrow(EntityNotFoundException::new);
+
         var jobOffers = StreamSupport
-            .stream(jobOfferService.findAll().spliterator(), false)
+            .stream(jobOfferService.findAll(user).spliterator(), false)
             .map(JobOfferResponse::new)
             .toArray(JobOfferResponse[]::new);
 

@@ -28,7 +28,7 @@ export class ShowJobOfferComponent implements OnInit {
     });
   }
 
-  loadCurrentJobOffer(jobOfferId : number){
+  loadCurrentJobOffer(jobOfferId : number) {
     this.companyResourceService.getOneJobOffer(this.userService.getCurrentCompany().id, jobOfferId).subscribe(
       (data : any) => {
         this.jobOfferRequest = data;
@@ -42,7 +42,7 @@ export class ShowJobOfferComponent implements OnInit {
     );
   }
 
-  updateJobOffer(){
+  updateJobOffer() {
     this.isLoading = true;
     this.companyResourceService.updateJobOffer(this.userService.getCurrentCompany().id, this.jobOfferId, this.jobOfferRequest).subscribe(
       (data : any) => {
