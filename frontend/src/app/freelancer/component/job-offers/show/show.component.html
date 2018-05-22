@@ -1,27 +1,6 @@
 <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 <div class="columns" *ngIf="!isLoading">
   <div class="column is-3">
-    <nav class="level">
-      <div class="level-left">
-        <div class="dropdown is-hoverable is-left">
-          <div class="dropdown-trigger">
-            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
-              <span>Optionen</span>
-              <span class="icon is-small">
-                <i class="fa fa-angle-down" aria-hidden="true"></i>
-              </span>
-            </button>
-          </div>
-          <div class="dropdown-menu" id="dropdown-menu4" role="menu">
-            <div class="dropdown-content">
-              <div class="dropdown-item">
-                <p>You can insert <strong>any type of content</strong> within the dropdown menu.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
     <div class="card">
       <div class="card-image">
         <figure class="image is-4by3">
@@ -51,10 +30,33 @@
     </div>
   </div>
   <div class="column">
-    <h1 class="title">
-      {{jobOffer.name}}
-      <small>{{jobOffer.job}}</small>
-    </h1>
+    <nav class="level">
+      <div class="level-left">
+        <h1 class="title is-2">
+          {{jobOffer.name}}
+          <small>{{jobOffer.job}}</small>
+        </h1>
+      </div>
+      <div class="level-right">
+        <div class="dropdown is-hoverable is-right">
+          <div class="dropdown-trigger">
+            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+              <span>Optionen</span>
+              <span class="icon is-small">
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+              </span>
+            </button>
+          </div>
+          <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+            <div class="dropdown-content">
+              <div class="dropdown-item">
+                <p>You can insert <strong>any type of content</strong> within the dropdown menu.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
     <div class="tabs is-centered is-boxed">
       <ul>
         <li class="is-active">
