@@ -15,16 +15,11 @@ public class UserPermission {
     }
 
     public boolean canAddCompany(User user, Company company){
+        return user.hasCompany() || company.getOwner() != null;
+    }
 
-        if (user.hasCompany()){
-            return false;
-        }
-
-        if (company.getOwner() != null){
-            return false;
-        }
-
-        return true;
+    public boolean isFreelancer(User user) {
+        return user.getType().equals(User.Type.FREELANCER);
     }
 
 }

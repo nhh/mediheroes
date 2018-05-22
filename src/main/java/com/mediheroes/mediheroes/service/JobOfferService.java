@@ -37,6 +37,7 @@ public class JobOfferService {
         return jobOfferRepository.save(jobOffer);
     }
 
+    @PreAuthorize("@userPermission.isFreelancer(#user)")
     public Iterable<JobOffer> findAll() {
         return jobOfferRepository.findAll();
     }
