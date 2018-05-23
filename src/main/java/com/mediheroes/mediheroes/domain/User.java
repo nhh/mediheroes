@@ -5,8 +5,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -135,8 +135,8 @@ public class User {
         this.updated_at = updated_at;
     }
 
-    public List<String> getRoles(){
-        return List.of(type.toString());
+    public Set<String> getRoles(){
+        return Set.of(type.toString());
     }
 
     public Address getAddress() {

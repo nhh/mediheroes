@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class CompanyService {
@@ -50,7 +51,7 @@ public class CompanyService {
     }
 
     @PreAuthorize("@companyPermission.canGetJobOffers(#company, #user)")
-    public List<JobOffer> getJobOffers(Company company, User user) {
+    public Set<JobOffer> getJobOffers(Company company, User user) {
         return company.getJobOffers();
     }
 

@@ -1,7 +1,7 @@
 package com.mediheroes.mediheroes.domain;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 public class UserSession implements Serializable {
 
@@ -9,7 +9,7 @@ public class UserSession implements Serializable {
     private final boolean verified;
     private final String email;
     private final String password;
-    private final List<String> roles;
+    private final Set<String> roles;
 
     public UserSession(User user) {
         active = user.isActive();
@@ -35,7 +35,7 @@ public class UserSession implements Serializable {
         return password;
     }
 
-    public List<String> getRoles() {
+    public Set<String> getRoles() {
         return roles;
     }
 }

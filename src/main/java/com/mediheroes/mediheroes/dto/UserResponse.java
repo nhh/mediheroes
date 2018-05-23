@@ -4,7 +4,9 @@ import com.mediheroes.mediheroes.domain.Company;
 import com.mediheroes.mediheroes.domain.User;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class UserResponse implements Serializable {
 
@@ -12,7 +14,7 @@ public class UserResponse implements Serializable {
     private final String firstname;
     private final String email;
     private final CompanyResponse company;
-    private final List<String> roles;
+    private final Set<String> roles;
 
     private final Long id;
 
@@ -29,7 +31,7 @@ public class UserResponse implements Serializable {
         }
     }
 
-    public List<String> getRoles() {
+    public Set<String> getRoles() {
         return roles;
     }
 

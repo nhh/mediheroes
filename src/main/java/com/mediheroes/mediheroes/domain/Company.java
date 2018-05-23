@@ -2,9 +2,7 @@ package com.mediheroes.mediheroes.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "companies")
@@ -32,16 +30,16 @@ public class Company {
     private String email;
 
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<JobOffer> jobOffers = new ArrayList<>();
+    private Set<JobOffer> jobOffers = new HashSet<>();
 
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Location> locations  = new ArrayList<>();
+    private Set<Location> locations = new HashSet<>();
 
     @OneToOne(mappedBy = "company", fetch = FetchType.LAZY)
     private User owner;
 
     @OneToMany(mappedBy = "employer", fetch = FetchType.LAZY)
-    private List<User> employees = new ArrayList<>();
+    private Set<User> employees = new HashSet<>();
 
     public void setOwner(User owner) {
         this.owner = owner;
@@ -79,15 +77,15 @@ public class Company {
         this.name = name;
     }
 
-    public void setJobOffers(List<JobOffer> jobOffers) {
+    public void setJobOffers(Set<JobOffer> jobOffers) {
         this.jobOffers = jobOffers;
     }
 
-    public List<Location> getLocations() {
+    public Set<Location> getLocations() {
         return locations;
     }
 
-    public void setLocations(List<Location> locations) {
+    public void setLocations(Set<Location> locations) {
         this.locations = locations;
     }
 
@@ -103,11 +101,11 @@ public class Company {
         return owner;
     }
 
-    public List<User> getEmployees() {
+    public Set<User> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(List<User> employees) {
+    public void setEmployees(Set<User> employees) {
         this.employees = employees;
     }
 
@@ -141,7 +139,7 @@ public class Company {
         jobOffer.setCompany(null);
     }
 
-    public List<JobOffer> getJobOffers() {
+    public Set<JobOffer> getJobOffers() {
         return jobOffers;
     }
 
