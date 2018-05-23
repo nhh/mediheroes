@@ -1,19 +1,18 @@
 package com.mediheroes.mediheroes.controller.api.v1;
 
-import com.mediheroes.mediheroes.domain.JobOffer;
-import com.mediheroes.mediheroes.dto.JobOfferRequest;
 import com.mediheroes.mediheroes.dto.JobOfferResponse;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
 import com.mediheroes.mediheroes.service.CompanyService;
 import com.mediheroes.mediheroes.service.JobOfferService;
-import com.mediheroes.mediheroes.service.LocationService;
 import com.mediheroes.mediheroes.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.stream.StreamSupport;
 
 @RestController
@@ -40,18 +39,22 @@ public class JobOfferController {
     public ResponseEntity<JobOfferResponse> getOneJobOffer(
         @PathVariable Long id
     ){
-        var jobOffer = jobOfferService
-            .findById(id)
-            .map(JobOfferResponse::new)
+        var user = userService
+            .getCurrentUser()
             .orElseThrow(EntityNotFoundException::new);
 
+        var jobOffer = jobOfferService
+            .findById(id, user)
+            .map(JobOfferResponse::new)
+            .orElseThrow(EntityNotFoundException::new);
         return new ResponseEntity<>(jobOffer, HttpStatus.OK);
     }
 
     @GetMapping("")
     public ResponseEntity<JobOfferResponse[]> getAllJobOffers() {
-        // Todo refactor within service for permission checks
-        var user = userService.getCurrentUser().orElseThrow(EntityNotFoundException::new);
+        var user = userService
+            .getCurrentUser()
+            .orElseThrow(EntityNotFoundException::new);
 
         var jobOffers = StreamSupport
             .stream(jobOfferService.findAll(user).spliterator(), false)

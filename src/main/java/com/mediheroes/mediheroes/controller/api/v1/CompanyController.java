@@ -5,8 +5,8 @@ import com.mediheroes.mediheroes.domain.JobOffer;
 import com.mediheroes.mediheroes.domain.Location;
 import com.mediheroes.mediheroes.dto.*;
 import com.mediheroes.mediheroes.exception.EntityAlreadyExistsException;
-import com.mediheroes.mediheroes.service.CompanyService;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
+import com.mediheroes.mediheroes.service.CompanyService;
 import com.mediheroes.mediheroes.service.JobOfferService;
 import com.mediheroes.mediheroes.service.LocationService;
 import com.mediheroes.mediheroes.service.UserService;
@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.stream.StreamSupport;
 
 @RestController

@@ -18,7 +18,8 @@ public class JobOfferService {
         this.jobOfferRepository = jobOfferRepository;
     }
 
-    public Optional<JobOffer> findById(Long id){
+    @PreAuthorize("@userPermission.isFreelancer(#user)")
+    public Optional<JobOffer> findById(Long id, User user){
         return jobOfferRepository.findById(id);
     }
 

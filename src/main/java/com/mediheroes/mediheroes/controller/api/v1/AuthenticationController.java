@@ -30,7 +30,6 @@ public class AuthenticationController {
             session.invalidate();
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalStateException e) {
-            // Already logged out
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }

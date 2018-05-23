@@ -14,7 +14,7 @@ public class SessionFlushJob {
     }
 
     // Todo implement jobs like this:
-    //@Scheduled(cron = cronTimer)
+    //@Scheduled(cron = "* * * * * *")
     private void clearSessionStorage(){
         redisClient.connect().async().flushdb();
     }
