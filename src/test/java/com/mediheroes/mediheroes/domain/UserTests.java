@@ -3,6 +3,7 @@ package com.mediheroes.mediheroes.domain;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 
 public class UserTests {
@@ -20,14 +21,29 @@ public class UserTests {
 
     @Test
     public void setCompany() {
-        // Setup
-        //fail("Implement me");
-        // Precondition
-        //fail("Implement me");
-        // Test
-        //fail("Implement me");
-        // Postcondition
-        //fail("Implement me");
+        var company  = new Company();
+        var user = new User();
+
+        assertNull(user.getCompany());
+        assertNull(user.getType());
+
+        user.setCompany(company);
+        assertEquals(user.getType(), User.Type.OWNER);
+        assertEquals(company.getOwner(), user);
+    }
+
+    @Test
+    public void equals() {
+        var user = new User();
+        var user1 = new User();
+
+        assertEquals(user, user1);
+
+        user.setId(1L);
+        user1.setId(10L);
+
+        assertNotEquals(user, user1);
+
     }
 
 }

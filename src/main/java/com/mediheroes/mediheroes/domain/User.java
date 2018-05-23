@@ -71,6 +71,7 @@ public class User {
 
     public void setCompany(Company company) {
         this.setType(Type.OWNER);
+        company.setOwner(this);
         this.company = company;
     }
 

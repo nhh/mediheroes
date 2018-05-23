@@ -32,10 +32,10 @@ public class Company {
     private String email;
 
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<JobOffer> jobOffers;
+    private List<JobOffer> jobOffers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Location> locations;
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Location> locations  = new ArrayList<>();
 
     @OneToOne(mappedBy = "company", fetch = FetchType.LAZY)
     private User owner;
