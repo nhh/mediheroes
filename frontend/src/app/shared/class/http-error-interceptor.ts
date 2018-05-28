@@ -10,7 +10,6 @@ import {Injectable} from '@angular/core';
 import {throwError, Observable} from 'rxjs';
 import {catchError, mergeMap} from 'rxjs/operators';
 import {AuthService} from '../service/auth/auth.service';
-import {Router} from '@angular/router';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {

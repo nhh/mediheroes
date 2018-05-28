@@ -1,0 +1,9 @@
+<section *ngFor="let banner of banners" [ngClass]="banner.klass" class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="subtitle">
+        {{banner.text}}
+      </h2>
+    </div>
+  </div>
+</section>
