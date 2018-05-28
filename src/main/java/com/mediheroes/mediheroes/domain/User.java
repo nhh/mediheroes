@@ -21,7 +21,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
-    private long id;
+    private Long id;
 
     @NotNull
     @Column(unique = true)
@@ -147,7 +147,7 @@ public class User {
         this.address = address;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
