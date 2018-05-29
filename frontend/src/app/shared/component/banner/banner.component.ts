@@ -11,7 +11,7 @@ import {Injectable} from '@angular/core';
 export class BannerComponent implements OnInit {
 
   banners : Notification[] = [];
-  deleteInterval = setInterval(() => this.removeNotification(), 1000);
+  deleteInterval = setInterval(() => this.removeNotification(), 3000);
 
   constructor() { }
 
@@ -19,9 +19,9 @@ export class BannerComponent implements OnInit {
 
   }
 
-  addNotification(notification : Notification){
+  addNotification(notification : Notification) {
     this.banners.push(notification);
-    this.deleteInterval = setInterval(() => this.removeNotification(), 1000);
+    this.deleteInterval = setInterval(() => this.removeNotification(), 3000);
   }
 
   removeNotification(){

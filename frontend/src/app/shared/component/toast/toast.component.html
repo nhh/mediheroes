@@ -1,3 +1,8 @@
-<p>
-  toast works!
-</p>
+<article *ngFor="let banner of banners" class="message toast is-active" [ngClass]="banner.klass">
+  <div class="message-body">
+    <span class="icon">
+      <i [ngClass]="banner.icon"></i>
+    </span>
+    {{banner.text}}
+  </div>
+</article>
