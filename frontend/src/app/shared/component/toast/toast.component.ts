@@ -12,9 +12,9 @@ export class ToastComponent extends BannerComponent implements OnInit {
   ngOnInit() {
     this.banners.push(
       new Notification(
-        "Hello, this is a long notification. Please watch this!",
+        "Wow, Welldone!",
         "is-success",
-        "fa fa-home"
+        "fa fa-check-circle-o fa-2x"
       )
     );
   }
