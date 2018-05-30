@@ -9,6 +9,7 @@ import {LoginComponent} from './component/login/login.component';
 import {RegisterComponent} from './component/register/register.component';
 import {AuthRouting} from './auth.routing';
 import {AuthComponent} from './component/auth.component';
+import {SharedModule} from '../shared/shared.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {AuthComponent} from './component/auth.component';
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    AuthRouting
+    AuthRouting,
+    SharedModule
   ],
   providers: [
     IsAuthenticatedGuard,

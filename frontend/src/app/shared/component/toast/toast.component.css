@@ -14,6 +14,12 @@
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 
+.toast.is-hidden {
+  -webkit-animation: fadeout 0.5s 2.5s;
+  animation: fadeout 0.5s 2.5s;
+}
+
+
 @-webkit-keyframes fadein {
   from {bottom: 0; opacity: 0;}
   to {bottom: 30px; opacity: 1;}
