@@ -5,6 +5,7 @@ import com.mediheroes.mediheroes.domain.JobOffer;
 import com.mediheroes.mediheroes.domain.User;
 import com.mediheroes.mediheroes.repository.JobOfferRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreFilter;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -41,5 +42,12 @@ public class JobOfferService {
     @PreAuthorize("@userPermission.isFreelancer(#user)")
     public Iterable<JobOffer> findAll(User user) {
         return jobOfferRepository.findAll();
+    }
+
+    @PreAuthorize("@userPermission.isFreelancer(#user)")
+    @PreFilter("@freelancerFilter.hasValidAddress(#user)")
+    public Iterable<JobOffer> findSuggestedJobOffers(User user){
+        // Todo implement
+        return null;
     }
 }

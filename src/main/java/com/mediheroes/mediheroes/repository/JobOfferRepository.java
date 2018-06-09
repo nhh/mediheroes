@@ -1,8 +1,10 @@
 package com.mediheroes.mediheroes.repository;
 
+import com.mediheroes.mediheroes.domain.Address;
 import com.mediheroes.mediheroes.domain.JobOffer;
 import org.springframework.data.repository.CrudRepository;
 
 public interface JobOfferRepository extends CrudRepository<JobOffer, Long> {
     public Iterable<JobOffer> findAllByCompanyId(Long id);
+    public Iterable<JobOffer> findByAddress(Address address);
 }
