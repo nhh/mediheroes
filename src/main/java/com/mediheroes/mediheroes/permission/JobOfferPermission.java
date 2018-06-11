@@ -38,4 +38,8 @@ public class JobOfferPermission {
     public boolean canUpdateJobOffer(JobOffer jobOffer, User user) {
         return user.getCompany().equals(jobOffer.getCompany());
     }
+
+    public boolean isFreelancer(User user) {
+        return user.getType().equals(User.Type.FREELANCER);
+    }
 }

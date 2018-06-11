@@ -19,7 +19,7 @@ public class JobOfferService {
         this.jobOfferRepository = jobOfferRepository;
     }
 
-    @PreAuthorize("@userPermission.isFreelancer(#user)")
+    @PreAuthorize("@jobOfferPermission.isFreelancer(#user)")
     public Optional<JobOffer> findById(Long id, User user){
         return jobOfferRepository.findById(id);
     }
@@ -39,13 +39,13 @@ public class JobOfferService {
         return jobOfferRepository.save(jobOffer);
     }
 
-    @PreAuthorize("@userPermission.isFreelancer(#user)")
+    @PreAuthorize("@jobOfferPermission.isFreelancer(#user)")
     public Iterable<JobOffer> findAll(User user) {
         return jobOfferRepository.findAll();
     }
 
-    @PreAuthorize("@userPermission.isFreelancer(#user)")
-    @PreFilter("@freelancerFilter.hasValidAddress(#user)")
+    @PreAuthorize("@jobOfferPermission.isFreelancer(#user)")
+    @PreFilter("@jobOfferFilter.hasValidAddress(#user)")
     public Iterable<JobOffer> findSuggestedJobOffers(User user){
         // Todo implement
         return null;

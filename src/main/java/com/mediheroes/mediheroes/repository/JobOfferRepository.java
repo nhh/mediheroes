@@ -6,5 +6,4 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface JobOfferRepository extends CrudRepository<JobOffer, Long> {
     public Iterable<JobOffer> findAllByCompanyId(Long id);
-    public Iterable<JobOffer> findByAddress(Address address);
 }

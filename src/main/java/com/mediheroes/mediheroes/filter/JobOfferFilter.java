@@ -3,8 +3,8 @@ package com.mediheroes.mediheroes.filter;
 import com.mediheroes.mediheroes.domain.User;
 import org.springframework.stereotype.Component;
 
-@Component("freelancerFilter")
-public class FreelancerFilter {
+@Component("jobOfferFilter")
+public class JobOfferFilter {
 
 
     public boolean hasValidAddress(User user){
