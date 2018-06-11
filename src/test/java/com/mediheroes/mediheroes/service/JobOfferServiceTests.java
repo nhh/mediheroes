@@ -3,10 +3,8 @@ package com.mediheroes.mediheroes.service;
 import com.mediheroes.mediheroes.domain.Address;
 import com.mediheroes.mediheroes.domain.JobOffer;
 import com.mediheroes.mediheroes.domain.User;
-import com.mediheroes.mediheroes.permission.JobOfferPermission;
 import com.mediheroes.mediheroes.repository.JobOfferRepository;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -36,12 +34,8 @@ public class JobOfferServiceTests {
     @Mock
     private JobOfferRepository jobOfferRepository;
 
-    private final JobOfferPermission jobOfferPermission = new JobOfferPermission();
-
-
-
-    @BeforeAll
-    public void mockJobOfferRepositoryMethods() {
+    @Test
+    public void validFindById() {
 
         var jobOffer = new JobOffer();
         jobOffer.setName("Hello World");
@@ -50,10 +44,6 @@ public class JobOfferServiceTests {
         jobOffer.setSalary(100);
 
         when(this.jobOfferRepository.findById(1L)).thenReturn(Optional.of(jobOffer));
-    }
-
-    @Test
-    public void validFindById() {
 
         var jobOfferService = new JobOfferService(jobOfferRepository);
 
@@ -68,9 +58,7 @@ public class JobOfferServiceTests {
         sender.setActive(true);
         sender.setVerified(true);
 
-        var jobOffer = jobOfferService.findById(1L, sender);
-
-        assertTrue(jobOffer.isPresent());
+        assertTrue(jobOfferService.findById(1L, sender).isPresent());
     }
 
     @Test
