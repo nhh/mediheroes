@@ -14,6 +14,8 @@ import {IndexComponent} from './component/job-offers/index/index.component';
 import {SharedModule} from '../shared/shared.module';
 import {IsFreelancerGuard} from '../shared/guard/is-freelancer.guard';
 import {ShowComponent} from './component/job-offers/show/show.component';
+import { ProfileComponent } from './component/settings/profile/profile.component';
+import { SettingsNavigationComponent } from './component/settings/settings-navigation/settings-navigation.component';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import {ShowComponent} from './component/job-offers/show/show.component';
     NavigationComponent,
     SettingsComponent,
     IndexComponent,
-    ShowComponent
+    ShowComponent,
+    ProfileComponent,
+    SettingsNavigationComponent
   ],
   imports: [
     SharedModule,

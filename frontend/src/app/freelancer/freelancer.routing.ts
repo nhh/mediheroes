@@ -7,6 +7,7 @@ import {IsFreelancerGuard} from '../shared/guard/is-freelancer.guard';
 import {IsAuthenticatedGuard} from '../shared/guard/is-authenticated.guard';
 import {ShowComponent} from './component/job-offers/show/show.component';
 import {IndexComponent} from './component/job-offers/index/index.component';
+import {ProfileComponent} from './component/settings/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -21,7 +22,13 @@ const routes: Routes = [
       },
       {
         path: "settings",
-        component: SettingsComponent
+        component: SettingsComponent,
+        children: [
+          {
+            path: "profile",
+            component: ProfileComponent
+          }
+        ]
       },
       {
         path: "job-offers",

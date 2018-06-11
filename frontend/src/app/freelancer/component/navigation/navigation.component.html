@@ -22,16 +22,9 @@
       </div>
 
       <div class="navbar-end">
+        <a routerLink="settings/profile" routerLinkActive="is-active" class="navbar-item">Profil/Einstellungen</a>
         <div class="navbar-item">
           <div class="field is-grouped">
-            <p class="control">
-              <a routerLink="settings" class="button">
-              <span class="icon">
-                <i class="fa fa-cog"></i>
-              </span>
-                <span>Einstellungen</span>
-              </a>
-            </p>
             <p class="control">
               <a (click)="logout()" class="button is-danger">
               <span class="icon">
