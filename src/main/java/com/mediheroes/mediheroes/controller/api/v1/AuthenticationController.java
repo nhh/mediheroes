@@ -20,6 +20,7 @@ public class AuthenticationController {
             var sessionId = session.getId();
             return new ResponseEntity<>(new AuthenticationToken(sessionId), HttpStatus.OK);
         } catch (IllegalStateException e){
+            e.printStackTrace();
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
     }

@@ -66,7 +66,7 @@ public class UserController {
         return new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<UserResponse> register(
         @Valid @RequestBody UserRequest userRequest
     ){

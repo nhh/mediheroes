@@ -16,6 +16,7 @@ public class User {
         FREELANCER,
         EMPLOYEE,
         OWNER,
+        ADMIN
     }
 
     @Id
