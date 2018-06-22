@@ -10,6 +10,8 @@ import {AuthRouting} from './auth/auth.routing';
 import {EmployeeRouting} from './employee/employee.routing';
 import {FreelancerRouting} from './freelancer/freelancer.routing';
 import {SharedModule} from './shared/shared.module';
+import {AdminRouting} from './admin/admin.routing';
+import {AdminModule} from './admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import {SharedModule} from './shared/shared.module';
     SharedModule,
     AuthModule,
     AuthRouting,
+    AdminRouting,
+    AdminModule,
     FreelancerModule,
     FreelancerRouting,
     FormsModule

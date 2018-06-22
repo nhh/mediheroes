@@ -31,6 +31,11 @@ export class UserService {
     return user.roles.includes("EMPLOYEE")
   }
 
+  isAdmin(): boolean {
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    return user.roles.includes("ADMIN")
+  }
+
   isOwner(): boolean {
     const user = JSON.parse(localStorage.getItem("currentUser"));
     return user.roles.includes("OWNER")

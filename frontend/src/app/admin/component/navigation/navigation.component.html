@@ -1,0 +1,54 @@
+<div class="container is-fluid">
+  <nav class="navbar is-transparent">
+    <div class="navbar-brand">
+      <a class="navbar-item">
+        <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+      </a>
+      <div class="navbar-burger burger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item has-icon" routerLink="dashboard" routerLinkActive="is-active">
+          <span class="icon"><i class="fa fa-dashboard"></i></span>
+          <span>Dashboard</span>
+        </a>
+        <a class="navbar-item has-icon" routerLink="users" routerLinkActive="is-active">
+          <span class="icon"><i class="fa fa-users"></i></span>
+          <span>Users</span>
+        </a>
+        <a class="navbar-item" routerLink="companies" routerLinkActive="is-active">
+          <span class="icon"><i class="fa fa-building"></i></span>
+          <span>Companies</span>
+        </a>
+        <a class="navbar-item" routerLink="job-offers" routerLinkActive="is-active">
+          <span class="icon"><i class="fa fa-briefcase"></i></span>
+          <span>Job Angebote</span>
+        </a>
+      </div>
+
+      <div class="navbar-end">
+        <a routerLink="settings" routerLinkActive="is-active" class="navbar-item">
+          <span class="icon"><i class="fa fa-cogs"></i></span>
+          <span>Settings</span>
+        </a>
+        <div class="navbar-item">
+          <div class="field is-grouped">
+            <p class="control">
+              <a (click)="logout()" class="button is-danger">
+              <span class="icon">
+                <i class="fa fa-sign-out"></i>
+              </span>
+                <span>Logout</span>
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>

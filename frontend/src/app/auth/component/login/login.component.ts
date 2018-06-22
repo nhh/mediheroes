@@ -37,6 +37,8 @@ export class LoginComponent implements OnInit {
           return this.router.navigate(['/employee/dashboard']);
         } else if (currentUser.roles.includes("EMPLOYEE")) {
           return this.router.navigate(['/employee/dashboard']);
+        } else if (currentUser.roles.includes("ADMIN")) {
+          return this.router.navigate(['/admin/dashboard']);
         } else {
           return this.router.navigate(['/freelancer/dashboard']);
         }
