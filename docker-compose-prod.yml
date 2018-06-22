@@ -4,6 +4,7 @@ services:
     image: paradoxxger/mediheroes-backend:latest
     environment:
       - "SPRING_REDIS_HOST=redis"
+      - "MEDIHEROES_BUGSNAG_API_KEY=1fe10f647a3646b90e4dcc201909c5df"
     networks:
       mediheroes:
         aliases:
