@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from "../../../../shared/service/user.service";
-import {JobOfferResourceService} from '../../../../shared/service/resource/job-offer-resource.service';
 import {CompanyResourceService} from '../../../../shared/service/resource/company-resource.service';
 
 @Component({

@@ -1,3 +1,43 @@
-<p>
-  companies works!
-</p>
+<table class="table is-fullwidth">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Employees</th>
+    <th>Status</th>
+    <th>Locations</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>#U1</td>
+    <td><a (click)="showOptionsModal =! showOptionsModal">Mediheroes GmbH</a></td>
+    <td>2</td>
+    <td><span class="tag is-success">VERIFIED</span></td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>#U2</td>
+    <td><a (click)="showOptionsModal =! showOptionsModal">Not verified company GmbH</a></td>
+    <td>0</td>
+    <td><span class="tag is-danger">NOT VERIFIED</span></td>
+    <td>0</td>
+  </tr>
+  </tbody>
+</table>
+
+<div class="modal" [ngClass]="{'is-active': showOptionsModal}">
+  <div (click)="showOptionsModal =! showOptionsModal" class="modal-background"></div>
+  <div class="modal-content">
+    <div class="box">
+      <h2 class="subtitle">Menu</h2>
+      <aside class="menu">
+        <ul class="menu-list">
+          <li><a>Editieren</a></li>
+          <li><a>Deaktivieren</a></li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+  <button (click)="showOptionsModal =! showOptionsModal" class="modal-close is-large" aria-label="close"></button>
+</div>

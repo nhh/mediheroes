@@ -14,6 +14,7 @@ import { UsersComponent } from './component/users/users.component';
 import { CompaniesComponent } from './component/companies/companies.component';
 import { JobOffersComponent } from './component/job-offers/job-offers.component';
 import { SettingsComponent } from './component/settings/settings.component';
+import {MetricResourceService} from '../shared/service/resource/metric-resource.service';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { SettingsComponent } from './component/settings/settings.component';
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
       multi: true
-    }
+    },
+    MetricResourceService
   ],
   exports: [
     AdminRouting

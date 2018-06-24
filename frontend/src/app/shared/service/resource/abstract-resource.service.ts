@@ -6,7 +6,7 @@ import {Injector, Injectable} from '@angular/core';
 })
 export abstract class AbstractResourceService {
 
-  protected http: HttpClient;
+  protected readonly http: HttpClient;
 
   constructor(injector: Injector) {
     this.http = injector.get(HttpClient);

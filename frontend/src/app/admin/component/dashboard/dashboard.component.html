@@ -1,3 +1,21 @@
-<p>
-  dashboard works!
-</p>
+<app-loading-spinner *ngIf="this.isLoading"></app-loading-spinner>
+<div  *ngIf="!this.isLoading" class="columns">
+  <div class="column is-narrow">
+    <div class="box">
+      <h2 class="subtitle">User</h2>
+      <h1 class="title">{{metrics.userCount}}</h1>
+    </div>
+  </div>
+  <div class="column is-narrow">
+    <div class="box">
+      <h2 class="subtitle">Companies</h2>
+      <h1 class="title">{{metrics.companyCount}}</h1>
+    </div>
+  </div>
+  <div class="column is-narrow">
+    <div class="box">
+      <h2 class="subtitle">Job Offers</h2>
+      <h1 class="title">{{metrics.jobOfferCount}}</h1>
+    </div>
+  </div>
+</div>
