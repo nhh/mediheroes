@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JobOffersComponent implements OnInit {
 
+  showOptionsModal = false;
+
   constructor() { }
 
   ngOnInit() {
