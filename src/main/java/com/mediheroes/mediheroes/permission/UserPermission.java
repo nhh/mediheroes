@@ -7,9 +7,12 @@ import org.springframework.stereotype.Component;
 
 @Component("userPermission")
 public class UserPermission {
-
     public boolean canAddCompany(User user, Company company){
         return user.hasCompany() || company.getOwner() != null;
+    }
+
+    public boolean isAdmin(User user){
+        return user.getType().equals(User.Type.ADMIN);
     }
 
 }

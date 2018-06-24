@@ -73,4 +73,7 @@ public class UserService {
         return newCompany;
     }
 
+    public long countUsers() {
+        return this.userRepository.count();
+    }
 }

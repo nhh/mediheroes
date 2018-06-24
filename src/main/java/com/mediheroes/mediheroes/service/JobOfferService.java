@@ -50,4 +50,8 @@ public class JobOfferService {
         // Todo implement
         return null;
     }
+
+    public long countJobOffers() {
+        return this.jobOfferRepository.count();
+    }
 }

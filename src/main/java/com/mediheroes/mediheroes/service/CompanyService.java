@@ -61,4 +61,7 @@ public class CompanyService {
         save(company);
     }
 
+    public long countCompanies() {
+        return this.companyRepository.count();
+    }
 }
