@@ -2,6 +2,7 @@ package com.mediheroes.mediheroes.service;
 
 import com.mediheroes.mediheroes.domain.Company;
 import com.mediheroes.mediheroes.domain.JobOffer;
+import com.mediheroes.mediheroes.domain.JobOfferApplication;
 import com.mediheroes.mediheroes.domain.User;
 import com.mediheroes.mediheroes.repository.JobOfferRepository;
 import org.springframework.security.access.prepost.PreAuthorize;

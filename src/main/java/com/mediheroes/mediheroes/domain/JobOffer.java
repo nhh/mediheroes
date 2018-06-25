@@ -2,7 +2,9 @@ package com.mediheroes.mediheroes.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "job_offers")
@@ -27,6 +29,9 @@ public class JobOffer {
     @NotNull
     @Column
     private String job;
+
+    @OneToMany(mappedBy = "jobOffer", fetch = FetchType.LAZY)
+    private Set<JobOfferApplication> applications = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;

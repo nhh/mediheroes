@@ -8,10 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class CompaniesComponent implements OnInit {
 
   showOptionsModal = false;
-  
+
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }

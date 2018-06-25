@@ -15,4 +15,8 @@ public class UserPermission {
         return user.getType().equals(User.Type.ADMIN);
     }
 
+    public boolean isFreelancer(User user){
+        return user.getType().equals(User.Type.FREELANCER);
+    }
+
 }

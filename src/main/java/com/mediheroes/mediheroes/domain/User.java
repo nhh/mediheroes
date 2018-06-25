@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -62,6 +63,9 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Company company;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<JobOfferApplication> applications = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     private Company employer;
