@@ -91,6 +91,14 @@ public class JobOffer {
         this.company = company;
     }
 
+    public Set<JobOfferApplication> getApplications() {
+        return applications;
+    }
+
+    public void setApplications(Set<JobOfferApplication> applications) {
+        this.applications = applications;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

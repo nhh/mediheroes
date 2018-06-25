@@ -181,6 +181,14 @@ public class User {
         this.employer = employer;
     }
 
+    public Set<JobOfferApplication> getApplications() {
+        return applications;
+    }
+
+    public void setApplications(Set<JobOfferApplication> applications) {
+        this.applications = applications;
+    }
+
     public void removeEmployer(){
         this.setEmployer(null);
         this.setType(Type.FREELANCER);
