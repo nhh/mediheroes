@@ -69,7 +69,7 @@ public class JobOfferController {
         return new ResponseEntity<>(jobOffers, HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/application")
+    @PostMapping("/{id}/applications")
     public ResponseEntity<JobOfferApplicationResponse> createApplication(
         @Valid @RequestBody JobOfferApplicationRequest jobOfferApplicationRequest,
         @PathVariable Long id

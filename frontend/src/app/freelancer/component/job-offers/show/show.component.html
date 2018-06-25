@@ -96,11 +96,38 @@
 
     <div class="field is-grouped">
       <div class="control">
-        <button (click)="createJobOfferApplication()" class="button is-success">Bewerbung schreiben</button>
+        <button (click)="showModalDialog = !showModalDialog" class="button is-info">Bewerbung schreiben</button>
       </div>
       <div class="control">
         <button routerLink=".." class="button is-text">Abbrechen</button>
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal" [ngClass]="{'is-active': showModalDialog}">
+  <div (click)="showModalDialog = !showModalDialog" class="modal-background"></div>
+  <div class="modal-content">
+    <div class="box">
+      <h1 class="subtitle">JO#{{jobOffer.id}} {{jobOffer.name}}</h1>
+      <form (ngSubmit)="createJobOfferApplication()">
+      <div class="field">
+        <label class="label">Label</label>
+        <div class="control">
+          <textarea [(ngModel)]="jobOfferApplicationRequest.description" name="description" class="textarea" rows="8" placeholder="Text input"></textarea>
+        </div>
+        <p class="help">This is a help text</p>
+      </div>
+      <div class="field is-grouped">
+        <div class="control">
+          <button type="submit" [disabled]="isLoading" [ngClass]="{'is-loading' : isLoading}" class="button is-success">Bewerbung abschicken</button>
+        </div>
+        <div class="control">
+          <button (click)="showModalDialog = !showModalDialog" class="button is-text">Abbrechen</button>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+  <button (click)="showModalDialog = !showModalDialog" class="modal-close is-large" aria-label="close"></button>
 </div>

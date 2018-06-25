@@ -3,6 +3,9 @@ import {JobOfferResourceService} from '../../../../shared/service/resource/job-o
 import {ActivatedRoute} from '@angular/router';
 import {CompanyResourceService} from '../../../../shared/service/resource/company-resource.service';
 import {mergeMap} from 'rxjs/operators';
+import {JobOfferApplicationRequest} from '../../../../shared/dto/job-offer-application-request';
+import {NotificationService} from '../../../../shared/service/notification.service';
+import {Notification} from '../../../../shared/class/notification';
 
 @Component({
   selector: 'app-show',
@@ -14,11 +17,14 @@ export class ShowComponent implements OnInit {
   jobOffer : any;
   company : any;
   isLoading = true;
+  jobOfferApplicationRequest = new JobOfferApplicationRequest();
+  showModalDialog = false;
 
   constructor(
     private companyResourceService : CompanyResourceService,
     private jobOfferResourceService : JobOfferResourceService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private notifciationService: NotificationService
   ) { }
 
   ngOnInit() {
@@ -38,4 +44,14 @@ export class ShowComponent implements OnInit {
     });
   }
 
+  createJobOfferApplication() {
+    this.jobOfferResourceService.createJobOfferApplication(this.jobOffer.id, this.jobOfferApplicationRequest).subscribe(
+      success => {
+        this.showModalDialog = false;
+        this.notifciationService.showToast(new Notification("Bewerbung erfolgreich erstellt!", "is-success", "fa fa-success"))
+        this.jobOfferApplicationRequest = new JobOfferApplicationRequest();
+      },
+      error => {console.log(error)},
+    )
+  }
 }
