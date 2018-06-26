@@ -12,8 +12,9 @@ import {NotificationService} from '../../../../shared/service/notification.servi
 })
 export class ApplicationComponent implements OnInit {
 
-  jobOfferApplicationRequest = new JobOfferApplicationRequest();
-  jobOfferId: number;
+  public jobOfferApplicationRequest = new JobOfferApplicationRequest();
+  public jobOfferId: number;
+  isLoading = false;
 
   constructor(
     private jobOfferResourceService: JobOfferResourceService,
@@ -27,14 +28,25 @@ export class ApplicationComponent implements OnInit {
   }
 
   createJobOfferApplication() {
+    this.isLoading = true;
     this.jobOfferResourceService.createJobOfferApplication(this.jobOfferId, this.jobOfferApplicationRequest).subscribe(
       success => {
-        this.notificationService.showToast(new Notification('Bewerbung erfolgreich erstellt!', 'is-success', 'fa fa-2x fa-check-circle-o'));
         this.jobOfferApplicationRequest = new JobOfferApplicationRequest();
+        setTimeout(() => {
+          this.notificationService.showToast(
+            new Notification('Bewerbung erfolgreich erstellt!', 'is-success', 'fa fa-2x fa-check-circle-o')
+          );
+          this.isLoading = false
+        }, 250);
       },
       error => {
-        console.log(error);
-      },
+        setTimeout(() => {
+          this.notificationService.showToast(
+            new Notification('Es ist ein Fehler aufgetreten, probieren Sie es erneut!', 'is-danger', 'fa fa-2x fa-times')
+          );
+          this.isLoading = false
+        }, 250);
+      }
     );
   }
 

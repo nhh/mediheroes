@@ -1,6 +1,6 @@
 export class JobOfferApplicationRequest {
 
-  private description: String
+  public description: String;
 
   constructor(){}
 
