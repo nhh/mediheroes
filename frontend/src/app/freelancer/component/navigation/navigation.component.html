@@ -16,7 +16,7 @@
         <a class="navbar-item" routerLink="dashboard" routerLinkActive="is-active">
           Dashboard
         </a>
-        <a class="navbar-item" routerLink="job-offers" routerLinkActive="is-active">
+        <a class="navbar-item" [routerLink]="['job-offers', 'overview']" routerLinkActive="is-active">
           Job Angebote
         </a>
       </div>

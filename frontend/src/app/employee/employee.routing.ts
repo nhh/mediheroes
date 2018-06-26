@@ -39,7 +39,8 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'settings', component: SettingsComponent,
+        path: 'settings',
+        component: SettingsComponent,
         children: [
           {
             path: 'general', component: GeneralComponent

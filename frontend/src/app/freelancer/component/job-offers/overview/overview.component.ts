@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {JobOfferResourceService} from '../../../../shared/service/resource/job-offer-resource.service';
 import {NotificationService} from '../../../../shared/service/notification.service';
 import {Notification} from '../../../../shared/class/notification';
+import {JobOfferResourceService} from '../../../../shared/service/resource/job-offer-resource.service';
 
 @Component({
-  selector: 'app-job-offers',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css']
+  selector: 'app-overview',
+  templateUrl: './overview.component.html',
+  styleUrls: ['./overview.component.css']
 })
-export class IndexComponent implements OnInit {
+export class OverviewComponent implements OnInit {
 
   isLoading = false;
   jobOffers : any = [];

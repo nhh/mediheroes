@@ -10,12 +10,16 @@ import {FreelancerRouting} from './freelancer.routing';
 import {FreelancerComponent} from './component/freelancer.component';
 import {NavigationComponent} from './component/navigation/navigation.component';
 import {SettingsComponent} from './component/settings/settings.component';
-import {IndexComponent} from './component/job-offers/index/index.component';
 import {SharedModule} from '../shared/shared.module';
 import {IsFreelancerGuard} from '../shared/guard/is-freelancer.guard';
-import {ShowComponent} from './component/job-offers/show/show.component';
 import { ProfileComponent } from './component/settings/profile/profile.component';
 import { SettingsNavigationComponent } from './component/settings/settings-navigation/settings-navigation.component';
+import { GeneralComponent } from './component/job-offers/general/general.component';
+import { LocationsComponent } from './component/job-offers/locations/locations.component';
+import { StationsComponent } from './component/job-offers/stations/stations.component';
+import { ApplicationComponent } from './component/job-offers/application/application.component';
+import { OverviewComponent } from './component/job-offers/overview/overview.component';
+import { JobOfferComponent } from './component/job-offers/job-offer.component';
 
 
 @NgModule({
@@ -24,10 +28,14 @@ import { SettingsNavigationComponent } from './component/settings/settings-navig
     FreelancerComponent,
     NavigationComponent,
     SettingsComponent,
-    IndexComponent,
-    ShowComponent,
     ProfileComponent,
-    SettingsNavigationComponent
+    SettingsNavigationComponent,
+    GeneralComponent,
+    LocationsComponent,
+    StationsComponent,
+    ApplicationComponent,
+    OverviewComponent,
+    JobOfferComponent
   ],
   imports: [
     SharedModule,

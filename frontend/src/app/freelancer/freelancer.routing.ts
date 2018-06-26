@@ -5,9 +5,13 @@ import {FreelancerComponent} from './component/freelancer.component';
 import {SettingsComponent} from './component/settings/settings.component';
 import {IsFreelancerGuard} from '../shared/guard/is-freelancer.guard';
 import {IsAuthenticatedGuard} from '../shared/guard/is-authenticated.guard';
-import {ShowComponent} from './component/job-offers/show/show.component';
-import {IndexComponent} from './component/job-offers/index/index.component';
 import {ProfileComponent} from './component/settings/profile/profile.component';
+import {GeneralComponent} from './component/job-offers/general/general.component';
+import {LocationsComponent} from './component/job-offers/locations/locations.component';
+import {OverviewComponent} from './component/job-offers/overview/overview.component';
+import {JobOfferComponent} from './component/job-offers/job-offer.component';
+import {StationsComponent} from './component/job-offers/stations/stations.component';
+import {ApplicationComponent} from './component/job-offers/application/application.component';
 
 const routes: Routes = [
   {
@@ -34,12 +38,30 @@ const routes: Routes = [
         path: "job-offers",
         children: [
           {
-            path: "",
-            component: IndexComponent
+            path: "overview",
+            component: OverviewComponent
           },
           {
             path: ":id",
-            component: ShowComponent
+            component: JobOfferComponent,
+            children: [
+              {
+                path: "locations",
+                component: LocationsComponent
+              },
+              {
+                path: "general",
+                component: GeneralComponent
+              },
+              {
+                path: "stations",
+                component: StationsComponent
+              },
+              {
+                path: "application",
+                component: ApplicationComponent
+              }
+            ]
           }
         ]
       }

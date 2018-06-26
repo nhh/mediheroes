@@ -57,7 +57,7 @@
       <tbody>
       <tr *ngFor="let offer of jobOffers">
         <td>#JO{{offer.id}}</td>
-        <td><a [routerLink]="offer.id">{{offer.name}}</a></td>
+        <td><a [routerLink]="[ '..', offer.id, 'general']">{{offer.name}}</a></td>
         <td>{{offer.job}}</td>
         <td>{{offer.description}}</td>
         <td>

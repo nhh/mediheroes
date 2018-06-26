@@ -1,0 +1,37 @@
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<div *ngIf="!isLoading" class="container">
+  <nav class="level">
+    <div class="level-left">
+      <h1 class="title is-2">
+        {{jobOffer.name}}
+        <small>{{jobOffer.job}}</small>
+      </h1>
+    </div>
+    <div class="level-right">
+      <div class="dropdown is-hoverable is-right">
+        <div class="dropdown-trigger">
+          <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+            <span>Optionen</span>
+            <span class="icon is-small">
+              <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </span>
+          </button>
+        </div>
+        <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+          <div class="dropdown-content">
+            <div class="dropdown-item">
+              <p>You can insert <strong>any type of content</strong> within the dropdown menu.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="content">
+    <label class="label">Beschreibung</label>
+    <p>{{jobOffer.description}}</p>
+    <label class="label">Gehalt</label>
+    <p>{{jobOffer.salary}} Euro/Std</p>
+  </div>
+</div>
