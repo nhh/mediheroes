@@ -48,7 +48,7 @@ export class ShowComponent implements OnInit {
     this.jobOfferResourceService.createJobOfferApplication(this.jobOffer.id, this.jobOfferApplicationRequest).subscribe(
       success => {
         this.showModalDialog = false;
-        this.notifciationService.showToast(new Notification("Bewerbung erfolgreich erstellt!", "is-success", "fa fa-success"))
+        this.notifciationService.showToast(new Notification("Bewerbung erfolgreich erstellt!", "is-success", "fa fa-2x fa-check-circle-o"));
         this.jobOfferApplicationRequest = new JobOfferApplicationRequest();
       },
       error => {console.log(error)},

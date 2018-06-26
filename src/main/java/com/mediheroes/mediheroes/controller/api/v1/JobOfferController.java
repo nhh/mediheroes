@@ -52,6 +52,7 @@ public class JobOfferController {
             .findById(id, user)
             .map(JobOfferResponse::new)
             .orElseThrow(EntityNotFoundException::new);
+
         return new ResponseEntity<>(jobOffer, HttpStatus.OK);
     }
 

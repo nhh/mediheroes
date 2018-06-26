@@ -89,6 +89,7 @@ public class CompanyController {
             .findByEmail(email)
             .orElseThrow(EntityNotFoundException::new);
 
+        // Todo refactor into service with permissions!
         company.addEmployee(employee);
         companyService.save(company);
 

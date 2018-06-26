@@ -4,12 +4,14 @@ import com.mediheroes.mediheroes.domain.Company;
 import com.mediheroes.mediheroes.domain.JobOffer;
 import com.mediheroes.mediheroes.domain.JobOfferApplication;
 import com.mediheroes.mediheroes.domain.User;
+import com.mediheroes.mediheroes.exception.EntityNotFoundException;
 import com.mediheroes.mediheroes.repository.JobOfferRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.access.prepost.PreFilter;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 @Service
 public class JobOfferService {
@@ -55,4 +57,5 @@ public class JobOfferService {
     public long countJobOffers() {
         return this.jobOfferRepository.count();
     }
+
 }
