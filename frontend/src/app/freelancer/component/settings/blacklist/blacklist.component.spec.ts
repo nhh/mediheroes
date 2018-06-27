@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SettingsNavigationComponent } from './settings-navigation.component';
+import { BlacklistComponent } from './blacklist.component';
 
-describe('SettingsNavigationComponent', () => {
-  let component: SettingsNavigationComponent;
-  let fixture: ComponentFixture<SettingsNavigationComponent>;
+describe('BlacklistComponent', () => {
+  let component: BlacklistComponent;
+  let fixture: ComponentFixture<BlacklistComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SettingsNavigationComponent ]
+      declarations: [ BlacklistComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SettingsNavigationComponent);
+    fixture = TestBed.createComponent(BlacklistComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

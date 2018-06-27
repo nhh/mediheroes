@@ -1,6 +1,33 @@
 <div class="columns">
-  <div class="column is-3">
-    <freelancer-settings-navigation></freelancer-settings-navigation>
+  <div class="column is-2">
+    <aside class="menu">
+      <ul class="menu-list">
+        <li>
+          <a routerLink="general" routerLinkActive="is-active">
+            <span class="icon"><i class="fa fa-user"></i></span>
+            <span>Allgemein</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="address" routerLinkActive="is-active">
+            <span class="icon"><i class="fa fa-address-card"></i></span>
+            <span>Anschrift</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="documents" routerLinkActive="is-active">
+            <span class="icon"><i class="fa fa-file"></i></span>
+            <span>Dokumente</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="blacklist" routerLinkActive="is-active">
+            <span class="icon"><i class="fa fa-eye"></i></span>
+            <span>Blacklist</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
   </div>
   <div class="column">
     <router-outlet></router-outlet>
