@@ -1,4 +1,4 @@
-package com.mediheroes.mediheroes.dto;
+package com.mediheroes.mediheroes.dto.user;
 
 import com.mediheroes.mediheroes.domain.Address;
 

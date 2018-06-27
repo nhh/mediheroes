@@ -2,16 +2,9 @@ package com.mediheroes.mediheroes.service;
 
 import com.mediheroes.mediheroes.domain.Company;
 import com.mediheroes.mediheroes.domain.User;
-import com.mediheroes.mediheroes.dto.CompanyRequest;
-import com.mediheroes.mediheroes.exception.EntityAlreadyExistsException;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
-import com.mediheroes.mediheroes.permission.UserPermission;
-import com.mediheroes.mediheroes.repository.CompanyRepository;
 import com.mediheroes.mediheroes.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.access.prepost.PreFilter;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

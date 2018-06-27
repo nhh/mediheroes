@@ -1,4 +1,4 @@
-package com.mediheroes.mediheroes.dto;
+package com.mediheroes.mediheroes.dto.company;
 
 import javax.validation.constraints.NotNull;
 

@@ -1,11 +1,9 @@
-package com.mediheroes.mediheroes.dto;
+package com.mediheroes.mediheroes.dto.user;
 
-import com.mediheroes.mediheroes.domain.Company;
 import com.mediheroes.mediheroes.domain.User;
+import com.mediheroes.mediheroes.dto.company.CompanyResponse;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class UserResponse implements Serializable {

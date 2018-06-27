@@ -1,10 +1,9 @@
 package com.mediheroes.mediheroes.controller.api.v1;
 
 import com.mediheroes.mediheroes.domain.User;
-import com.mediheroes.mediheroes.dto.UserRequest;
-import com.mediheroes.mediheroes.dto.UserResponse;
+import com.mediheroes.mediheroes.dto.user.UserRequest;
+import com.mediheroes.mediheroes.dto.user.UserResponse;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
-import com.mediheroes.mediheroes.repository.UserRepository;
 import com.mediheroes.mediheroes.service.CompanyService;
 import com.mediheroes.mediheroes.service.UserService;
 import org.springframework.http.HttpStatus;

@@ -1,9 +1,9 @@
 package com.mediheroes.mediheroes.controller.api.v1;
 
 import com.mediheroes.mediheroes.domain.JobOfferApplication;
-import com.mediheroes.mediheroes.dto.JobOfferApplicationRequest;
-import com.mediheroes.mediheroes.dto.JobOfferApplicationResponse;
-import com.mediheroes.mediheroes.dto.JobOfferResponse;
+import com.mediheroes.mediheroes.dto.job.JobOfferApplicationRequest;
+import com.mediheroes.mediheroes.dto.job.JobOfferApplicationResponse;
+import com.mediheroes.mediheroes.dto.job.JobOfferResponse;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
 import com.mediheroes.mediheroes.service.CompanyService;
 import com.mediheroes.mediheroes.service.JobOfferApplicationService;

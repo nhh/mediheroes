@@ -1,6 +1,7 @@
-package com.mediheroes.mediheroes.dto;
+package com.mediheroes.mediheroes.dto.job;
 
 import com.mediheroes.mediheroes.domain.JobOfferApplication;
+import com.mediheroes.mediheroes.dto.user.UserResponse;
 
 public class JobOfferApplicationResponse {
 
