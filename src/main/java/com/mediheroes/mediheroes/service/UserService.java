@@ -71,7 +71,7 @@ public class UserService {
     }
 
 
-    @PreAuthorize("#user.equals(#sender OR @userPermission.isAdmin(#sender))")
+    @PreAuthorize("@userPermission.isAdmin(#sender) or #sender == #user")
     public void updateProfile(User user, Profile profile, User sender) {
         user.setProfile(profile);
         save(user);

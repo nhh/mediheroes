@@ -2,25 +2,25 @@
   <div class="field">
     <label class="label">Straße</label>
     <div class="control">
-      <input class="input" type="text" placeholder="Straße">
+      <input [(ngModel)]="addressRequest.street" name="street" class="input" type="text" placeholder="Straße">
     </div>
   </div>
   <div class="field">
     <label class="label">Postleitzahl</label>
     <div class="control">
-      <input class="input" type="text" placeholder="Nachname">
+      <input [(ngModel)]="addressRequest.zip" name="firstname" class="input" type="text" placeholder="Postleitzahl">
     </div>
   </div>
   <div class="field">
     <label class="label">Stadt</label>
     <div class="control">
-      <input class="input" type="text" placeholder="Stadt">
+      <input [(ngModel)]="addressRequest.city" name="city" class="input" type="text" placeholder="Stadt">
     </div>
   </div>
   <div class="field">
     <label class="label">Bundesland</label>
     <div class="select">
-      <select>
+      <select [(ngModel)]="addressRequest.state" name="state">
         <option>Auswählen</option>
         <option>Hamburg</option>
         <option>Niedersachsen</option>

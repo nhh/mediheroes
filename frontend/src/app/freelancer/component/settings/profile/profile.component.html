@@ -1,0 +1,24 @@
+<form (ngSubmit)="updateMyProfile()">
+  <div class="field">
+    <label class="label">Vorname</label>
+    <div class="control">
+      <input [(ngModel)]="profileRequest.firstname" name="firstname" class="input" type="text" placeholder="Vorname">
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">Nachname</label>
+    <div class="control">
+      <input [(ngModel)]="profileRequest.lastname" name="lastname" class="input" type="text" placeholder="Nachname">
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">Email</label>
+    <div class="control">
+      <input [(ngModel)]="profileRequest.email" name="email" class="input" type="email" placeholder="Email Adresse">
+    </div>
+  </div>
+  <div class="field">
+    <button [disabled]="isLoading" [ngClass]="{'is-loading' : isLoading}"  type="submit" class="button is-success">Speichern</button>
+  </div>
+</form>
+

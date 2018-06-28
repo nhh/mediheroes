@@ -21,7 +21,7 @@ import { JobOfferComponent } from './component/job-offers/job-offer.component';
 import { AddressComponent } from './component/settings/address/address.component';
 import { BlacklistComponent } from './component/settings/blacklist/blacklist.component';
 import { DocumentsComponent } from './component/settings/documents/documents.component';
-import { SettingsGeneralComponent } from './component/settings/settings-general/settings-general.component';
+import { ProfileComponent } from './component/settings/profile/profile.component';
 
 
 @NgModule({
@@ -39,7 +39,7 @@ import { SettingsGeneralComponent } from './component/settings/settings-general/
     AddressComponent,
     BlacklistComponent,
     DocumentsComponent,
-    SettingsGeneralComponent
+    ProfileComponent
   ],
   imports: [
     SharedModule,

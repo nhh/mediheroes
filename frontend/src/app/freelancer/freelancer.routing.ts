@@ -14,7 +14,7 @@ import {ApplicationComponent} from './component/job-offers/application/applicati
 import {AddressComponent} from './component/settings/address/address.component';
 import {BlacklistComponent} from './component/settings/blacklist/blacklist.component';
 import {DocumentsComponent} from './component/settings/documents/documents.component';
-import {SettingsGeneralComponent} from './component/settings/settings-general/settings-general.component';
+import {ProfileComponent} from './component/settings/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -33,7 +33,7 @@ const routes: Routes = [
         children: [
           {
             path: "general",
-            component: SettingsGeneralComponent
+            component: ProfileComponent
           },
           {
             path: "address",
