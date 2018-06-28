@@ -1,17 +1,15 @@
-<div class="box">
-  <h1 class="subtitle">JO#{{jobOfferId}}</h1>
-  <form (ngSubmit)="createJobOfferApplication()">
-    <div class="field">
-      <label class="label">Label</label>
-      <div class="control">
-        <textarea [(ngModel)]="jobOfferApplicationRequest.description" name="description" class="textarea" rows="8" placeholder="Text input"></textarea>
-      </div>
-      <p class="help">This is a help text</p>
+<h1 class="subtitle">Bewerbung für JO#{{jobOfferId}}</h1>
+<form (ngSubmit)="createJobOfferApplication()">
+  <div class="field">
+    <label class="label">Anschreiben</label>
+    <div class="control">
+      <textarea [(ngModel)]="jobOfferApplicationRequest.description" name="description" class="textarea" rows="8"></textarea>
     </div>
-    <div class="field is-grouped">
-      <div class="control">
-        <button type="submit" [disabled]="isLoading" [ngClass]="{'is-loading' : isLoading}" class="button is-success">Bewerbung abschicken</button>
-      </div>
+    <p class="help">This is a help text</p>
+  </div>
+  <div class="field is-grouped">
+    <div class="control">
+      <button type="submit" [disabled]="isLoading" [ngClass]="{'is-loading' : isLoading}" class="button is-success">Bewerbung abschicken</button>
     </div>
-  </form>
-</div>
+  </div>
+</form>
