@@ -1,6 +1,7 @@
-package com.mediheroes.mediheroes.domain;
+package com.mediheroes.mediheroes.domain.user;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.mediheroes.mediheroes.domain.Company;
+import com.mediheroes.mediheroes.domain.JobOfferApplication;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,16 +26,8 @@ public class User {
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
-    @NotNull
-    @Column(unique = true)
-    private String email;
-
     @Enumerated(EnumType.STRING)
     private Type type;
-
-    @NotNull
-    @Column
-    private String password;
 
     @NotNull
     @Column
@@ -44,16 +37,11 @@ public class User {
     @Column
     private boolean verified;
 
-    @NotNull
-    @Column
-    private String firstname;
-
-    @NotNull
-    @Column
-    private String lastname;
-
     @Embedded
     private Address address;
+
+    @Embedded
+    private Profile profile;
 
     @Column
     private Date created_at;
@@ -80,14 +68,6 @@ public class User {
         this.company = company;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email.toLowerCase();
-    }
-
     public boolean isActive() {
         return active;
     }
@@ -102,26 +82,6 @@ public class User {
 
     public void setVerified(boolean verified) {
         this.verified = verified;
-    }
-
-    public String getFullname(){
-        return this.firstname + this.lastname;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
     }
 
     public Date getCreated_at() {
@@ -160,14 +120,6 @@ public class User {
         this.id = id;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = new BCryptPasswordEncoder().encode(password);
-    }
-
     public boolean hasCompany() {
         return company != null;
     }
@@ -194,6 +146,22 @@ public class User {
         this.setType(Type.FREELANCER);
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -206,13 +174,5 @@ public class User {
     public int hashCode() {
 
         return Objects.hash(id);
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
     }
 }

@@ -1,6 +1,9 @@
 package com.mediheroes.mediheroes.controller.api.v1;
 
-import com.mediheroes.mediheroes.domain.User;
+import com.mediheroes.mediheroes.domain.user.Address;
+import com.mediheroes.mediheroes.domain.user.User;
+import com.mediheroes.mediheroes.dto.user.AddressRequest;
+import com.mediheroes.mediheroes.dto.user.UserProfileRequest;
 import com.mediheroes.mediheroes.dto.user.UserRequest;
 import com.mediheroes.mediheroes.dto.user.UserResponse;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
@@ -47,20 +50,43 @@ public class UserController {
         return new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
     }
 
-    @PutMapping("/me")
-    public ResponseEntity<UserResponse> updateMe(
-        @Valid @RequestBody UserRequest userRequest
+    @PutMapping("/me/address")
+    public ResponseEntity<UserResponse> updateMyAddress(
+        @Valid @RequestBody AddressRequest addressRequest
     ){
         var user = userService
             .getCurrentUser()
             .orElseThrow(EntityNotFoundException::new);
 
-        user.setFirstname(userRequest.getFirstname());
-        user.setLastname(userRequest.getLastname());
-        user.setEmail(userRequest.getEmail());
-        user.setAddress(userRequest.getAddress());
+        var address = new Address();
+        address.setZip(addressRequest.getZip());
+        address.setCity(addressRequest.getCity());
+        address.setState(addressRequest.getState());
+        address.setStreet(addressRequest.getStreet());
+
+        user.setAddress(address);
 
         userService.save(user);
+
+        return new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/profile")
+    public ResponseEntity<UserResponse> updateMe(
+        @PathVariable Long id,
+        @Valid @RequestBody UserProfileRequest userProfileRequest
+    ){
+        var user = userService
+            .getCurrentUser()
+            .orElseThrow(EntityNotFoundException::new);
+
+        var profile = user.getProfile();
+
+        profile.setFirstname(userProfileRequest.getFirstname());
+        profile.setLastname(userProfileRequest.getLastname());
+        profile.setEmail(userProfileRequest.getEmail());
+
+        userService.updateProfile(user, profile, user);
 
         return new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
     }
@@ -72,10 +98,14 @@ public class UserController {
 
         var user = new User();
         user.setAddress(userRequest.getAddress());
-        user.setPassword(userRequest.getPassword());
-        user.setEmail(userRequest.getEmail());
-        user.setFirstname(userRequest.getFirstname());
-        user.setLastname(userRequest.getLastname());
+
+        var profile = user.getProfile();
+        profile.setPassword(userRequest.getPassword());
+        profile.setEmail(userRequest.getEmail());
+        profile.setFirstname(userRequest.getFirstname());
+        profile.setLastname(userRequest.getLastname());
+
+        user.setProfile(profile);
         user.setActive(userRequest.isActive());
         user.setVerified(userRequest.isVerified());
         user.setType(User.Type.FREELANCER);

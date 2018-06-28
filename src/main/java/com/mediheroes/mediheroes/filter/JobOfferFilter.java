@@ -1,6 +1,6 @@
 package com.mediheroes.mediheroes.filter;
 
-import com.mediheroes.mediheroes.domain.User;
+import com.mediheroes.mediheroes.domain.user.User;
 import org.springframework.stereotype.Component;
 
 @Component("jobOfferFilter")

@@ -1,5 +1,6 @@
 package com.mediheroes.mediheroes.domain;
 
+import com.mediheroes.mediheroes.domain.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

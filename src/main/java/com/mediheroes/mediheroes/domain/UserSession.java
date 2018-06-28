@@ -1,5 +1,7 @@
 package com.mediheroes.mediheroes.domain;
 
+import com.mediheroes.mediheroes.domain.user.User;
+
 import java.io.Serializable;
 import java.util.Set;
 
@@ -14,8 +16,8 @@ public class UserSession implements Serializable {
     public UserSession(User user) {
         active = user.isActive();
         verified = user.isVerified();
-        email = user.getEmail();
-        password = user.getPassword();
+        email = user.getProfile().getEmail();
+        password = user.getProfile().getPassword();
         roles = user.getRoles();
     }
 

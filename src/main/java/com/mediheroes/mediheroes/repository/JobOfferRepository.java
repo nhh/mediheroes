@@ -1,6 +1,5 @@
 package com.mediheroes.mediheroes.repository;
 
-import com.mediheroes.mediheroes.domain.Address;
 import com.mediheroes.mediheroes.domain.JobOffer;
 import org.springframework.data.repository.CrudRepository;
 

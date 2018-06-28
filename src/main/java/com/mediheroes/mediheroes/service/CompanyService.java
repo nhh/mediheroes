@@ -3,12 +3,11 @@ package com.mediheroes.mediheroes.service;
 import com.mediheroes.mediheroes.domain.Company;
 import com.mediheroes.mediheroes.domain.JobOffer;
 import com.mediheroes.mediheroes.domain.Location;
-import com.mediheroes.mediheroes.domain.User;
+import com.mediheroes.mediheroes.domain.user.User;
 import com.mediheroes.mediheroes.repository.CompanyRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 

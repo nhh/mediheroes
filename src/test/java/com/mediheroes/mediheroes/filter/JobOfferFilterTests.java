@@ -1,7 +1,7 @@
 package com.mediheroes.mediheroes.filter;
 
-import com.mediheroes.mediheroes.domain.Address;
-import com.mediheroes.mediheroes.domain.User;
+import com.mediheroes.mediheroes.domain.user.Address;
+import com.mediheroes.mediheroes.domain.user.User;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;

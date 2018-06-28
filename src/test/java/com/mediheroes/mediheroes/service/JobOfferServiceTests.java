@@ -1,8 +1,9 @@
 package com.mediheroes.mediheroes.service;
 
-import com.mediheroes.mediheroes.domain.Address;
+import com.mediheroes.mediheroes.domain.user.Address;
 import com.mediheroes.mediheroes.domain.JobOffer;
-import com.mediheroes.mediheroes.domain.User;
+import com.mediheroes.mediheroes.domain.user.Profile;
+import com.mediheroes.mediheroes.domain.user.User;
 import com.mediheroes.mediheroes.repository.JobOfferRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,9 +51,8 @@ public class JobOfferServiceTests {
         var sender = new User();
 
         sender.setAddress(new Address());
-        sender.setEmail("mock@mocked.com");
-        sender.setLastname("mocked");
-        sender.setFirstname("mocked");
+        sender.setProfile(new Profile());
+
         sender.setId(1L);
         sender.setType(User.Type.FREELANCER);
         sender.setActive(true);
@@ -69,9 +69,8 @@ public class JobOfferServiceTests {
         var sender = new User();
 
         sender.setAddress(new Address());
-        sender.setEmail("mock@mocked.com");
-        sender.setLastname("mocked");
-        sender.setFirstname("mocked");
+
+        sender.setProfile(new Profile());
         sender.setId(1L);
         sender.setType(User.Type.FREELANCER);
         sender.setActive(true);

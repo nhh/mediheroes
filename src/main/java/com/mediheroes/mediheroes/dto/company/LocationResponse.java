@@ -1,6 +1,6 @@
 package com.mediheroes.mediheroes.dto.company;
 
-import com.mediheroes.mediheroes.domain.Address;
+import com.mediheroes.mediheroes.domain.user.Address;
 import com.mediheroes.mediheroes.domain.Location;
 
 public class LocationResponse {

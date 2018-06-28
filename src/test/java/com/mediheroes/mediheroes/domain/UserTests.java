@@ -1,5 +1,7 @@
 package com.mediheroes.mediheroes.domain;
 
+import com.mediheroes.mediheroes.domain.user.Address;
+import com.mediheroes.mediheroes.domain.user.User;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

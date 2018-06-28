@@ -1,5 +1,7 @@
 package com.mediheroes.mediheroes.domain;
 
+import com.mediheroes.mediheroes.domain.user.User;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.*;

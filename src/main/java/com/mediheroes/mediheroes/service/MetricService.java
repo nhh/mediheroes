@@ -1,6 +1,6 @@
 package com.mediheroes.mediheroes.service;
 
-import com.mediheroes.mediheroes.domain.User;
+import com.mediheroes.mediheroes.domain.user.User;
 import com.mediheroes.mediheroes.dto.SummaryMetricResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;

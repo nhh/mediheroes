@@ -1,7 +1,8 @@
 package com.mediheroes.mediheroes.service;
 
 import com.mediheroes.mediheroes.domain.Company;
-import com.mediheroes.mediheroes.domain.User;
+import com.mediheroes.mediheroes.domain.user.Profile;
+import com.mediheroes.mediheroes.domain.user.User;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
 import com.mediheroes.mediheroes.repository.UserRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UserService {
 
     private final UserRepository userRepository;
@@ -35,7 +37,7 @@ public class UserService {
     }
 
     public Optional<User> findByEmail(String email){
-        return this.userRepository.findByEmail(email);
+        return this.userRepository.findByProfile_Email(email);
     }
     public User save(User user) {
         return userRepository.save(user);
@@ -45,7 +47,6 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    @Transactional
     @PreAuthorize("@userPermission.canUpdateCompany(#updatedCompany)")
     public Company updateCompany(Company updatedCompany, User user){
 
@@ -58,7 +59,6 @@ public class UserService {
         return updatedCompany;
     }
 
-    @Transactional
     @PreAuthorize("@userPermission.canAddCompany(#user, #newCompany)")
     public Company createCompany(User user, Company newCompany) {
         user.setCompany(newCompany);
@@ -68,5 +68,12 @@ public class UserService {
 
     public long countUsers() {
         return this.userRepository.count();
+    }
+
+
+    @PreAuthorize("#user.equals(#sender OR @userPermission.isAdmin(#sender))")
+    public void updateProfile(User user, Profile profile, User sender) {
+        user.setProfile(profile);
+        save(user);
     }
 }

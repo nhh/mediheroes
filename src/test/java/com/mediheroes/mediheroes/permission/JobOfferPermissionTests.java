@@ -3,7 +3,7 @@ package com.mediheroes.mediheroes.permission;
 
 import com.mediheroes.mediheroes.domain.Company;
 import com.mediheroes.mediheroes.domain.JobOffer;
-import com.mediheroes.mediheroes.domain.User;
+import com.mediheroes.mediheroes.domain.user.User;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;

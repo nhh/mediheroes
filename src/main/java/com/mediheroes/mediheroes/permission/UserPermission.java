@@ -1,8 +1,7 @@
 package com.mediheroes.mediheroes.permission;
 
 import com.mediheroes.mediheroes.domain.Company;
-import com.mediheroes.mediheroes.domain.User;
-import com.mediheroes.mediheroes.service.UserService;
+import com.mediheroes.mediheroes.domain.user.User;
 import org.springframework.stereotype.Component;
 
 @Component("userPermission")

@@ -1,4 +1,4 @@
-package com.mediheroes.mediheroes.domain;
+package com.mediheroes.mediheroes.domain.user;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

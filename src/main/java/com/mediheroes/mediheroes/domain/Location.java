@@ -1,5 +1,7 @@
 package com.mediheroes.mediheroes.domain;
 
+import com.mediheroes.mediheroes.domain.user.Address;
+
 import javax.persistence.*;
 import java.util.Objects;
 
