@@ -26,12 +26,13 @@ repositories {
 
 dependencies {
 
+  compile("org.springframework.boot:spring-boot-starter-data-mongodb:2.0.3.RELEASE")
+
   compile "io.springfox:springfox-swagger2:2.8.0"
   compile "io.springfox:springfox-swagger-ui:2.8.0"
 
-  compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.0.1.RELEASE'
-  compile 'org.springframework.session:spring-session-data-redis:2.0.2.RELEASE'
-  compile 'org.springframework.session:spring-session-core:2.0.2.RELEASE'
+  compile 'org.springframework.session:spring-session-core'
+  compile 'org.springframework.session:spring-session-jdbc'
 
   compile 'com.bugsnag:bugsnag:3.+'
   compile('org.flywaydb:flyway-core:5.0.7')
