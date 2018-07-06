@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BugsnagConfig {
 
-    private String apiKey;
+    private final String apiKey;
 
     public BugsnagConfig(
         @Value("${mediheroes.bugsnag.api-key}") String apiKey

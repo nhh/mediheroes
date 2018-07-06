@@ -1,4 +1,4 @@
-package com.mediheroes.mediheroes.controller.api.v1;
+package com.mediheroes.mediheroes.controller.api.v1.user;
 
 import com.mediheroes.mediheroes.domain.user.Address;
 import com.mediheroes.mediheroes.domain.user.User;
@@ -7,14 +7,21 @@ import com.mediheroes.mediheroes.dto.user.UserProfileRequest;
 import com.mediheroes.mediheroes.dto.user.UserRequest;
 import com.mediheroes.mediheroes.dto.user.UserResponse;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
+import com.mediheroes.mediheroes.exception.FileNotFoundException;
 import com.mediheroes.mediheroes.service.CompanyService;
 import com.mediheroes.mediheroes.service.UserService;
+import com.mongodb.BasicDBObject;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.MimeType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.stream.StreamSupport;
 
 @RequestMapping("/api/v1/users")
@@ -23,14 +30,11 @@ import java.util.stream.StreamSupport;
 public class UserController {
 
     private final UserService userService;
-    private final CompanyService companyService;
 
     public UserController (
-        UserService userServiceImpl,
-        CompanyService companyServiceImpl
+        UserService userServiceImpl
     ) {
         userService = userServiceImpl;
-        companyService = companyServiceImpl;
     }
 
     @GetMapping("/{id}")
@@ -124,4 +128,58 @@ public class UserController {
 
         return new ResponseEntity<>(userList, HttpStatus.OK);
     }
+
+    @PutMapping("/{id}/profile/image")
+    public ResponseEntity<String>uploadProfilePicture(
+        @PathVariable Long id,
+        @RequestBody MultipartFile file
+    ){
+        var user = userService
+            .getCurrentUser()
+            .orElseThrow(EntityNotFoundException::new);
+
+        var fileId = userService.updateProfileImage(user, file, user);
+
+        return new ResponseEntity<>(fileId, HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}/files/{id}")
+    public ResponseEntity getUploadedFile(
+        @PathVariable Long userId,
+        @PathVariable String id
+    ){
+        var user = userService
+            .getCurrentUser()
+            .orElseThrow(EntityNotFoundException::new);
+
+        var resource = userService
+            .getUploadedFileResource(id)
+            .orElseThrow(FileNotFoundException::new);
+
+        try {
+            return ResponseEntity
+                .ok()
+                .contentLength(resource.contentLength())
+                .contentType(MediaType.asMediaType(MimeType.valueOf(resource.getContentType())))
+                .body(new InputStreamResource(resource.getInputStream()));
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    @GetMapping("/{userId}/files/")
+    public ResponseEntity getDocuments(
+        @PathVariable Long userId
+    ){
+        var user = userService
+            .getCurrentUser()
+            .orElseThrow(EntityNotFoundException::new);
+
+        var documents = userService.getDocuments(user, user);
+
+        return new ResponseEntity(documents, HttpStatus.OK);
+
+    }
+
 }

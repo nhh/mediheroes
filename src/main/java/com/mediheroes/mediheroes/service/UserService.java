@@ -1,16 +1,31 @@
 package com.mediheroes.mediheroes.service;
 
 import com.mediheroes.mediheroes.domain.Company;
+import com.mediheroes.mediheroes.domain.user.Document;
 import com.mediheroes.mediheroes.domain.user.Profile;
 import com.mediheroes.mediheroes.domain.user.User;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
+import com.mediheroes.mediheroes.exception.FileDownloadException;
+import com.mediheroes.mediheroes.exception.FileUploadException;
 import com.mediheroes.mediheroes.repository.UserRepository;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.gridfs.GridFSBucket;
+import com.mongodb.client.gridfs.GridFSDownloadStream;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsResource;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.print.Doc;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -18,13 +33,20 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final CompanyService companyService;
+    private final GridFsTemplate gridFsTemplate;
+    private final GridFSBucket gridFsBucket;
 
     public UserService(
+        GridFSBucket gridFsBucket,
         UserRepository userRepositoryImpl,
-        CompanyService companyServiceImpl)
+        CompanyService companyServiceImpl,
+        GridFsTemplate gridFsTemplate
+    )
     {
-        userRepository = userRepositoryImpl;
-        companyService = companyServiceImpl;
+        this.gridFsBucket = gridFsBucket;
+        this.gridFsTemplate = gridFsTemplate;
+        this.userRepository = userRepositoryImpl;
+        this.companyService = companyServiceImpl;
     }
 
     public Optional<User> getCurrentUser(){
@@ -76,4 +98,40 @@ public class UserService {
         user.setProfile(profile);
         save(user);
     }
+
+    @PreAuthorize("@userPermission.isAdmin(#sender) or #sender == #user")
+    public String updateProfileImage(User user, MultipartFile file, User sender) {
+        String id = null;
+
+        var metaData = new BasicDBObject();
+        metaData.put("user", user.getId());
+        metaData.put("sender", sender.getId());
+
+        try {
+            id = gridFsTemplate.store(file.getInputStream(), file.getOriginalFilename(), file.getContentType(), metaData).toString();
+        } catch(IOException e){
+            throw new FileUploadException();
+        }
+
+        var profile = user.getProfile();
+        profile.setPictureId(id);
+        user.setProfile(profile);
+
+        save(user);
+        return id;
+    }
+
+    // TODO implement getResource from https://jira.spring.io/browse/DATAMONGO-2020
+    public Optional<GridFsResource> getUploadedFileResource(String id) {
+        var file = this.gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
+        GridFSDownloadStream stream = gridFsBucket.openDownloadStream(file.getObjectId());
+        var resource = new GridFsResource(file, stream);
+        return Optional.of(resource);
+    }
+
+    @PreAuthorize("@userPermission.isAdmin(#sender) or #sender == #user")
+    public Set<Document> getDocuments(User user, User sender) {
+        return user.getDocuments();
+    }
+
 }

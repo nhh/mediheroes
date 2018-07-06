@@ -38,10 +38,10 @@ public class User {
     private boolean verified;
 
     @Embedded
-    private Address address;
+    private Address address = new Address();
 
     @Embedded
-    private Profile profile;
+    private Profile profile = new Profile();
 
     @Column
     private Date created_at;
@@ -51,6 +51,9 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Company company;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Document> documents = new HashSet<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<JobOfferApplication> applications = new HashSet<>();
@@ -160,6 +163,14 @@ public class User {
 
     public void setProfile(Profile profile) {
         this.profile = profile;
+    }
+
+    public Set<Document> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(Set<Document> documents) {
+        this.documents = documents;
     }
 
     @Override

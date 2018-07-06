@@ -1,5 +1,6 @@
 package com.mediheroes.mediheroes.domain.user;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Column;
@@ -25,6 +26,9 @@ public class Profile {
     @NotNull
     @Column
     private String lastname;
+
+    @Id
+    private String pictureId;
 
     public String getEmail() {
         return email;
@@ -60,6 +64,14 @@ public class Profile {
 
     public void setPassword(String password) {
         this.password = new BCryptPasswordEncoder().encode(password);
+    }
+
+    public String getPictureId() {
+        return pictureId;
+    }
+
+    public void setPictureId(String pictureId) {
+        this.pictureId = pictureId;
     }
 
     @Override
