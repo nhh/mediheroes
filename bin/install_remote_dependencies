@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]
+then
+    echo "ERROR: No target host supplied!"
+    exit 255
+fi
+
+set -e
+
+echo "INFO: Installing docker"
+ssh root@$1 "apt-get update && apt-get install zip unzip"
+
+ssh root@$1 "curl https://releases.rancher.com/install-docker/17.12.sh | sh"
+
+echo "INFO: Installing docker-compose"
+ssh root@$1 "curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-Linux-x86_64 -o /usr/local/bin/docker-compose"
+
+echo "INFO: Modifying file rights"
+ssh root@$1 "chmod +x /usr/local/bin/docker-compose"
+
+echo "INFO: OK"

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Create bundle-latest
+
+set -e
+
+openssl aes-256-cbc -a -salt -in .env -out .env.enc -pass file:$HOME/.mediheroes/secret.key
