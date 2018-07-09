@@ -2,15 +2,11 @@ package com.mediheroes.mediheroes.controller.api.v1.user;
 
 import com.mediheroes.mediheroes.domain.user.Address;
 import com.mediheroes.mediheroes.domain.user.User;
-import com.mediheroes.mediheroes.dto.user.AddressRequest;
-import com.mediheroes.mediheroes.dto.user.UserProfileRequest;
-import com.mediheroes.mediheroes.dto.user.UserRequest;
-import com.mediheroes.mediheroes.dto.user.UserResponse;
+import com.mediheroes.mediheroes.dto.DocumentResponse;
+import com.mediheroes.mediheroes.dto.user.*;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
 import com.mediheroes.mediheroes.exception.FileNotFoundException;
-import com.mediheroes.mediheroes.service.CompanyService;
 import com.mediheroes.mediheroes.service.UserService;
-import com.mongodb.BasicDBObject;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -56,17 +52,17 @@ public class UserController {
 
     @PutMapping("/me/address")
     public ResponseEntity<UserResponse> updateMyAddress(
-        @Valid @RequestBody AddressRequest addressRequest
+        @Valid @RequestBody UserAddressRequest userAddressRequest
     ){
         var user = userService
             .getCurrentUser()
             .orElseThrow(EntityNotFoundException::new);
 
         var address = new Address();
-        address.setZip(addressRequest.getZip());
-        address.setCity(addressRequest.getCity());
-        address.setState(addressRequest.getState());
-        address.setStreet(addressRequest.getStreet());
+        address.setZip(userAddressRequest.getZip());
+        address.setCity(userAddressRequest.getCity());
+        address.setState(userAddressRequest.getState());
+        address.setStreet(userAddressRequest.getStreet());
 
         user.setAddress(address);
 
@@ -119,6 +115,7 @@ public class UserController {
         return new ResponseEntity<>(new UserResponse(user), HttpStatus.CREATED);
     }
 
+    // Todo Rewrite into Service!
     @GetMapping
     public ResponseEntity<UserResponse[]> getAllUser() {
         var userList = StreamSupport
@@ -168,18 +165,37 @@ public class UserController {
 
     }
 
-    @GetMapping("/{userId}/files/")
-    public ResponseEntity getDocuments(
-        @PathVariable Long userId
+    @GetMapping("/{id}/files")
+    @Transactional
+    public ResponseEntity<DocumentResponse[]> getDocuments(@PathVariable Long id){
+        var sender = userService
+            .getCurrentUser()
+            .orElseThrow(EntityNotFoundException::new);
+
+        var user = userService
+            .find(id)
+            .orElseThrow(EntityNotFoundException::new);
+
+        var response = userService.getFiles(user, sender)
+            .stream()
+            .map(DocumentResponse::new)
+            .toArray(DocumentResponse[]::new);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/files")
+    public ResponseEntity uploadFile(
+        @PathVariable Long id,
+        @RequestBody MultipartFile file
     ){
         var user = userService
             .getCurrentUser()
             .orElseThrow(EntityNotFoundException::new);
 
-        var documents = userService.getDocuments(user, user);
+        userService.addFile(user, file, user);
 
-        return new ResponseEntity(documents, HttpStatus.OK);
-
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }

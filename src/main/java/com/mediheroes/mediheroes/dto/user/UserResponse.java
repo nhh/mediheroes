@@ -6,13 +6,14 @@ import com.mediheroes.mediheroes.dto.company.CompanyResponse;
 import java.io.Serializable;
 import java.util.Set;
 
-public class UserResponse implements Serializable {
+public class UserResponse {
 
     private final String lastname;
     private final String firstname;
     private final String email;
     private final CompanyResponse company;
     private final Set<String> roles;
+    private final String imageId;
 
     private final Long id;
 
@@ -22,6 +23,7 @@ public class UserResponse implements Serializable {
         this.lastname = user.getProfile().getLastname();
         this.email = user.getProfile().getEmail();
         this.roles = user.getRoles();
+        this.imageId = user.getProfile().getImageId();
         if(user.getCompany() == null){
             this.company = null;
         } else {
@@ -51,5 +53,9 @@ public class UserResponse implements Serializable {
 
     public CompanyResponse getCompany() {
         return company;
+    }
+
+    public String getImageId() {
+        return imageId;
     }
 }

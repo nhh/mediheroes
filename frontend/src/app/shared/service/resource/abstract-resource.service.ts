@@ -12,7 +12,6 @@ export abstract class AbstractResourceService {
     this.http = injector.get(HttpClient);
   }
 
-
   protected authenticatedHttpOptions() : any {
     return {
       headers: new HttpHeaders({
@@ -21,6 +20,13 @@ export abstract class AbstractResourceService {
       }),
       withCredentials: true
     };
+  }
+
+  protected authenticatedHttpHeaders() : HttpHeaders {
+    return new HttpHeaders({
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-AUTH-TOKEN': localStorage.getItem('x-auth-token')
+    });
   }
 
 }

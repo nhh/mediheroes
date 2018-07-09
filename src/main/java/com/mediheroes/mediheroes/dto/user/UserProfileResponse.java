@@ -13,7 +13,7 @@ public class UserProfileResponse {
         this.email = user.getProfile().getEmail();
         this.firstname = user.getProfile().getFirstname();
         this.lastname = user.getProfile().getLastname();
-        this.imageId = user.getProfile().getPictureId();
+        this.imageId = user.getProfile().getImageId();
     }
 
     public String getEmail() {

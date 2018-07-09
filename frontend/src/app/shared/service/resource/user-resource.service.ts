@@ -11,6 +11,15 @@ export class UserResourceService extends AbstractResourceService {
 
   private basePath = "/api/v1/users";
 
+  downloadFile(userId: number, documentId: string) {
+    const options: any = {
+      headers: this.authenticatedHttpHeaders(),
+      responseType: "blob",
+      withCredentials: true
+    };
+    return this.http.get(this.basePath + '/' + userId + "/files/" + documentId, options)
+  }
+
   getUser(){
     return this.http.get(this.basePath, this.authenticatedHttpOptions())
   }

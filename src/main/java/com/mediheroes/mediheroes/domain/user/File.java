@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "documents")
-public class Document {
+@Table(name = "files")
+public class File {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,10 +13,21 @@ public class Document {
     private Long id;
 
     @Column
-    private String documentId;
+    private String fileId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column
+    private String filename;
+
+    @OneToOne(fetch = FetchType.LAZY)
     private User user;
+
+    public File(String fileId) {
+        this.fileId = fileId;
+    }
+
+    public File(){
+
+    }
 
     public Long getId() {
         return id;
@@ -26,12 +37,12 @@ public class Document {
         this.id = id;
     }
 
-    public String getDocumentId() {
-        return documentId;
+    public String getFileId() {
+        return fileId;
     }
 
-    public void setDocumentId(String documentId) {
-        this.documentId = documentId;
+    public void setFileId(String documentId) {
+        this.fileId = documentId;
     }
 
     public User getUser() {
@@ -42,18 +53,26 @@ public class Document {
         this.user = user;
     }
 
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Document document = (Document) o;
-        return Objects.equals(id, document.id) &&
-            Objects.equals(documentId, document.documentId);
+        File file = (File) o;
+        return Objects.equals(id, file.id) &&
+            Objects.equals(fileId, file.fileId);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, documentId);
+        return Objects.hash(id, fileId);
     }
 }

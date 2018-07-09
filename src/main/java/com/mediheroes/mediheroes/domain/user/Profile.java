@@ -27,8 +27,8 @@ public class Profile {
     @Column
     private String lastname;
 
-    @Id
-    private String pictureId;
+    @Column
+    private String imageId;
 
     public String getEmail() {
         return email;
@@ -66,12 +66,12 @@ public class Profile {
         this.password = new BCryptPasswordEncoder().encode(password);
     }
 
-    public String getPictureId() {
-        return pictureId;
+    public String getImageId() {
+        return imageId;
     }
 
-    public void setPictureId(String pictureId) {
-        this.pictureId = pictureId;
+    public void setImageId(String pictureId) {
+        this.imageId = pictureId;
     }
 
     @Override

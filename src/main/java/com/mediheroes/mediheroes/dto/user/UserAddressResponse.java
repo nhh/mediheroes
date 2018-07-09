@@ -2,14 +2,15 @@ package com.mediheroes.mediheroes.dto.user;
 
 import com.mediheroes.mediheroes.domain.user.Address;
 
-public class AddressResponse {
+public class UserAddressResponse {
 
     private final String street;
     private final String city;
     private final Integer zip;
     private final String state;
 
-    public AddressResponse(Address address) {
+    // Todo Refactor like UserProfileRequest due to passing User Object instead of Address
+    public UserAddressResponse(Address address) {
         this.street = address.getStreet();
         this.city = address.getCity();
         this.zip = address.getZip();

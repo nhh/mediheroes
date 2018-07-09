@@ -2,7 +2,7 @@ package com.mediheroes.mediheroes.dto.user;
 
 import javax.validation.constraints.NotNull;
 
-public class AddressRequest {
+public class UserAddressRequest {
 
     @NotNull
     private String city;

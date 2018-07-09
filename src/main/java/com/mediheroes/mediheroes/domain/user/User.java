@@ -52,10 +52,10 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     private Company company;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Document> documents = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<File> files = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private Set<JobOfferApplication> applications = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -165,12 +165,17 @@ public class User {
         this.profile = profile;
     }
 
-    public Set<Document> getDocuments() {
-        return documents;
+    public Set<File> getFiles() {
+        return this.files;
     }
 
-    public void setDocuments(Set<Document> documents) {
-        this.documents = documents;
+    public void setFiles(Set<File> files) {
+        this.files = files;
+    }
+
+    public void addFile(File file) {
+        file.setUser(this);
+        this.files.add(file);
     }
 
     @Override

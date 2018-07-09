@@ -1,11 +1,11 @@
 package com.mediheroes.mediheroes.service;
 
 import com.mediheroes.mediheroes.domain.Company;
-import com.mediheroes.mediheroes.domain.user.Document;
+import com.mediheroes.mediheroes.domain.user.File;
 import com.mediheroes.mediheroes.domain.user.Profile;
 import com.mediheroes.mediheroes.domain.user.User;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
-import com.mediheroes.mediheroes.exception.FileDownloadException;
+import com.mediheroes.mediheroes.exception.FileNotFoundException;
 import com.mediheroes.mediheroes.exception.FileUploadException;
 import com.mediheroes.mediheroes.repository.UserRepository;
 import com.mongodb.BasicDBObject;
@@ -21,9 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.print.Doc;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Optional;
 import java.util.Set;
 
@@ -101,37 +99,56 @@ public class UserService {
 
     @PreAuthorize("@userPermission.isAdmin(#sender) or #sender == #user")
     public String updateProfileImage(User user, MultipartFile file, User sender) {
-        String id = null;
 
         var metaData = new BasicDBObject();
         metaData.put("user", user.getId());
         metaData.put("sender", sender.getId());
 
-        try {
-            id = gridFsTemplate.store(file.getInputStream(), file.getOriginalFilename(), file.getContentType(), metaData).toString();
-        } catch(IOException e){
-            throw new FileUploadException();
-        }
+        var id = storeFile(file, metaData);
 
         var profile = user.getProfile();
-        profile.setPictureId(id);
+        profile.setImageId(id);
         user.setProfile(profile);
 
         save(user);
         return id;
     }
 
+    @PreAuthorize("@userPermission.isAdmin(#sender) or #sender == #user")
+    public void addFile(User user, MultipartFile file, User sender) {
+
+        var metaData = new BasicDBObject();
+        metaData.put("user", user.getId());
+        metaData.put("sender", sender.getId());
+
+        var uploadedFile = new File(storeFile(file, metaData));
+        uploadedFile.setFilename(file.getOriginalFilename());
+        user.addFile(uploadedFile);
+
+        save(user);
+    }
+
     // TODO implement getResource from https://jira.spring.io/browse/DATAMONGO-2020
     public Optional<GridFsResource> getUploadedFileResource(String id) {
-        var file = this.gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
+
+        var file = Optional
+            .ofNullable(this.gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id))))
+            .orElseThrow(FileNotFoundException::new);
         GridFSDownloadStream stream = gridFsBucket.openDownloadStream(file.getObjectId());
         var resource = new GridFsResource(file, stream);
         return Optional.of(resource);
     }
 
     @PreAuthorize("@userPermission.isAdmin(#sender) or #sender == #user")
-    public Set<Document> getDocuments(User user, User sender) {
-        return user.getDocuments();
+    public Set<File> getFiles(User user, User sender) {
+        return user.getFiles();
     }
 
+    private String storeFile(MultipartFile file, BasicDBObject metaData) {
+        try {
+            return gridFsTemplate.store(file.getInputStream(), file.getOriginalFilename(), file.getContentType(), metaData).toString();
+        } catch(IOException e){
+            throw new FileUploadException();
+        }
+    }
 }
