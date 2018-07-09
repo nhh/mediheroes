@@ -18,18 +18,5 @@ public class JobOfferFilterTests {
      * FPN (FALSE,POSTIVE,NULL)
     **/
 
-    @Test
-    public void hasValidAddress(){
-        var user = new User();
-        user.setAddress(new Address());
-        assertTrue(this.jobOfferFilter.hasValidAddress(user));
-    }
-
-    @Test
-    public void hasInvalidAddress(){
-        var user = new User();
-        assertFalse(this.jobOfferFilter.hasValidAddress(user));
-    }
-
 
 }

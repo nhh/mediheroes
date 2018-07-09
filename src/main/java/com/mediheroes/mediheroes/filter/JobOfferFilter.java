@@ -1,5 +1,6 @@
 package com.mediheroes.mediheroes.filter;
 
+import com.mediheroes.mediheroes.domain.user.Address;
 import com.mediheroes.mediheroes.domain.user.User;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +9,7 @@ public class JobOfferFilter {
 
 
     public boolean hasValidAddress(User user){
-        return user.getAddress() != null;
+        return user.getAddress() == new Address();
     }
 
 

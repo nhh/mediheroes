@@ -14,10 +14,10 @@ public class UserTests {
     public void setAddress() {
 
         var user = new User();
-        assertNull(user.getAddress());
         var address = new Address();
-        user.setAddress(address);
         assertEquals(user.getAddress(), address);
+        user.setAddress(address);
+
 
     }
 
