@@ -4,6 +4,13 @@ services:
     image: paradoxxger/mediheroes-backend:${VERSION}
     environment:
       - "MEDIHEROES_BUGSNAG_API_KEY=${MEDIHEROES_BUGSNAG_API_KEY}"
+      - "RELEASE_DATE=${RELEASE_DATE}"
+      - "SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}"
+      - "SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}"
+      - "SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}"
+      - "SPRING_DATA_MONGODB_HOST=${SPRING_DATA_MONGODB_HOST}"
+      - "SPRING_DATA_MONGODB_PORT=${SPRING_DATA_MONGODB_PORT}"
+      - "SPRING_DATA_MONGODB_DATABASE=${SPRING_DATA_MONGODB_DATABASE}"
     networks:
       mediheroes:
         aliases:
@@ -19,16 +26,16 @@ services:
         aliases:
           - postgres
     volumes:
-      - data/postgres:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
   mongo:
-    image: paradoxxger/mediheroes-mongodb:${VERSION}
+    image: paradoxxger/mediheroes-mongo:${VERSION}
     command: --enableFreeMonitoring on --serviceExecutor adaptive
     networks:
       mediheroes:
         aliases:
           - mongo
     volumes:
-      - data/mongo:/data/db
+      - mongo:/data/db
   frontend:
     image: paradoxxger/mediheroes-frontend:${VERSION}
     ports:
@@ -44,4 +51,5 @@ services:
 networks:
   mediheroes:
 volumes:
-  - data
+  postgres:
+  mongo:

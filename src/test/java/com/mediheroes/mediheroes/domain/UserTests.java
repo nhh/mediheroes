@@ -15,9 +15,8 @@ public class UserTests {
 
         var user = new User();
         var address = new Address();
-        assertEquals(user.getAddress(), address);
+        assertNull(user.getAddress());
         user.setAddress(address);
-
 
     }
 

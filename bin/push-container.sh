@@ -2,6 +2,15 @@
 
 set -e
 
-docker push paradoxxger/mediheroes-frontend:latest
+VERSION=$1
 
-docker push paradoxxger/mediheroes-backend:latest
+if [ -z "$VERSION" ]
+then
+    echo "ERROR: No version supplied! Usage: push-container.sh 1.0.0.RELEASE"
+    exit 255
+fi
+
+docker push paradoxxger/mediheroes-frontend:$VERSION
+docker push paradoxxger/mediheroes-backend:$VERSION
+docker push paradoxxger/mediheroes-mongo:$VERSION
+docker push paradoxxger/mediheroes-postgres:$VERSION
