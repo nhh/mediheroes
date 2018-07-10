@@ -7,7 +7,7 @@ then
     exit 255
 fi
 
-BUNDLE_PATH=mediheroes
+BUNDLE_PATH=/tmp/mediheroes
 
 RELEASE_DATE=`date +%Y-%m-%d`
 
