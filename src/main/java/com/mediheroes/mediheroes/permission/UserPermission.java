@@ -1,6 +1,7 @@
 package com.mediheroes.mediheroes.permission;
 
 import com.mediheroes.mediheroes.domain.Company;
+import com.mediheroes.mediheroes.domain.user.File;
 import com.mediheroes.mediheroes.domain.user.User;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,10 @@ public class UserPermission {
 
     public boolean isFreelancer(User user){
         return user.getType().equals(User.Type.FREELANCER);
+    }
+
+    public boolean fileBelongsTo(File file, User user) {
+        return user.getFiles().contains(file) || user.getProfile().getImageId().equals(file.getFileId());
     }
 
 }

@@ -131,12 +131,13 @@ public class UserService {
 
     // TODO implement getResource from https://jira.spring.io/browse/DATAMONGO-2020
     // TODO also implement permissions!
-    public Optional<GridFsResource> getUploadedFileResource(String id) {
-        var file = Optional
-            .ofNullable(this.gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id))))
+    @PreAuthorize("@userPermission.isAdmin(#sender) or (@userPermission.fileBelongsTo(#file, #user) and #sender == #user)")
+    public Optional<GridFsResource> getUploadedFileResource(User user, File file, User sender) {
+        var gridFSFile = Optional
+            .ofNullable(this.gridFsTemplate.findOne(new Query(Criteria.where("_id").is(file.getFileId()))))
             .orElseThrow(FileNotFoundException::new);
-        GridFSDownloadStream stream = gridFsBucket.openDownloadStream(file.getObjectId());
-        var resource = new GridFsResource(file, stream);
+        GridFSDownloadStream stream = gridFsBucket.openDownloadStream(gridFSFile.getObjectId());
+        var resource = new GridFsResource(gridFSFile, stream);
         return Optional.of(resource);
     }
 

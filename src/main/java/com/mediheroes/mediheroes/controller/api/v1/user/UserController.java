@@ -1,6 +1,7 @@
 package com.mediheroes.mediheroes.controller.api.v1.user;
 
 import com.mediheroes.mediheroes.domain.user.Address;
+import com.mediheroes.mediheroes.domain.user.Profile;
 import com.mediheroes.mediheroes.domain.user.User;
 import com.mediheroes.mediheroes.dto.user.UserAddressRequest;
 import com.mediheroes.mediheroes.dto.user.UserRequest;
@@ -54,12 +55,14 @@ public class UserController {
         var user = new User();
         user.setAddress(userRequest.getAddress());
 
-        var profile = user.getProfile();
+        var profile = new Profile();
         profile.setPassword(userRequest.getPassword());
         profile.setEmail(userRequest.getEmail());
         profile.setFirstname(userRequest.getFirstname());
         profile.setLastname(userRequest.getLastname());
 
+        // TODO Refactor into service
+        // TODO Add filter for duplicate accounts etc.
         user.setProfile(profile);
         user.setActive(userRequest.isActive());
         user.setVerified(userRequest.isVerified());

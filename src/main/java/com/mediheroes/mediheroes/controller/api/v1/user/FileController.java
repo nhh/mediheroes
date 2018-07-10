@@ -58,17 +58,27 @@ public class FileController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/{userId}/files/{id}")
+    @GetMapping("/{userId}/files/{fileId}")
     public ResponseEntity getUploadedFile(
         @PathVariable Long userId,
-        @PathVariable String id
+        @PathVariable String fileId
     ){
-        var user = userService
+        var sender = userService
             .getCurrentUser()
             .orElseThrow(EntityNotFoundException::new);
 
+        var user = userService
+            .find(userId)
+            .orElseThrow(EntityNotFoundException::new);
+
+        var file = user.getFiles()
+            .stream()
+            .filter((f) -> f.getFileId().equals(fileId))
+            .findFirst()
+            .orElseThrow(EntityNotFoundException::new);
+
         var resource = userService
-            .getUploadedFileResource(id)
+            .getUploadedFileResource(user, file, sender)
             .orElseThrow(FileNotFoundException::new);
 
         try {
