@@ -1,6 +1,6 @@
 package com.mediheroes.mediheroes.dto.user;
 
-import com.mediheroes.mediheroes.domain.user.User;
+import com.mediheroes.mediheroes.domain.user.Profile;
 
 public class UserProfileResponse {
 
@@ -9,11 +9,11 @@ public class UserProfileResponse {
     private final String lastname;
     private final String imageId;
 
-    public UserProfileResponse(User user) {
-        this.email = user.getProfile().getEmail();
-        this.firstname = user.getProfile().getFirstname();
-        this.lastname = user.getProfile().getLastname();
-        this.imageId = user.getProfile().getImageId();
+    public UserProfileResponse(Profile profile) {
+        this.email = profile.getEmail();
+        this.firstname = profile.getFirstname();
+        this.lastname = profile.getLastname();
+        this.imageId = profile.getImageId();
     }
 
     public String getEmail() {

@@ -1,6 +1,7 @@
 package com.mediheroes.mediheroes.controller.api.v1.user;
 
 import com.mediheroes.mediheroes.dto.user.UserProfileRequest;
+import com.mediheroes.mediheroes.dto.user.UserProfileResponse;
 import com.mediheroes.mediheroes.dto.user.UserResponse;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
 import com.mediheroes.mediheroes.service.UserService;
@@ -63,6 +64,26 @@ public class ProfileController {
         userService.updateProfile(user, profile, sender);
 
         return new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/profile")
+    public ResponseEntity<UserProfileResponse> getProfile(
+        @PathVariable Long id
+    ) {
+        var sender = userService
+            .getCurrentUser()
+            .orElseThrow(EntityNotFoundException::new);
+
+        var user = userService
+            .find(id)
+            .orElseThrow(EntityNotFoundException::new);
+
+        var response = userService
+            .getProfile(user, sender)
+            .map(UserProfileResponse::new)
+            .orElseThrow(EntityNotFoundException::new);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }
