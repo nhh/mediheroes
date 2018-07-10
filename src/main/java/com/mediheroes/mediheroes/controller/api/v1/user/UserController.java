@@ -45,27 +45,6 @@ public class UserController {
         return new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
     }
 
-    @PutMapping("/me/address")
-    public ResponseEntity<UserResponse> updateMyAddress(
-        @Valid @RequestBody UserAddressRequest userAddressRequest
-    ){
-        var user = userService
-            .getCurrentUser()
-            .orElseThrow(EntityNotFoundException::new);
-
-        var address = new Address();
-        address.setZip(userAddressRequest.getZip());
-        address.setCity(userAddressRequest.getCity());
-        address.setState(userAddressRequest.getState());
-        address.setStreet(userAddressRequest.getStreet());
-
-        user.setAddress(address);
-
-        userService.save(user);
-
-        return new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
-    }
-
     // Todo Refactor into authentication controller
     @PostMapping
     public ResponseEntity<UserResponse> register(

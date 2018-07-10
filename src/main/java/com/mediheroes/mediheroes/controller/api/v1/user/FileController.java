@@ -18,11 +18,11 @@ import java.io.IOException;
 @RequestMapping("/api/v1/users")
 @RestController
 @Transactional
-public class FilesController {
+public class FileController {
 
     private final UserService userService;
 
-    public FilesController(UserService userService) {
+    public FileController(UserService userService) {
         this.userService = userService;
     }
 

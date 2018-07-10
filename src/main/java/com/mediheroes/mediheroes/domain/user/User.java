@@ -38,10 +38,10 @@ public class User {
     private boolean verified;
 
     @Embedded
-    private Address address = new Address();
+    private Address address;
 
     @Embedded
-    private Profile profile = new Profile();
+    private Profile profile;
 
     @Column
     private Date created_at;

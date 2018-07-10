@@ -1,6 +1,7 @@
 package com.mediheroes.mediheroes.service;
 
 import com.mediheroes.mediheroes.domain.Company;
+import com.mediheroes.mediheroes.domain.user.Address;
 import com.mediheroes.mediheroes.domain.user.File;
 import com.mediheroes.mediheroes.domain.user.Profile;
 import com.mediheroes.mediheroes.domain.user.User;
@@ -150,5 +151,15 @@ public class UserService {
         } catch(IOException e){
             throw new FileUploadException();
         }
+    }
+
+    @PreAuthorize("@userPermission.isAdmin(#sender) or #sender == #user")
+    public void updateAddress(User user, Address address, User sender) {
+        user.setAddress(address);
+        save(user);
+    }
+
+    public Optional<Address> getAddress(User user, User sender) {
+        return Optional.ofNullable(user.getAddress());
     }
 }
