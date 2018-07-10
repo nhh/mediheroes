@@ -3,7 +3,6 @@ package com.mediheroes.mediheroes.controller.api.v1.user;
 import com.mediheroes.mediheroes.domain.user.Address;
 import com.mediheroes.mediheroes.domain.user.User;
 import com.mediheroes.mediheroes.dto.user.UserAddressRequest;
-import com.mediheroes.mediheroes.dto.user.UserProfileRequest;
 import com.mediheroes.mediheroes.dto.user.UserRequest;
 import com.mediheroes.mediheroes.dto.user.UserResponse;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.stream.StreamSupport;
@@ -68,26 +66,7 @@ public class UserController {
         return new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}/profile")
-    public ResponseEntity<UserResponse> updateMe(
-        @PathVariable Long id,
-        @Valid @RequestBody UserProfileRequest userProfileRequest
-    ){
-        var user = userService
-            .getCurrentUser()
-            .orElseThrow(EntityNotFoundException::new);
-
-        var profile = user.getProfile();
-
-        profile.setFirstname(userProfileRequest.getFirstname());
-        profile.setLastname(userProfileRequest.getLastname());
-        profile.setEmail(userProfileRequest.getEmail());
-
-        userService.updateProfile(user, profile, user);
-
-        return new ResponseEntity<>(new UserResponse(user), HttpStatus.OK);
-    }
-
+    // Todo Refactor into authentication controller
     @PostMapping
     public ResponseEntity<UserResponse> register(
         @Valid @RequestBody UserRequest userRequest
@@ -121,20 +100,6 @@ public class UserController {
             .toArray(UserResponse[]::new);
 
         return new ResponseEntity<>(userList, HttpStatus.OK);
-    }
-
-    @PutMapping("/{id}/profile/image")
-    public ResponseEntity<String>uploadProfilePicture(
-        @PathVariable Long id,
-        @RequestBody MultipartFile file
-    ){
-        var user = userService
-            .getCurrentUser()
-            .orElseThrow(EntityNotFoundException::new);
-
-        var fileId = userService.updateProfileImage(user, file, user);
-
-        return new ResponseEntity<>(fileId, HttpStatus.OK);
     }
 
 }
