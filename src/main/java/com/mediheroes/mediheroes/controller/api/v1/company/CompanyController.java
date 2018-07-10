@@ -1,4 +1,4 @@
-package com.mediheroes.mediheroes.controller.api.v1;
+package com.mediheroes.mediheroes.controller.api.v1.company;
 
 import com.mediheroes.mediheroes.domain.Company;
 import com.mediheroes.mediheroes.domain.JobOffer;

@@ -1,4 +1,4 @@
-package com.mediheroes.mediheroes.controller.api.v1;
+package com.mediheroes.mediheroes.controller.api.v1.auth;
 
 import com.mediheroes.mediheroes.dto.AuthenticationToken;
 import org.springframework.http.HttpStatus;

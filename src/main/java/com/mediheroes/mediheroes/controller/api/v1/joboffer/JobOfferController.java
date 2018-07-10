@@ -1,4 +1,4 @@
-package com.mediheroes.mediheroes.controller.api.v1;
+package com.mediheroes.mediheroes.controller.api.v1.joboffer;
 
 import com.mediheroes.mediheroes.domain.JobOfferApplication;
 import com.mediheroes.mediheroes.dto.job.JobOfferApplicationRequest;

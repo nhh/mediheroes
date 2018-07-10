@@ -1,4 +1,4 @@
-package com.mediheroes.mediheroes.controller.api.v1;
+package com.mediheroes.mediheroes.controller.api.v1.metric;
 
 import com.mediheroes.mediheroes.dto.SummaryMetricResponse;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
