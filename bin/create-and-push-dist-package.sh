@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 VERSION=$1
+PASSWORD=$2
 
 if [ -z "$VERSION" ]
 then
@@ -16,7 +17,7 @@ BINARY_NAME=mediheroes-$VERSION.zip
 
 set -e
 
-bin/decrypt_configuration_files
+bin/decrypt_configuration_files $PASSWORD
 
 mkdir -p $BUNDLE_PATH
 
