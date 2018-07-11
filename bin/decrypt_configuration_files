@@ -4,4 +4,12 @@
 
 set -e
 
+PASSWORD=$1
+
+if [ -z "$PASSWORD" ]
+then
+    openssl aes-256-cbc -d -a -in .env.enc -out .env -pass $PASSWORD
+    exit 0
+fi
+
 openssl aes-256-cbc -d -a -in .env.enc -out .env -pass file:$HOME/.mediheroes/secret.key
