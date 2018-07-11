@@ -1,9 +1,7 @@
 package com.mediheroes.mediheroes.controller.api.v1.user;
 
-import com.mediheroes.mediheroes.domain.user.Address;
 import com.mediheroes.mediheroes.domain.user.Profile;
 import com.mediheroes.mediheroes.domain.user.User;
-import com.mediheroes.mediheroes.dto.user.UserAddressRequest;
 import com.mediheroes.mediheroes.dto.user.UserRequest;
 import com.mediheroes.mediheroes.dto.user.UserResponse;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;

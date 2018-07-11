@@ -12,12 +12,13 @@ export class UserResourceService extends AbstractResourceService {
   private basePath = "/api/v1/users";
 
   downloadFile(userId: number, documentId: string) {
-    const options: any = {
-      headers: this.authenticatedHttpHeaders(),
-      responseType: "blob",
-      withCredentials: true
-    };
+    const options = this.createFileOptions();
     return this.http.get(this.basePath + '/' + userId + "/files/" + documentId, options)
+  }
+
+  downloadProfileImage(userId: number, documentId: string) {
+    const options = this.createFileOptions();
+    return this.http.get(this.basePath + '/' + userId + "/profile/image/" + documentId, options)
   }
 
   getUser(){
@@ -38,6 +39,14 @@ export class UserResourceService extends AbstractResourceService {
 
   updateMyAddress(userId: number, addressRequest : AddressRequest) {
     return this.http.put(this.basePath + userId + '/address', addressRequest, this.authenticatedHttpOptions())
+  }
+
+  private createFileOptions(): any {
+    return {
+      headers: this.authenticatedHttpHeaders(),
+      responseType: "blob",
+      withCredentials: true
+    };
   }
 
 }

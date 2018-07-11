@@ -4,14 +4,19 @@ import com.mediheroes.mediheroes.dto.user.UserProfileRequest;
 import com.mediheroes.mediheroes.dto.user.UserProfileResponse;
 import com.mediheroes.mediheroes.dto.user.UserResponse;
 import com.mediheroes.mediheroes.exception.EntityNotFoundException;
+import com.mediheroes.mediheroes.exception.FileNotFoundException;
 import com.mediheroes.mediheroes.service.UserService;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.MimeType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("api/v1/users")
@@ -84,6 +89,35 @@ public class ProfileController {
             .orElseThrow(EntityNotFoundException::new);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}/profile/image/{imageId}")
+    public ResponseEntity getUploadedImage(
+        @PathVariable Long userId,
+        @PathVariable String imageId
+    ){
+        var sender = userService
+            .getCurrentUser()
+            .orElseThrow(EntityNotFoundException::new);
+
+        var user = userService
+            .find(userId)
+            .orElseThrow(EntityNotFoundException::new);
+
+        var resource = userService
+            .getUploadedImageResource(user, imageId, sender)
+            .orElseThrow(FileNotFoundException::new);
+
+        try {
+            return ResponseEntity
+                .ok()
+                .contentLength(resource.contentLength())
+                .contentType(MediaType.asMediaType(MimeType.valueOf(resource.getContentType())))
+                .body(new InputStreamResource(resource.getInputStream()));
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 }

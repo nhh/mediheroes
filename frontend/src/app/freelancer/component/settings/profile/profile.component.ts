@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit {
     }
 
     this.isLoading = true;
-    this.userResourceService.downloadFile(this.userService.getCurrentUser().id, this.userService.getCurrentUser().imageId).subscribe(
+    this.userResourceService.downloadProfileImage(this.userService.getCurrentUser().id, this.userService.getCurrentUser().imageId).subscribe(
       (data) => {
         this.profileImageUrl = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(data));
         setTimeout(() => {this.isLoading = false}, 250);

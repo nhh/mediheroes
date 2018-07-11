@@ -133,12 +133,12 @@ public class UserService {
     // TODO also implement permissions!
     @PreAuthorize("@userPermission.isAdmin(#sender) or (@userPermission.fileBelongsTo(#file, #user) and #sender == #user)")
     public Optional<GridFsResource> getUploadedFileResource(User user, File file, User sender) {
-        var gridFSFile = Optional
-            .ofNullable(this.gridFsTemplate.findOne(new Query(Criteria.where("_id").is(file.getFileId()))))
-            .orElseThrow(FileNotFoundException::new);
-        GridFSDownloadStream stream = gridFsBucket.openDownloadStream(gridFSFile.getObjectId());
-        var resource = new GridFsResource(gridFSFile, stream);
-        return Optional.of(resource);
+        return getGridFsResource(file.getFileId());
+    }
+
+    @PreAuthorize("@userPermission.isAdmin(#sender) or (@userPermission.imageBelongsTo(#imageId, #user) and #sender == #user)")
+    public Optional<GridFsResource> getUploadedImageResource(User user, String imageId, User sender) {
+        return getGridFsResource(imageId);
     }
 
     @PreAuthorize("@userPermission.isAdmin(#sender) or #sender == #user")
@@ -152,6 +152,14 @@ public class UserService {
         } catch(IOException e){
             throw new FileUploadException();
         }
+    }
+
+    private Optional<GridFsResource> getGridFsResource(String fileId){
+        var gridFSFile = Optional
+            .ofNullable(this.gridFsTemplate.findOne(new Query(Criteria.where("_id").is(fileId))))
+            .orElseThrow(FileNotFoundException::new);
+        var stream = gridFsBucket.openDownloadStream(gridFSFile.getObjectId());
+        return Optional.of(new GridFsResource(gridFSFile, stream));
     }
 
     @PreAuthorize("@userPermission.isAdmin(#sender) or #sender == #user")

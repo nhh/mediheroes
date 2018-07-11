@@ -23,4 +23,8 @@ public class UserPermission {
         return user.getFiles().contains(file) || user.getProfile().getImageId().equals(file.getFileId());
     }
 
+    public boolean imageBelongsTo(String imageId, User user) {
+        return user.getProfile().getImageId().equals(imageId);
+    }
+
 }
