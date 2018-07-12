@@ -8,8 +8,12 @@ PASSWORD=$1
 
 if [ -z "$PASSWORD" ]
 then
-    openssl aes-256-cbc -a -salt -in .env -out .env.enc -pass $PASSWORD
-    exit 0
+  echo "Password parameter not given, trying $HOME/.mediheroes/secret.key"
+  openssl aes-256-cbc -a -salt -in .env -out .env.enc -pass file:"$HOME/.mediheroes/secret.key"
+  echo "OK!"
+else
+  openssl aes-256-cbc -a -salt -in .env -out .env.enc -pass pass:"$PASSWORD"
+  echo "OK!"
 fi
 
-openssl aes-256-cbc -a -salt -in .env -out .env.enc -pass file:$HOME/.mediheroes/secret.key
+
