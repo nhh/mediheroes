@@ -11,7 +11,7 @@ then
   echo "No password parameter given, trying to read from $HOME/.mediheroes/secret.key"
   openssl aes-256-cbc -d -a -in .env.enc -out .env -pass file:$HOME/.mediheroes/secret.key
 else
-  openssl aes-256-cbc -d -a -in .env.enc -out .env -pass $PASSWORD
+  openssl aes-256-cbc -d -a -in .env.enc -out .env -pass pass:$PASSWORD
 fi
 
 
