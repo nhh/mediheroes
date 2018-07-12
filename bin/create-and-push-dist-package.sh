@@ -9,11 +9,11 @@ then
     exit 255
 fi
 
-BUNDLE_PATH=mediheroes/
+BUNDLE_PATH=mediheroes-$VERSION
 
 RELEASE_DATE=`date +%Y-%m-%d`
 
-BINARY_NAME=mediheroes-$VERSION.zip
+BINARY_NAME=mediheroes-zip
 
 set -e
 
@@ -25,16 +25,12 @@ sed "s/\${VERSION}/$VERSION/" docker-compose-prod.yml > $BUNDLE_PATH/docker-comp
 
 mv .env $BUNDLE_PATH
 
-zip -r $BINARY_NAME $BUNDLE_PATH
-
 echo "INFO: Uploading release:"
 
-scp $BINARY_NAME root@mediheroes.com:/srv/$BINARY_NAME
+scp -rp $BUNDLE_PATH root@mediheroes.com:/srv/releases/
 
 echo "INFO: Removing local bundle"
 
 rm -rf $BUNDLE_PATH
-
-rm $BINARY_NAME
 
 echo "INFO: OK!"

@@ -20,7 +20,7 @@ BINARY_NAME=mediheroes-$VERSION.zip
 set -e
 
 echo "INFO: Unzipping remote artifact"
-ssh root@$TARGET_HOST "cd /srv/ && unzip -o $BINARY_NAME"
+ssh root@$TARGET_HOST "mv /srv/releases/mediheroes-$VERSION /srv/mediheroes"
 
 echo "INFO: Pulling new images"
 ssh root@$TARGET_HOST "cd /srv/mediheroes && docker-compose pull"
