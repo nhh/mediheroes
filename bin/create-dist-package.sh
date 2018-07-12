@@ -24,13 +24,3 @@ mkdir -p $BUNDLE_PATH
 sed "s/\${VERSION}/$VERSION/" docker-compose-prod.yml > $BUNDLE_PATH/docker-compose.yml
 
 mv .env $BUNDLE_PATH
-
-echo "INFO: Uploading release:"
-
-scp -rp $BUNDLE_PATH root@mediheroes.com:/srv/releases/
-
-echo "INFO: Removing local bundle"
-
-rm -rf $BUNDLE_PATH
-
-echo "INFO: OK!"
