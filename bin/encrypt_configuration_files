@@ -12,6 +12,7 @@ then
   openssl aes-256-cbc -a -salt -in .env -out .env.enc -pass file:"$HOME/.mediheroes/secret.key"
   echo "OK!"
 else
+  echo "Trying to decrypt with password as argument"
   openssl aes-256-cbc -a -salt -in .env -out .env.enc -pass pass:"$PASSWORD"
   echo "OK!"
 fi
