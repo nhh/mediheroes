@@ -1,0 +1,4 @@
+language: java
+
+scripts:
+  - ./gradlew test
